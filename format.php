@@ -15,18 +15,27 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin strings are defined here.
+ * twocol course format.  Display the whole course as "twocol" made of modules.
  *
  * @package     format_twocol
- * @category    string
  * @copyright   2019 Matt Porritt <mattp@catalyst-au.net>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'Two Column';
-$string['privacy:metadata'] = 'The two column format plugin does not store any personal data.';
+require_once($CFG->libdir.'/filelib.php');
+require_once($CFG->libdir.'/completionlib.php');
 
-$string['section0name'] = 'General';
-$string['sectionname'] = 'Topic';
+$context = context_course::instance($course->id);
+// Retrieve course format option fields and add them to the $course object.
+$course = course_get_format($course)->get_course();
+
+if (($marker >=0) && has_capability('moodle/course:setcurrentsection', $context) && confirm_sesskey()) {
+    $course->marker = $marker;
+    course_set_marker($course->id, $marker);
+}
+
+// Set up renderer to display page elements.
+$renderer = $PAGE->get_renderer('format_twocol');
+//$renderer->print_single_section_page($course, null, null, null, null, $displaysection);

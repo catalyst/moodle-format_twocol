@@ -13,20 +13,29 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * Plugin strings are defined here.
+ * Privacy Subsystem implementation for format_twocol.
  *
  * @package     format_twocol
- * @category    string
  * @copyright   2019 Matt Porritt <mattp@catalyst-au.net>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
+namespace format_twocol\privacy;
 defined('MOODLE_INTERNAL') || die();
-
-$string['pluginname'] = 'Two Column';
-$string['privacy:metadata'] = 'The two column format plugin does not store any personal data.';
-
-$string['section0name'] = 'General';
-$string['sectionname'] = 'Topic';
+/**
+ * Privacy Subsystem for format_twocol implementing null_provider.
+ *
+ * @copyright  2018 Carlos Escobedo <carlos@moodle.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class provider implements \core_privacy\local\metadata\null_provider {
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function get_reason() : string {
+        return 'privacy:metadata';
+    }
+}
