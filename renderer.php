@@ -72,4 +72,8 @@ class format_twocol_renderer extends format_section_renderer_base {
     protected function page_title() {
         return get_string('topicoutline');
     }
+
+    public function print_course_summary() {
+        echo html_writer::tag('h1', 'a cool course sumamry');
+    }
 }

@@ -38,4 +38,9 @@ if (($marker >=0) && has_capability('moodle/course:setcurrentsection', $context)
 
 // Set up renderer to display page elements.
 $renderer = $PAGE->get_renderer('format_twocol');
-//$renderer->print_single_section_page($course, null, null, null, null, $displaysection);
+
+if (!empty($displaysection)) {
+    $renderer->print_single_section_page($course, null, null, null, null, $displaysection);
+} else {
+    $renderer->print_course_summary();
+}
