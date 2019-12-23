@@ -74,6 +74,6 @@ class format_twocol_renderer extends format_section_renderer_base {
     }
 
     public function print_course_summary() {
-        echo html_writer::tag('h1', 'a cool course sumamry');
+        echo $this->render_from_template('format_twocol/course_summary', array());
     }
 }
