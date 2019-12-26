@@ -42,5 +42,12 @@ $renderer = $PAGE->get_renderer('format_twocol');
 if (!empty($displaysection)) {
     $renderer->print_single_section_page($course, null, null, null, null, $displaysection);
 } else {
-    $renderer->print_course_summary();
+    $renderer->print_course_summary($course);
+    if ($USER->editing == 1) { // TODO: use $PAGE->user_is_editing() instead.
+        $renderer->print_multiple_section_page($course, null, null, null, null, $displaysection);
+    }
 }
+
+// Include course format js module
+$PAGE->requires->js('/course/format/topics/format.js');
+
