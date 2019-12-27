@@ -121,6 +121,30 @@ class format_twocol_renderer extends format_section_renderer_base {
             $templatecontext->sectiontext1 = $courseformatoptions['sectiontext1']['text'];
         }
 
+        if (!empty($courseformatoptions['sectionheading2'])) {
+            $templatecontext->sectionheading2 = $courseformatoptions['sectionheading2'];
+            $templatecontext->sectionicon2 = $courseformatoptions['sectionicon2'];
+            $templatecontext->sectiontext2 = $courseformatoptions['sectiontext2']['text'];
+        }
+
+        if (!empty($courseformatoptions['sectionheading3'])) {
+            $templatecontext->sectionheading3 = $courseformatoptions['sectionheading3'];
+            $templatecontext->sectionicon3 = $courseformatoptions['sectionicon3'];
+            $templatecontext->sectiontext3 = $courseformatoptions['sectiontext3']['text'];
+        }
+
+        if (!empty($courseformatoptions['sectionheading4'])) {
+            $templatecontext->sectionheading4 = $courseformatoptions['sectionheading4'];
+            $templatecontext->sectionicon4 = $courseformatoptions['sectionicon4'];
+            $templatecontext->sectiontext4 = $courseformatoptions['sectiontext4']['text'];
+        }
+
+        if (!empty($courseformatoptions['sectionheading5'])) {
+            $templatecontext->sectionheading5 = $courseformatoptions['sectionheading5'];
+            $templatecontext->sectionicon5 = $courseformatoptions['sectionicon5'];
+            $templatecontext->sectiontext5 = $courseformatoptions['sectiontext5']['text'];
+        }
+
         echo $this->render_from_template('format_twocol/course_summary', $templatecontext);
     }
 

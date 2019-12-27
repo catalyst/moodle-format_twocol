@@ -252,6 +252,58 @@ class format_twocol extends format_base {
                     'default' => '',
                     'type' => PARAM_ALPHAEXT,
                 ),
+                'sectionheading2' => array(
+                    'default' => '',
+                    'type' => PARAM_ALPHANUMEXT,
+                ),
+                'sectiontext2' => array(
+                    'default' => '',
+                    'type' => PARAM_RAW,
+                    'element' => 'editor'
+                ),
+                'sectionicon2' => array(
+                    'default' => '',
+                    'type' => PARAM_ALPHAEXT,
+                ),
+                'sectionheading3' => array(
+                    'default' => '',
+                    'type' => PARAM_ALPHANUMEXT,
+                ),
+                'sectiontext3' => array(
+                    'default' => '',
+                    'type' => PARAM_RAW,
+                    'element' => 'editor'
+                ),
+                'sectionicon3' => array(
+                    'default' => '',
+                    'type' => PARAM_ALPHAEXT,
+                ),
+                'sectionheading4' => array(
+                    'default' => '',
+                    'type' => PARAM_ALPHANUMEXT,
+                ),
+                'sectiontext4' => array(
+                    'default' => '',
+                    'type' => PARAM_RAW,
+                    'element' => 'editor'
+                ),
+                'sectionicon4' => array(
+                    'default' => '',
+                    'type' => PARAM_ALPHAEXT,
+                ),
+                'sectionheading5' => array(
+                    'default' => '',
+                    'type' => PARAM_ALPHANUMEXT,
+                ),
+                'sectiontext5' => array(
+                    'default' => '',
+                    'type' => PARAM_RAW,
+                    'element' => 'editor'
+                ),
+                'sectionicon5' => array(
+                    'default' => '',
+                    'type' => PARAM_ALPHAEXT,
+                ),
             );
         }
         if ($foreditform && !isset($courseformatoptions['coursedisplay']['label'])) {
@@ -300,6 +352,98 @@ class format_twocol extends format_base {
                     'label' => get_string('sectionicon1_label', 'format_twocol'),
                     'element_type' => 'select',
                     'help' => 'sectionicon1',
+                    'help_component' => 'format_twocol',
+                    'element_attributes' => array($icons),
+                ),
+                'sectionheading2' => array(
+                    'label' => get_string('sectionheading2_label', 'format_twocol'),
+                    'element_type' => 'text',
+                    'help' => 'sectionheading2',
+                    'help_component' => 'format_twocol',
+                ),
+                'sectiontext2' => array(
+                    'label' => get_string('sectiontext2_label', 'format_twocol'),
+                    'element_type' => 'editor',
+                    'help' => 'sectiontext2',
+                    'help_component' => 'format_twocol',
+                    'element_attributes' => array(
+                        'trusttext' => 0,
+                        'enable_filemanagement' => false
+                    )
+                ),
+                'sectionicon2' => array(
+                    'label' => get_string('sectionicon2_label', 'format_twocol'),
+                    'element_type' => 'select',
+                    'help' => 'sectionicon2',
+                    'help_component' => 'format_twocol',
+                    'element_attributes' => array($icons),
+                ),
+                'sectionheading3' => array(
+                    'label' => get_string('sectionheading3_label', 'format_twocol'),
+                    'element_type' => 'text',
+                    'help' => 'sectionheading3',
+                    'help_component' => 'format_twocol',
+                ),
+                'sectiontext3' => array(
+                    'label' => get_string('sectiontext3_label', 'format_twocol'),
+                    'element_type' => 'editor',
+                    'help' => 'sectiontext3',
+                    'help_component' => 'format_twocol',
+                    'element_attributes' => array(
+                        'trusttext' => 0,
+                        'enable_filemanagement' => false
+                    )
+                ),
+                'sectionicon3' => array(
+                    'label' => get_string('sectionicon3_label', 'format_twocol'),
+                    'element_type' => 'select',
+                    'help' => 'sectionicon3',
+                    'help_component' => 'format_twocol',
+                    'element_attributes' => array($icons),
+                ),
+                'sectionheading4' => array(
+                    'label' => get_string('sectionheading4_label', 'format_twocol'),
+                    'element_type' => 'text',
+                    'help' => 'sectionheading4',
+                    'help_component' => 'format_twocol',
+                ),
+                'sectiontext4' => array(
+                    'label' => get_string('sectiontext4_label', 'format_twocol'),
+                    'element_type' => 'editor',
+                    'help' => 'sectiontext4',
+                    'help_component' => 'format_twocol',
+                    'element_attributes' => array(
+                        'trusttext' => 0,
+                        'enable_filemanagement' => false
+                    )
+                ),
+                'sectionicon4' => array(
+                    'label' => get_string('sectionicon4_label', 'format_twocol'),
+                    'element_type' => 'select',
+                    'help' => 'sectionicon4',
+                    'help_component' => 'format_twocol',
+                    'element_attributes' => array($icons),
+                ),
+                'sectionheading5' => array(
+                    'label' => get_string('sectionheading5_label', 'format_twocol'),
+                    'element_type' => 'text',
+                    'help' => 'sectionheading5',
+                    'help_component' => 'format_twocol',
+                ),
+                'sectiontext5' => array(
+                    'label' => get_string('sectiontext5_label', 'format_twocol'),
+                    'element_type' => 'editor',
+                    'help' => 'sectiontext5',
+                    'help_component' => 'format_twocol',
+                    'element_attributes' => array(
+                        'trusttext' => 0,
+                        'enable_filemanagement' => false
+                    )
+                ),
+                'sectionicon5' => array(
+                    'label' => get_string('sectionicon5_label', 'format_twocol'),
+                    'element_type' => 'select',
+                    'help' => 'sectionicon5',
                     'help_component' => 'format_twocol',
                     'element_attributes' => array($icons),
                 ),
