@@ -104,3 +104,10 @@
     max-width: 100%;
     max-height: 250px;
 }
+.twocol .course-img .media .progress-chart-container .progress-doughnut .progress-indicator .circular-chart .progress-circle {
+    stroke: #1177d1;
+    fill: none;
+    stroke-width: 2.3;
+    stroke-linecap: round;
+    animation: progress 1s ease-out forwards;
+}
