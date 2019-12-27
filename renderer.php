@@ -106,11 +106,20 @@ class format_twocol_renderer extends format_section_renderer_base {
         }
 
         $templatecontext->sections = $this->get_section_info($course);
-        $templatecontext->detailsheading = $courseformatoptions['detailsheading'];
-        $templatecontext->resourcesheading = $courseformatoptions['resourcesheading'];
-        $templatecontext->sectionheading1 = $courseformatoptions['sectionheading1'];
-        $templatecontext->sectionicon1 = $courseformatoptions['sectionicon1'];
-        $templatecontext->sectiontext1 = $courseformatoptions['sectiontext1']['text'];
+
+        if (!empty($courseformatoptions['detailsheading'])) {
+            $templatecontext->detailsheading = $courseformatoptions['detailsheading'];
+        }
+
+        if (!empty($courseformatoptions['resourcesheading'])) {
+            $templatecontext->resourcesheading = $courseformatoptions['resourcesheading'];
+        }
+
+        if (!empty($courseformatoptions['sectionheading1'])) {
+            $templatecontext->sectionheading1 = $courseformatoptions['sectionheading1'];
+            $templatecontext->sectionicon1 = $courseformatoptions['sectionicon1'];
+            $templatecontext->sectiontext1 = $courseformatoptions['sectiontext1']['text'];
+        }
 
         echo $this->render_from_template('format_twocol/course_summary', $templatecontext);
     }
