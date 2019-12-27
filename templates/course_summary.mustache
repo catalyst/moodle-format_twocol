@@ -84,9 +84,12 @@
       <div class="col-md-6 col-sm-12">
         <div class="column">
           <h3>{{detailsheading}}</h3>
-          {{# pix }} i/{{{sectionicon1}}}, core {{/ pix }}
-          <h5>{{sectionheading1}}</h5>
-          {{{sectiontext1}}}
+
+          {{#sectionheading1}}
+	          {{# pix }} i/{{{sectionicon1}}}, core {{/ pix }}
+	          <h5>{{sectionheading1}}</h5>
+	          {{{sectiontext1}}}
+          {{/sectionheading1}}
 
           <h3>{{resourcesheading}}</h3>
           <ul class="twocol">
