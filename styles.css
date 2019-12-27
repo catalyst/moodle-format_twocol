@@ -127,7 +127,7 @@
     display: inline-block;
     font-weight: 700;
     font-size: 110%;
-    width: calc(100% - 55px);
+    width: calc(100% - 60px);
     padding-right: 1rem;
     text-align: left;
 }
@@ -137,5 +137,5 @@
     background-color: rgba(255,255,255,0.25);
     padding: 0.2rem 1rem;
     border-radius: 0.5rem;
-    width: 55px;
+    width: 60px;
 }
