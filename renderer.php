@@ -89,6 +89,7 @@ class format_twocol_renderer extends format_section_renderer_base {
         $displaysection = 0;
 
         $templatecontext = new \stdClass();
+        $templatecontext->rightcontent = $this->section_right_content($thissection, $course, true);
         $templatecontext->summaryname = get_section_name($course, $thissection);
         $templatecontext->summary = $this->format_summary_text($thissection);
         $templatecontext->mods = $this->courserenderer->course_section_cm_list($course, $thissection, $displaysection);
@@ -327,7 +328,6 @@ class format_twocol_renderer extends format_section_renderer_base {
             $thismod = $modinfo->cms[$cmid];
 
             if ($thismod->uservisible) {
-                error_log('a');
                 if ($cancomplete && $completioninfo->is_enabled($thismod) != COMPLETION_TRACKING_NONE) {
                     $total++;
                     $completiondata = $completioninfo->get_data($thismod, true);
@@ -346,8 +346,6 @@ class format_twocol_renderer extends format_section_renderer_base {
 
         $completion->total = $total;
         $completion->complete = $complete;
-
-        error_log(print_r($completion, true));
 
         return $completion;
     }

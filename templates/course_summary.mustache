@@ -55,14 +55,17 @@
                  </div>
              </div>
         </div>
-        <h2>{{summaryname}}</h2>
-        <div class="summary">
-            {{{summary}}}
+        <div class="section">
+	        <div class="right side">{{{rightcontent}}}</div>
+	        <h2>{{summaryname}}</h2>
+	        <div class="summary">
+	            {{{summary}}}
+	        </div>
         </div>
         <div class="sections">
             {{#sections}}
                 <div class="topic-jump">
-                    <a href="{{{url}}}">{{name}}</a>
+                    <a href="{{{url}}}" class="topic-name">{{name}}</a>
                     {{#completion}}
                         {{#hastotal}}
                         <p>Progress: {{complete}} / {{total}}</p>
