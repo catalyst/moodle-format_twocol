@@ -99,7 +99,7 @@ class format_twocol_renderer extends format_section_renderer_base {
         $coursecompletion = \core_completion\progress::get_course_progress_percentage($course);
         if(!is_null($coursecompletion)) {
             $templatecontext->hasprogress = true;
-            $templatecontext->progress = $coursecompletion;
+            $templatecontext->progress = round($coursecompletion);
         } else {
             $templatecontext->hasprogress = false;
         }
