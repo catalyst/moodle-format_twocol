@@ -40,3 +40,10 @@
     height: 100%;
     padding: 20px 20px 10px;
 }
+
+.twocol .course-img {
+    position: relative;
+    border: none;
+    height: 150px;
+    width: 100%;
+}

@@ -1,4 +1,6 @@
 <?php
+use core_course\external\course_summary_exporter;
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -73,7 +75,15 @@ class format_twocol_renderer extends format_section_renderer_base {
         return get_string('topicoutline');
     }
 
-    public function print_course_summary($course) {
+
+    /**
+     * Prints the course summary.
+     *
+     * @param \stdClass $course
+     */
+    public function print_course_summary($course) : void {
+        global $OUTPUT;
+
         $modinfo = get_fast_modinfo($course);
         $thissection = $modinfo->get_section_info(0);
         $displaysection = 0;
@@ -83,6 +93,7 @@ class format_twocol_renderer extends format_section_renderer_base {
         $templatecontext->summary = $this->format_summary_text($thissection);
         $templatecontext->mods = $this->courserenderer->course_section_cm_list($course, $thissection, $displaysection);
         $templatecontext->modcontrol = $this->courserenderer->course_section_add_cm_control($course, 0, $displaysection);
+        $templatecontext->courseimage = $OUTPUT->get_generated_image_for_id($course->id);
 
         echo $this->render_from_template('format_twocol/course_summary', $templatecontext);
     }
