@@ -28,7 +28,10 @@ defined('MOODLE_INTERNAL') || die();
 $string['pluginname'] = 'Two Column';
 $string['privacy:metadata'] = 'The two column format plugin does not store any personal data.';
 
+$string['detailsheading'] = 'Summary';
+$string['detailsheading_help'] = 'Chose the text for the Summary heading';
+$string['detailsheading_label'] = 'Summary heading';
 $string['hidefromothers'] = 'Hide topic';
-$string['section0name'] = 'General';
+$string['section0name'] = 'Overview';
 $string['sectionname'] = 'Topic';
 $string['showfromothers'] = 'Show topic';

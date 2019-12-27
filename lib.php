@@ -208,7 +208,11 @@ class format_twocol extends format_base {
                 'hiddensections' => array(
                     'default' => $courseconfig->hiddensections,
                     'type' => PARAM_INT,
-                )
+                ),
+                'detailsheading' => array(
+                    'default' => get_string('detailsheading', 'format_twocol'),
+                    'type' => PARAM_ALPHANUMEXT,
+                ),
             );
         }
         if ($foreditform && !isset($courseformatoptions['coursedisplay']['label'])) {
@@ -224,6 +228,12 @@ class format_twocol extends format_base {
                             1 => new lang_string('hiddensectionsinvisible')
                         )
                     ),
+                ),
+                'detailsheading' => array(
+                    'label' => get_string('detailsheading_label', 'format_twocol'),
+                    'element_type' => 'text',
+                    'help' => 'detailsheading',
+                    'help_component' => 'format_twocol',
                 ),
             );
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
