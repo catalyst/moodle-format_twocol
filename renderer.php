@@ -74,19 +74,25 @@ class format_twocol_renderer extends format_section_renderer_base {
     }
 
     public function print_course_summary($course) {
-        echo $this->render_from_template('format_twocol/course_summary', array());
-
         $modinfo = get_fast_modinfo($course);
         $thissection = $modinfo->get_section_info(0);
         $displaysection = 0;
-        if ($thissection->summary or !empty($modinfo->sections[0]) or $PAGE->user_is_editing()) {
-            echo $this->start_section_list();
-            echo $this->section_header($thissection, $course, true, $displaysection);
-            echo $this->courserenderer->course_section_cm_list($course, $thissection, $displaysection);
-            echo $this->courserenderer->course_section_add_cm_control($course, 0, $displaysection);
-            echo $this->section_footer();
-            echo $this->end_section_list();
-        }
+
+        $templatecontext = new \stdClass();
+        $templatecontext->summaryname = get_section_name($course, $thissection);
+        $templatecontext->summary = $this->format_summary_text($thissection);
+        $templatecontext->mods = $this->courserenderer->course_section_cm_list($course, $thissection, $displaysection);
+        $templatecontext->modcontrol = $this->courserenderer->course_section_add_cm_control($course, 0, $displaysection);
+
+        echo $this->render_from_template('format_twocol/course_summary', $templatecontext);
+
+//            echo $this->start_section_list(); // Prints some wrapper that helps with formating.
+//            echo $this->section_header($thissection, $course, true, $displaysection); // Prints Topic 0 header and summary
+//            echo $this->courserenderer->course_section_cm_list($course, $thissection, $displaysection); // Prints sectopn 0 mods.
+//            echo $this->courserenderer->course_section_add_cm_control($course, 0, $displaysection); // prints editing options.
+//            echo $this->section_footer();
+//            echo $this->end_section_list(); // Prints some wrapper that helps with formating.
+
     }
 
     /**

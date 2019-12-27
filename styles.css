@@ -32,3 +32,11 @@
 .course-content ul.twocol li.section .section_action_menu .menu-action-text {
     white-space: nowrap;
 }
+
+.twocol .column {
+    border: 1px solid rgba(0,0,0,.125);
+    -webkit-box-shadow: 0 0 7px rgba(0,0,0,.17);
+    box-shadow: 0 0 7px rgba(0,0,0,.17);
+    height: 100%;
+    padding: 20px 20px 10px;
+}

@@ -24,4 +24,31 @@
 
     }
 }}
-<h1>I'm a template</h1>
+<div class="twocol">
+    <div class="row row-flex">
+      <div class="col-md-6 col-sm-12">
+        <div class="column">
+          <h3>First column</h3>
+          <p>This one has a bit longer content</p>
+          <p>This one has a bit longer content</p>
+          <p>This one has a bit longer content</p>
+          <p>This one has a bit longer content</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <div class="column">
+          <h3>Second column</h3>
+          <p>Normal content.</p>
+          <ul class="twocol">
+           <li id="section-0" class="section main clearfix" role="region" aria-label="overview">
+                <span class="hidden sectionname">overview</span>
+                <div class = "content">
+                    {{{ mods }}}
+                    {{{ modcontrol }}}
+                </div>
+            </li>
+          </ul>
+        </div>
+    </div>
+  </div>
+</div>
