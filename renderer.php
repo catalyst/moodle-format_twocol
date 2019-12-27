@@ -85,14 +85,6 @@ class format_twocol_renderer extends format_section_renderer_base {
         $templatecontext->modcontrol = $this->courserenderer->course_section_add_cm_control($course, 0, $displaysection);
 
         echo $this->render_from_template('format_twocol/course_summary', $templatecontext);
-
-//            echo $this->start_section_list(); // Prints some wrapper that helps with formating.
-//            echo $this->section_header($thissection, $course, true, $displaysection); // Prints Topic 0 header and summary
-//            echo $this->courserenderer->course_section_cm_list($course, $thissection, $displaysection); // Prints sectopn 0 mods.
-//            echo $this->courserenderer->course_section_add_cm_control($course, 0, $displaysection); // prints editing options.
-//            echo $this->section_footer();
-//            echo $this->end_section_list(); // Prints some wrapper that helps with formating.
-
     }
 
     /**
