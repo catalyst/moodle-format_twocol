@@ -95,6 +95,16 @@ class format_twocol_renderer extends format_section_renderer_base {
         $templatecontext->modcontrol = $this->courserenderer->course_section_add_cm_control($course, 0, $displaysection);
         $templatecontext->courseimage = $OUTPUT->get_generated_image_for_id($course->id);
 
+        $coursecompletion = \core_completion\progress::get_course_progress_percentage($course);
+        if(!is_null($coursecompletion)) {
+            $templatecontext->hasprogress = true;
+            $templatecontext->progress = $coursecompletion;
+        } else {
+            $templatecontext->hasprogress = false;
+        }
+
+        $templatecontext->sections = $this->get_section_info($course);
+
         echo $this->render_from_template('format_twocol/course_summary', $templatecontext);
     }
 
@@ -254,4 +264,92 @@ class format_twocol_renderer extends format_section_renderer_base {
         }
 
     }
+
+    /**
+     *
+     * @param stdClass $course The course entry from DB
+     * @return array $sections array of section names and ids.
+     */
+    private function get_section_info(\stdClass $course) : array {
+        $modinfo = get_fast_modinfo($course);
+        $numsections = course_get_format($course)->get_last_section_number();
+        $sections = array();
+
+        foreach ($modinfo->get_section_info_all() as $section => $thissection) {
+            if ($section == 0) {
+                continue;
+            }
+            if ($section > $numsections) {
+                // activities inside this section are 'orphaned', this section will be printed as 'stealth' below
+                continue;
+            }
+            // Show the section if the user is permitted to access it, OR if it's not available
+            // but there is some available info text which explains the reason & should display,
+            // OR it is hidden but the course has a setting to display hidden sections as unavilable.
+            $showsection = $thissection->uservisible ||
+            ($thissection->visible && !$thissection->available && !empty($thissection->availableinfo)) ||
+            (!$thissection->visible && !$course->hiddensections);
+            if (!$showsection) {
+                continue;
+            }
+
+            $sections[] = array(
+                'url' => new moodle_url('/course/view.php', array('id' => $course->id, 'section' => $section)),
+                'name' => get_section_name($course, $thissection),
+                'completion' => $this->get_section_completion($thissection, $course)
+            );
+        }
+
+        return $sections;
+    }
+
+    /**
+     *
+     * @param unknown $section
+     * @param \stdClass $course
+     * @return \stdClass
+     */
+    private function get_section_completion($section, \stdClass $course) : \stdClass {
+        $total = 0;
+        $complete = 0;
+        $cancomplete = isloggedin() && !isguestuser();
+        $completioninfo = new completion_info($course);
+        $modinfo = get_fast_modinfo($course);
+
+        $completion = new \stdClass();
+        $completion->hastotal = false;
+
+        if (empty($modinfo->sections[$section->section])) {
+            return $completion;
+        }
+
+        foreach ($modinfo->sections[$section->section] as $cmid) {
+            $thismod = $modinfo->cms[$cmid];
+
+            if ($thismod->uservisible) {
+                error_log('a');
+                if ($cancomplete && $completioninfo->is_enabled($thismod) != COMPLETION_TRACKING_NONE) {
+                    $total++;
+                    $completiondata = $completioninfo->get_data($thismod, true);
+                    if ($completiondata->completionstate == COMPLETION_COMPLETE ||
+                        $completiondata->completionstate == COMPLETION_COMPLETE_PASS) {
+                            $complete++;
+                        }
+                }
+            }
+        }
+
+        if ($total > 0) {
+
+            $completion->hastotal = true;
+        }
+
+        $completion->total = $total;
+        $completion->complete = $complete;
+
+        error_log(print_r($completion, true));
+
+        return $completion;
+    }
+
 }
