@@ -65,12 +65,16 @@
         <div class="sections">
             {{#sections}}
                 <div class="topic-jump">
-                    <a href="{{{url}}}" class="topic-name">{{name}}</a>
-                    {{#completion}}
-                        {{#hastotal}}
-                        <p>Progress: {{complete}} / {{total}}</p>
-                        {{/hastotal}}
-                    {{/completion}}
+                    <a href="{{{url}}}" class="btn btn-primary btn-block topic-name">
+                        <span class="topic-name-item">{{name}}</span>
+                        {{#completion}}
+                            {{#hastotal}}
+                                <span class="topic-name-completion">
+                                    {{complete}} / {{total}}
+                                </span>
+                            {{/hastotal}}
+                        {{/completion}}
+                    </a>
                 </div>
             {{/sections}}
         </div>

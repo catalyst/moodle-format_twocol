@@ -13,6 +13,10 @@
     padding: 0 6px;
 }
 
+.course-content .twocol .section .right + h2 {
+    margin-top: 2rem;
+}
+
 .course-content ul.twocol li.section .left {
     padding-top: 22px;
     text-align: right;
@@ -104,10 +108,34 @@
     max-width: 100%;
     max-height: 250px;
 }
-.twocol .course-img .media .progress-chart-container .progress-doughnut .progress-indicator .circular-chart .progress-circle {
+.progress-chart-container .progress-doughnut .progress-indicator .circular-chart .progress-circle {
     stroke: #1177d1;
     fill: none;
     stroke-width: 2.3;
     stroke-linecap: round;
     animation: progress 1s ease-out forwards;
+}
+.twocol .topic-jump + .topic-jump {
+    margin-top: 1rem;
+}
+.twocol .topic-jump .topic-name {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+.twocol .topic-jump .topic-name-item {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 110%;
+    width: calc(100% - 55px);
+    padding-right: 1rem;
+    text-align: left;
+}
+.twocol .topic-jump .topic-name-completion {
+    font-size: 80%;
+    display: inline-block;
+    background-color: rgba(255,255,255,0.25);
+    padding: 0.2rem 1rem;
+    border-radius: 0.5rem;
+    width: 55px;
 }
