@@ -159,6 +159,8 @@ class format_twocol_renderer extends format_section_renderer_base {
      * @param int $displaysection The section number in the course which is being displayed
      */
     public function print_single_section_page($course, $sections, $mods, $modnames, $modnamesused, $displaysection) {
+        global $OUTPUT;
+
         $modinfo = get_fast_modinfo($course);
         $course = course_get_format($course)->get_course();
         $completioninfo = new completion_info($course);
@@ -174,6 +176,8 @@ class format_twocol_renderer extends format_section_renderer_base {
         // The requested section page.
         $thissection = $modinfo->get_section_info($displaysection);
 
+        $sectioncompletion = $this->get_section_completion($thissection, $course);
+
         // Title with section navigation links.
         $sectionnavlinks = $this->get_nav_links($course, $modinfo->get_section_info_all(), $displaysection);
 
@@ -184,6 +188,7 @@ class format_twocol_renderer extends format_section_renderer_base {
         }
 
         $templatecontext = new \stdClass();
+        $templatecontext->courseimage = $OUTPUT->get_generated_image_for_id($course->id);
         $templatecontext->clipboard = $this->course_activity_clipboard($course, $displaysection); // Copy activity clipboard.
         $templatecontext->navlinkprevious = $sectionnavlinks['previous'];
         $templatecontext->navlinknext = $sectionnavlinks['next'];
@@ -195,6 +200,8 @@ class format_twocol_renderer extends format_section_renderer_base {
         $templatecontext->sectioncmcontrol = $this->courserenderer->course_section_add_cm_control(
             $course, $displaysection, $displaysection);
         $templatecontext->navselection = $this->section_nav_selection($course, $sections, $displaysection);
+        $templatecontext->hastotal = $sectioncompletion->hastotal;
+        $templatecontext->percent = $sectioncompletion->percent;
 
         echo $this->render_from_template('format_twocol/course_topic', $templatecontext);
     }
@@ -332,6 +339,7 @@ class format_twocol_renderer extends format_section_renderer_base {
 
         $completion = new \stdClass();
         $completion->hastotal = false;
+        $completion->percent = 0;
 
         if (empty($modinfo->sections[$section->section])) {
             return $completion;
@@ -352,13 +360,13 @@ class format_twocol_renderer extends format_section_renderer_base {
             }
         }
 
-        if ($total > 0) {
-
-            $completion->hastotal = true;
-        }
-
         $completion->total = $total;
         $completion->complete = $complete;
+
+        if ($total > 0) {
+            $completion->hastotal = true;
+            $completion->percent = round((($complete / $total) * 100), 2);
+        }
 
         return $completion;
     }
