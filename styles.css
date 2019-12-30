@@ -65,6 +65,31 @@
     background: #fff;
     border-radius: 50%;
 }
+
+.twocol .course-img .media .progress-chart-container .no-progress {
+    height: 100px;
+    width: 100px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    border: 10px solid #dee2e6;
+    position: relative;
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+}
+
+.twocol .course-img .media .progress-chart-container .no-progress .icon,
+.twocol .course-img .media .progress-chart-container .no-progress .icon .smallicon {
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    margin: 0;
+    padding: 0;
+    transform: translate(-45%, -45%);
+    color: #c1c9d0;
+    height: 50px;
+    width: 50px;
+    font-size: 45px;
+}
+
 .twocol .course-img .media .progress-chart-container .progress-doughnut {
     position: relative;
     height: 100px;
