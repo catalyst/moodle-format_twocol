@@ -43,7 +43,7 @@ if (!empty($displaysection)) {
     $renderer->print_single_section_page($course, null, null, null, null, $displaysection);
 } else {
     $renderer->print_course_summary($course);
-    if ($USER->editing == 1) { // TODO: use $PAGE->user_is_editing() instead.
+    if ($PAGE->user_is_editing()) {
         $renderer->print_multiple_section_page($course, null, null, null, null, $displaysection);
     }
 }
