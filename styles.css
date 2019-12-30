@@ -1,10 +1,7 @@
 .course-content ul.twocol {
     margin: 0;
+    padding: 0;
     list-style: none;
-}
-
-.course-content ul.twocol li.section .content {
-    margin: 0 40px;
 }
 
 .course-content ul.twocol li.section .left,
@@ -12,14 +9,16 @@
     width: 40px;
     padding: 0 6px;
 }
-
-.course-content .twocol .section .right + h2 {
+.course-content ul.twocol li.section ul.section {
+    margin: 0;
+    padding: 0 5px;
+}
+.course-content div.twocol .column .right + h2 {
     margin-top: 2rem;
 }
-
-.course-content ul.twocol li.section .left {
-    padding-top: 22px;
-    text-align: right;
+.course-content div.twocol .column h3 + h5,
+.course-content div.twocol .column p + h3 {
+    margin-top: 2rem;   
 }
 
 .jsenabled .course-content ul.twocol li.section .left,
@@ -121,7 +120,7 @@
 .twocol .topic-jump .topic-name {
     display: flex;
     flex-wrap: nowrap;
-    align-items: flex-start;
+    align-items: center;
 }
 .twocol .topic-jump .topic-name-item {
     display: inline-block;
