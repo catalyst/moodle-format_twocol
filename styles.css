@@ -1,7 +1,8 @@
 .course-content ul.twocol {
     margin: 0;
-    padding: 0;
+    padding: 1.5rem 0 0 0;
     list-style: none;
+    clear: both;
 }
 
 .course-content ul.twocol li.section .left,
@@ -162,4 +163,41 @@
     padding: 0.2rem 1rem;
     border-radius: 0.5rem;
     width: 60px;
+}
+#page-course-view-twocol .course-content .single-section .section-navigation.navigationtitle {
+    margin-bottom: 1rem;
+    padding: 1rem 1rem;
+}
+#page-course-view-twocol #region-main .course-content .single-section h2.sectionname {
+    text-align: left;
+    display: block;
+    float: left;
+    clear: left;
+    padding: 0.5rem 1rem;
+    background-color: rgba(255,255,255,0.4);
+    border-radius: 0 5px 5px 0;
+    margin-left: -1rem;
+    margin-right: 130px;
+}
+#page-course-view-twocol #region-main .course-content .single-section .section-navigation-back {
+    display: block;
+    float: left;
+    padding: 0.2rem 1rem;
+    background-color: rgba(255,255,255,0.4);
+    border-radius: 0 5px 5px 0;
+    margin-left: -1rem;
+    margin-right: 130px;
+    font-size: 90%;
+    transition: all 0.2s;
+}
+#page-course-view-twocol #region-main .course-content .single-section .section-navigation-back:hover,
+#page-course-view-twocol #region-main .course-content .single-section .section-navigation-back:focus {
+    background-color: #fff;
+    padding-left: 1.2rem;
+}   
+#page-course-view-twocol #region-main .course-content .single-section .section-navigation-back a {
+    color: initial;
+}
+#page-course-view-twocol #region-main .course-content .single-section .section-navigation-back a:hover {
+    text-decoration: none;
 }
