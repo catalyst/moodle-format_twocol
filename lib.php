@@ -39,7 +39,7 @@ class format_twocol extends format_base {
      *
      * @return bool
      */
-    public function uses_sections() {
+    public function uses_sections() : bool {
         return true;
     }
 
@@ -51,7 +51,7 @@ class format_twocol extends format_base {
      * @param int|stdClass $section Section object from database or just field section.section
      * @return string Display name that the course format prefers, e.g. "Topic 2"
      */
-    public function get_section_name($section) {
+    public function get_section_name($section) : string {
         $section = $this->get_section($section);
         if ((string)$section->name !== '') {
             return format_string($section->name, true,
@@ -103,8 +103,8 @@ class format_twocol extends format_base {
             $sectionno = $section;
         }
         if ($sectionno !== null) {
-                $url->param('section', $sectionno);
-            }
+            $url->param('section', $sectionno);
+        }
         return $url;
     }
 
@@ -130,7 +130,7 @@ class format_twocol extends format_base {
      */
     public function extend_course_navigation($navigation, navigation_node $node) {
         global $PAGE;
-        // if section is specified in course/view.php, make sure it is expanded in navigation
+        // If section is specified in course/view.php, make sure it is expanded in navigation.
         if ($navigation->includesectionnum === false) {
             $selectedsection = optional_param('section', null, PARAM_INT);
             if ($selectedsection !== null && (!defined('AJAX_SCRIPT') || AJAX_SCRIPT == '0') &&
@@ -139,7 +139,7 @@ class format_twocol extends format_base {
             }
         }
 
-        // check if there are callbacks to extend course navigation
+        // Check if there are callbacks to extend course navigation.
         parent::extend_course_navigation($navigation, $node);
 
         // We want to remove the general section if it is empty.
@@ -163,7 +163,7 @@ class format_twocol extends format_base {
      *
      * @return array This will be passed in ajax respose
      */
-    function ajax_section_move() {
+    public function ajax_section_move() {
         global $PAGE;
         $titles = array();
         $course = $this->get_course();
@@ -568,71 +568,71 @@ class format_twocol extends format_base {
         }
 
         if (empty($options)) {
-            // there are no option for course/sections anyway, no need to go further
+            // There are no option for course/sections anyway, no need to go further.
             return array();
         }
         if ($section === null) {
-            // course format options will be returned
+            // Course format options will be returned.
             $sectionid = 0;
         } else if ($this->courseid && isset($section->id)) {
-            // course section format options will be returned
+            // Course section format options will be returned.
             $sectionid = $section->id;
         } else if ($this->courseid && is_int($section) &&
             ($sectionobj = $DB->get_record('course_sections',
                 array('section' => $section, 'course' => $this->courseid), 'id'))) {
-                    // course section format options will be returned
+                    // Course section format options will be returned.
                     $sectionid = $sectionobj->id;
-                } else {
-                    // non-existing (yet) section was passed as an argument
-                    // default format options for course section will be returned
-                    $sectionid = -1;
+        } else {
+            // Non-existing (yet) section was passed as an argument,
+            // default format options for course section will be returned.
+            $sectionid = -1;
+        }
+        if (!array_key_exists($sectionid, $this->formatoptions)) {
+            $this->formatoptions[$sectionid] = array();
+            // First fill with default values.
+            foreach ($options as $optionname => $optionparams) {
+                $this->formatoptions[$sectionid][$optionname] = null;
+                if (array_key_exists('default', $optionparams)) {
+                    $this->formatoptions[$sectionid][$optionname] = $optionparams['default'];
                 }
-                if (!array_key_exists($sectionid, $this->formatoptions)) {
-                    $this->formatoptions[$sectionid] = array();
-                    // first fill with default values
-                    foreach ($options as $optionname => $optionparams) {
-                        $this->formatoptions[$sectionid][$optionname] = null;
-                        if (array_key_exists('default', $optionparams)) {
-                            $this->formatoptions[$sectionid][$optionname] = $optionparams['default'];
+            }
+            if ($this->courseid && $sectionid !== -1) {
+                // Overwrite the default options values with those stored in course_format_options table.
+                // Nothing can be stored if we are interested in generic course ($this->courseid == 0)
+                // or generic section ($sectionid === 0).
+                $records = $DB->get_records('course_format_options',
+                    array('courseid' => $this->courseid,
+                          'format' => $this->format,
+                          'sectionid' => $sectionid
+                          ), '', 'id,name,value');
+                foreach ($records as $record) {
+                    if (array_key_exists($record->name, $this->formatoptions[$sectionid])) {
+                        $value = $record->value;
+                        if ($value !== null && isset($options[$record->name]['type'])) {
+                            // This will convert string value to number if needed.
+                            $value = clean_param($value, $options[$record->name]['type']);
                         }
-                    }
-                    if ($this->courseid && $sectionid !== -1) {
-                        // overwrite the default options values with those stored in course_format_options table
-                        // nothing can be stored if we are interested in generic course ($this->courseid == 0)
-                        // or generic section ($sectionid === 0)
-                        $records = $DB->get_records('course_format_options',
-                            array('courseid' => $this->courseid,
-                                'format' => $this->format,
-                                'sectionid' => $sectionid
-                            ), '', 'id,name,value');
-                        foreach ($records as $record) {
-                            if (array_key_exists($record->name, $this->formatoptions[$sectionid])) {
-                                $value = $record->value;
-                                if ($value !== null && isset($options[$record->name]['type'])) {
-                                    // this will convert string value to number if needed
-                                    $value = clean_param($value, $options[$record->name]['type']);
-                                }
 
-                                if(!empty($options[$record->name]['element']) && $options[$record->name]['element'] === 'editor') {
-                                    $this->formatoptions[$sectionid][$record->name] = json_decode($value, true);
-                                } else {
-                                    $this->formatoptions[$sectionid][$record->name] = $value;
-                                }
-                            }
+                        if (!empty($options[$record->name]['element']) && $options[$record->name]['element'] === 'editor') {
+                            $this->formatoptions[$sectionid][$record->name] = json_decode($value, true);
+                        } else {
+                            $this->formatoptions[$sectionid][$record->name] = $value;
                         }
                     }
                 }
-                return $this->formatoptions[$sectionid];
+            }
+        }
+        return $this->formatoptions[$sectionid];
     }
     /**
-     * Whether this format allows to delete sections
+     * Whether this format allows to delete sections.
      *
      * Do not call this function directly, instead use {@link course_can_delete_section()}
      *
      * @param int|stdClass|section_info $section
      * @return bool
      */
-    public function can_delete_section($section) {
+    public function can_delete_section($section) : bool {
         return true;
     }
 
@@ -663,7 +663,7 @@ class format_twocol extends format_base {
      *
      * @return bool
      */
-    public function supports_news() {
+    public function supports_news() : bool {
         return false;
     }
 
@@ -675,11 +675,24 @@ class format_twocol extends format_base {
      * @param stdClass|section_info $section section where this module is located or will be added to
      * @return bool
      */
-    public function allow_stealth_module_visibility($cm, $section) {
+    public function allow_stealth_module_visibility($cm, $section) : bool {
         // Allow the third visibility state inside visible sections or in section 0.
         return !$section->section || $section->visible;
     }
 
+    /**
+     * Callback used in WS core_course_edit_section when teacher performs an AJAX action on a section (show/hide).
+     *
+     * Access to the course is already validated in the WS but the callback has to make sure
+     * that particular action is allowed by checking capabilities.
+     *
+     * Course formats should register.
+     *
+     * @param stdClass|section_info $section
+     * @param string $action
+     * @param int $sr
+     * @return null|array|stdClass any data for the Javascript post-processor (must be json-encodeable)
+     */
     public function section_action($section, $action, $sr) {
         global $PAGE;
 

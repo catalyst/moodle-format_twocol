@@ -31,7 +31,7 @@ $context = context_course::instance($course->id);
 // Retrieve course format option fields and add them to the $course object.
 $course = course_get_format($course)->get_course();
 
-if (($marker >=0) && has_capability('moodle/course:setcurrentsection', $context) && confirm_sesskey()) {
+if (($marker >= 0) && has_capability('moodle/course:setcurrentsection', $context) && confirm_sesskey()) {
     $course->marker = $marker;
     course_set_marker($course->id, $marker);
 }
@@ -48,6 +48,6 @@ if (!empty($displaysection)) {
     }
 }
 
-// Include course format js module
+// Include course format js module. We are reusing the core topics format JS.
 $PAGE->requires->js('/course/format/topics/format.js');
 

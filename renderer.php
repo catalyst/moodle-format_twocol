@@ -1,6 +1,4 @@
 <?php
-use core_course\external\course_summary_exporter;
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -47,7 +45,8 @@ class format_twocol_renderer extends format_section_renderer_base {
         parent::__construct($page, $target);
 
         // Since format_twocol_renderer::section_edit_control_items() only displays the 'Highlight' control when editing mode is on
-        // we need to be sure that the link 'Turn editing mode on' is available for a user who does not have any other managing capability.
+        // we need to be sure that the link 'Turn editing mode on' is available
+        // for a user who does not have any other managing capability.
         $page->set_other_editing_capability('moodle/course:setcurrentsection');
     }
 
@@ -55,7 +54,7 @@ class format_twocol_renderer extends format_section_renderer_base {
      * Generate the starting container html for a list of sections
      * @return string HTML to output.
      */
-    protected function start_section_list() {
+    protected function start_section_list() : string {
         return html_writer::start_tag('ul', array('class' => 'twocol'));
     }
 
@@ -63,7 +62,7 @@ class format_twocol_renderer extends format_section_renderer_base {
      * Generate the closing container html for a list of sections
      * @return string HTML to output.
      */
-    protected function end_section_list() {
+    protected function end_section_list() :string {
         return html_writer::end_tag('ul');
     }
 
@@ -71,7 +70,7 @@ class format_twocol_renderer extends format_section_renderer_base {
      * Generate the title for this section page
      * @return string the page title
      */
-    protected function page_title() {
+    protected function page_title() : string {
         return get_string('topicoutline');
     }
 
@@ -98,7 +97,7 @@ class format_twocol_renderer extends format_section_renderer_base {
         $templatecontext->courseimage = $OUTPUT->get_generated_image_for_id($course->id);
 
         $coursecompletion = \core_completion\progress::get_course_progress_percentage($course);
-        if(!is_null($coursecompletion)) {
+        if (!is_null($coursecompletion)) {
             $templatecontext->hasprogress = true;
             $templatecontext->progress = round($coursecompletion);
         } else {
@@ -181,7 +180,7 @@ class format_twocol_renderer extends format_section_renderer_base {
         // Title with section navigation links.
         $sectionnavlinks = $this->get_nav_links($course, $modinfo->get_section_info_all(), $displaysection);
 
-        // Title attributes
+        // Title attributes.
         $classes = 'sectionname';
         if (!$thissection->visible) {
             $classes .= ' dimmed_text';
@@ -239,7 +238,7 @@ class format_twocol_renderer extends format_section_renderer_base {
                 continue;
             }
             if ($section > $numsections) {
-                // activities inside this section are 'orphaned', this section will be printed as 'stealth' below
+                // Activities inside this section are 'orphaned', this section will be printed as 'stealth' below.
                 continue;
             }
             // Show the section if the user is permitted to access it, OR if it's not available
@@ -269,7 +268,7 @@ class format_twocol_renderer extends format_section_renderer_base {
             // Print stealth sections if present.
             foreach ($modinfo->get_section_info_all() as $section => $thissection) {
                 if ($section <= $numsections or empty($modinfo->sections[$section])) {
-                    // this is not stealth section or it is empty
+                    // This is not stealth section or it is empty.
                     continue;
                 }
                 echo $this->stealth_section_header($section);
@@ -287,6 +286,7 @@ class format_twocol_renderer extends format_section_renderer_base {
     }
 
     /**
+     * Get section info for UI display.
      *
      * @param stdClass $course The course entry from DB
      * @return array $sections array of section names and ids.
@@ -301,7 +301,7 @@ class format_twocol_renderer extends format_section_renderer_base {
                 continue;
             }
             if ($section > $numsections) {
-                // activities inside this section are 'orphaned', this section will be printed as 'stealth' below
+                // Activities inside this section are 'orphaned', this section will be printed as 'stealth' below.
                 continue;
             }
             // Show the section if the user is permitted to access it, OR if it's not available
@@ -325,12 +325,13 @@ class format_twocol_renderer extends format_section_renderer_base {
     }
 
     /**
+     * Get section activity completion information.
      *
-     * @param unknown $section
+     * @param \section_info $section
      * @param \stdClass $course
      * @return \stdClass
      */
-    private function get_section_completion($section, \stdClass $course) : \stdClass {
+    private function get_section_completion(\section_info $section, \stdClass $course) : \stdClass {
         $total = 0;
         $complete = 0;
         $cancomplete = isloggedin() && !isguestuser();
@@ -355,7 +356,7 @@ class format_twocol_renderer extends format_section_renderer_base {
                     if ($completiondata->completionstate == COMPLETION_COMPLETE ||
                         $completiondata->completionstate == COMPLETION_COMPLETE_PASS) {
                             $complete++;
-                        }
+                    }
                 }
             }
         }
