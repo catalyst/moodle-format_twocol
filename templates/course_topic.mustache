@@ -53,7 +53,11 @@
                     </div>
                 </div>
             </div>
-            <h6 class="section-navigation-back"><a href="#" title="Back to Course Home"><i class="fa fa-home" aria-hidden="true"></i> Course Name</a></h6>
+            <h6 class="section-navigation-back">
+                <a href="{{{courseurl}}}" title="{{#str}}home_tip, format_twocol{{/str}}">
+                    <i class="fa fa-home" aria-hidden="true"></i> {{#str}}home, format_twocol{{/str}}
+                </a>
+            </h6>
             <h2 class="{{sectionnameclasses}}">{{{sectionname}}}</h2>
         </div>
         <div class="section-navigation mdl-top">

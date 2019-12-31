@@ -188,6 +188,7 @@ class format_twocol_renderer extends format_section_renderer_base {
 
         $templatecontext = new \stdClass();
         $templatecontext->courseimage = $OUTPUT->get_generated_image_for_id($course->id);
+        $templatecontext->courseurl = new moodle_url('/course/view.php', array('id' => $course->id));
         $templatecontext->clipboard = $this->course_activity_clipboard($course, $displaysection); // Copy activity clipboard.
         $templatecontext->navlinkprevious = $sectionnavlinks['previous'];
         $templatecontext->navlinknext = $sectionnavlinks['next'];
