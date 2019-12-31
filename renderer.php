@@ -402,10 +402,11 @@ class format_twocol_renderer extends format_section_renderer_base {
         while ($back > 0 and empty($links['previous'])) {
             if ($canviewhidden || $sections[$back]->uservisible) {
                 $params = array();
+                $params = array('class' => 'btn btn-primary btn-small', 'role' => 'button');
                 if (!$sections[$back]->visible) {
-                    $params = array('class' => 'dimmed_text');
+                    $params = array('' => 'disabled');
                 }
-                $previouslink = html_writer::tag('span', $this->output->larrow(), array('class' => 'larrow'));
+                $previouslink = html_writer::tag('span', '', array('class' => 'fa fa-arrow-left fa-fw'));
                 $previouslink .= get_section_name($course, $sections[$back]);
                 $links['previous'] = html_writer::link(course_get_url($course, $back), $previouslink, $params);
             }
@@ -417,11 +418,12 @@ class format_twocol_renderer extends format_section_renderer_base {
         while ($forward <= $numsections and empty($links['next'])) {
             if ($canviewhidden || $sections[$forward]->uservisible) {
                 $params = array();
+                $params = array('class' => 'btn btn-primary btn-small', 'role' => 'button');
                 if (!$sections[$forward]->visible) {
-                    $params = array('class' => 'dimmed_text');
+                    $params = array('' => 'disabled');
                 }
                 $nextlink = get_section_name($course, $sections[$forward]);
-                $nextlink .= html_writer::tag('span', $this->output->rarrow(), array('class' => 'rarrow'));
+                $nextlink .= html_writer::tag('span', '', array('class' => 'fa fa-arrow-right fa-fw'));
                 $links['next'] = html_writer::link(course_get_url($course, $forward), $nextlink, $params);
             }
             $forward++;
