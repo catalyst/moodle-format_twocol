@@ -1,0 +1,58 @@
+
+language: php
+addons:
+  apt:
+    packages:
+      - openjdk-8-jre
+  postgresql: "9.4"
+
+notifications:
+  email:
+    recipients:
+    - mattp@catalyst-au.net
+
+sudo: required
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+
+env:
+ matrix:
+  - DB=pgsql MOODLE_BRANCH=MOODLE_37_STABLE
+  - DB=mysqli MOODLE_BRANCH=MOODLE_37_STABLE
+  - DB=pgsql MOODLE_BRANCH=MOODLE_38_STABLE
+  - DB=mysqli MOODLE_BRANCH=MOODLE_38_STABLE
+  - DB=pgsql MOODLE_BRANCH=master
+  - DB=mysqli MOODLE_BRANCH=master
+
+matrix:
+  exclude:
+    - php: 7.1
+      env: DB=pgsql MOODLE_BRANCH=master
+    - php: 7.1
+      env: DB=mysqli MOODLE_BRANCH=master
+
+before_install:
+  - cd ../..
+  - composer selfupdate
+  - composer create-project -n --no-dev moodlerooms/moodle-plugin-ci ci ^1
+  - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
+
+install:
+  - moodle-plugin-ci install -vvv
+
+script:
+  - moodle-plugin-ci phplint
+#  - moodle-plugin-ci phpcpd
+# - moodle-plugin-ci phpmd
+  - moodle-plugin-ci codechecker
+  - moodle-plugin-ci validate
+  - moodle-plugin-ci shifter
+  - moodle-plugin-ci phpunit
+  - moodle-plugin-ci behat      # No tests yet
