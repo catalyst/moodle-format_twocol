@@ -402,7 +402,7 @@ class format_twocol_renderer extends format_section_renderer_base {
         while ($back > 0 and empty($links['previous'])) {
             if ($canviewhidden || $sections[$back]->uservisible) {
                 $params = array();
-                $params = array('class' => 'btn btn-primary btn-small', 'role' => 'button');
+                $params = array('class' => 'btn btn-outline-primary btn-small', 'role' => 'button');
                 if (!$sections[$back]->visible) {
                     $params = array('' => 'disabled');
                 }
@@ -418,7 +418,7 @@ class format_twocol_renderer extends format_section_renderer_base {
         while ($forward <= $numsections and empty($links['next'])) {
             if ($canviewhidden || $sections[$forward]->uservisible) {
                 $params = array();
-                $params = array('class' => 'btn btn-primary btn-small', 'role' => 'button');
+                $params = array('class' => 'btn btn-outline-primary btn-small', 'role' => 'button');
                 if (!$sections[$forward]->visible) {
                     $params = array('' => 'disabled');
                 }
