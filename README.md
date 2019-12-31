@@ -1,21 +1,32 @@
-# Two Column #
+[![Build Status](https://www.travis-ci.org/catalyst/moodle-format_twocol.svg?branch=master)](https://www.travis-ci.org/catalyst/moodle-format_twocol)
 
-TODO Describe the plugin shortly here.
+# Two Column - Course Formatt#
 
-TODO Provide more detailed description here.
+A two column course format for Moodle.
 
-## License ##
+## Supported Moodle Versions
+This plugin currently supports Moodle:
 
-2019 Matt Porritt <mattp@catalyst-au.net>
+* 3.7
+* 3.8
 
-This program is free software: you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free Software
-Foundation, either version 3 of the License, or (at your option) any later
-version.
+# Crafted by Catalyst IT
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY
-WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with
-this program.  If not, see <http://www.gnu.org/licenses/>.
+This plugin was developed by Catalyst IT Australia:
+
+https://www.catalyst-au.net/
+
+![Catalyst IT](/pix/catalyst-logo.png?raw=true)
+
+
+# Contributing and Support
+
+Issues, and pull requests using github are welcome and encouraged! 
+
+https://github.com/catalyst/moodle-format_twocol/issues
+
+If you would like commercial support or would like to sponsor additional improvements
+to this plugin please contact us:
+
+https://www.catalyst-au.net/contact-us
