@@ -45,6 +45,9 @@ class format_twocol_renderer_testcase extends advanced_testcase {
 
     public function setUp() {
         $this->resetAfterTest();
+
+        global $CFG;
+        $CFG->enablecompletion = COMPLETION_ENABLED;
      }
 
     /**
@@ -53,8 +56,22 @@ class format_twocol_renderer_testcase extends advanced_testcase {
     public function test_get_completion_count() {
         global $PAGE;
         $renderer = $PAGE->get_renderer('format_twocol');
+        $completionauto = array('completion' => COMPLETION_TRACKING_AUTOMATIC);
 
-        $course = $this->getDataGenerator()->create_course();
+        // Set up the course.
+        $course = $this->getDataGenerator()->create_course(array('enablecompletion' => true));
+
+//         $activity = $this->getDataGenerator()->get_plugin_generator('mod_page');
+//         $activity->create_instance(array('course'=>$course->id, 'completion' => COMPLETION_TRACKING_AUTOMATIC));
+        $page = $this->getDataGenerator()->create_module('page', array('course' => $course->id), $completionauto);
+
+        $user1 = $this->getDataGenerator()->create_user();
+        $user2 = $this->getDataGenerator()->create_user();
+        $user3 = $this->getDataGenerator()->create_user();
+
+        $this->getDataGenerator()->enrol_user($user1->id, $course->id);
+        $this->getDataGenerator()->enrol_user($user2->id, $course->id);
+        $this->getDataGenerator()->enrol_user($user3->id, $course->id);
 
         // We're testing a private method, so we need to setup reflector magic.
         $method = new ReflectionMethod('format_twocol_renderer', 'get_completion_count');
