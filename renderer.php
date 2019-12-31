@@ -366,7 +366,7 @@ class format_twocol_renderer extends format_section_renderer_base {
 
         if ($total > 0) {
             $completion->hastotal = true;
-            $completion->percent = round((($complete / $total) * 100), 2);
+            $completion->percent = round((($complete / $total) * 100), 0);
         }
 
         return $completion;
