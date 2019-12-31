@@ -1,6 +1,6 @@
 [![Build Status](https://www.travis-ci.org/catalyst/moodle-format_twocol.svg?branch=master)](https://www.travis-ci.org/catalyst/moodle-format_twocol)
 
-# Two Column - Course Formatt#
+# Two Column - Course Format
 
 A two column course format for Moodle.
 
