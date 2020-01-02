@@ -15,9 +15,9 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template course_course/coursecard
+    @template format_twocol/course_sumamry
 
-    This template renders the a card for the course cards.
+    This template renders the course sumamry section.
 
     Example context (json):
     {
@@ -30,30 +30,7 @@
         <div class="column">
          <div class="course-img" style='background-image: url("{{{courseimage}}}");'>
             <span class="sr-only">{{#str}}aria:courseimage, core_course{{/str}}</span>
-            <div class="media">
-                <div class="mr-2">
-                     <div class="progress-chart-container m-b-1 m-r-1">
-                        {{#hasprogress}}
-                            <div class="progress-doughnut">
-                                <div class="progress-text {{#progress}}has-percent{{/progress}}">{{progress}}&#37;</div>
-                                    <div class="progress-indicator">
-                                        <svg viewbox="0 0 36 36" class="circular-chart">
-                                            <path class="progress-circle" stroke-dasharray="{{progress}}, 100" d="M18 2.0845
-                                            a 15.9155 15.9155 0 0 1 0 31.831
-                                            a 15.9155 15.9155 0 0 1 0 -31.831"
-                                            </path>
-                                        </svg>
-                                    </div>
-                                </div>
-                        {{/hasprogress}}
-                        {{^hasprogress}}
-                            <div class="no-progress">
-                                {{# pix }} i/course, core {{/ pix }}
-                            </div>
-                        {{/hasprogress}}
-                    </div>
-                 </div>
-             </div>
+            {{> format_twocol/progress_bar }}
         </div>
         <div class="section">
 	        <div class="right side">{{{rightcontent}}}</div>
@@ -83,6 +60,12 @@
       </div>
       <div class="col-md-6 col-sm-12">
         <div class="column">
+            {{#completioncounts}}
+                <p>complete: {{complete}}</p>
+                <p>in progress: {{inprogress}}</p>
+                <p>not started: {{notstarted}}</p>
+            {{/completioncounts}}
+        
           <h3>{{detailsheading}}</h3>
 
           {{#sectionheading1}}

@@ -15,9 +15,9 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template course_course/coursecard
+    @template format_twocol/course_topic
 
-    This template renders the a card for the course cards.
+    This template renders the course topics.
 
     Example context (json):
     {
@@ -29,30 +29,7 @@
     <div class="single-section">
         <div class="section-navigation navigationtitle course-img" style='background-image: url("{{{courseimage}}}");'>
             <span class="sr-only">{{#str}}aria:courseimage, core_course{{/str}}</span>
-            <div class="media">
-                <div class="mr-2">
-                     <div class="progress-chart-container m-b-1 m-r-1">
-                        {{#hastotal}}
-                            <div class="progress-doughnut">
-                                <div class="progress-text {{#percent}}has-percent{{/percent}}">{{percent}}&#37;</div>
-                                    <div class="progress-indicator">
-                                        <svg viewbox="0 0 36 36" class="circular-chart">
-                                            <path class="progress-circle" stroke-dasharray="{{percent}} 100" d="M18 2.0845
-                                            a 15.9155 15.9155 0 0 1 0 31.831
-                                            a 15.9155 15.9155 0 0 1 0 -31.831"
-                                            </path>
-                                        </svg>
-                                    </div>
-                                </div>
-                        {{/hastotal}}
-                        {{^hastotal}}
-                            <div class="no-progress">
-                                {{# pix }} i/course, core {{/ pix }}
-                            </div>
-                        {{/hastotal}}
-                    </div>
-                </div>
-            </div>
+            {{> format_twocol/progress_bar }}
             <h6 class="section-navigation-back">
                 <a href="{{{courseurl}}}" title="{{#str}}home_tip, format_twocol{{/str}}">
                     <i class="fa fa-home" aria-hidden="true"></i> {{#str}}home, format_twocol{{/str}}

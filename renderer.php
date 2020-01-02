@@ -74,15 +74,40 @@ class format_twocol_renderer extends format_section_renderer_base {
         return get_string('topicoutline');
     }
 
-    private function get_completion_count(\stdClass $course) : array {
-        $completioninfo = new completion_info($course);
-        $userprogress = $completioninfo->get_progress_all();
-        error_log('here');
-        foreach ($userprogress as $user) {
-            error_log(print_r($user, true));
-        }
+    /**
+     * Get counts of user completion states for the course.
+     *
+     * @param \stdClass $course
+     * @return array $completioncounts
+     */
+    private function get_completion_counts(\stdClass $course) : array {
+        $completioncounts = array(
+            'complete' => 0,
+            'inprogress' => 0,
+            'notstarted' => 0
+        );
 
-        return array();
+        $completioninfo = new completion_info($course);
+        $trackedusers = $completioninfo->get_tracked_users();
+
+        foreach ($trackedusers as $trackeduser) {
+            $params = array(
+                'userid'    => $trackeduser->id,
+                'course'  => $course->id
+            );
+
+            $ccompletion = new completion_completion($params);
+            if ($ccompletion->timecompleted > 0) {
+                $completioncounts['complete'] ++;
+            } else if ($ccompletion->timestarted > 0) {
+                $completioncounts['inprogress'] ++;
+            } else {
+                $completioncounts['notstarted'] ++;
+            }
+
+         }
+
+         return $completioncounts;
     }
 
     /**
@@ -154,6 +179,12 @@ class format_twocol_renderer extends format_section_renderer_base {
             $templatecontext->sectiontext5 = $courseformatoptions['sectiontext5']['text'];
         }
 
+        if (has_capability('format/completionstats:view', context_course::instance($course->id))) {
+            $templatecontext->completioncounts = $this->get_completion_counts($course);
+        } else {
+            $templatecontext->completioncounts = false;
+        }
+
         echo $this->render_from_template('format_twocol/course_summary', $templatecontext);
     }
 
@@ -210,8 +241,8 @@ class format_twocol_renderer extends format_section_renderer_base {
         $templatecontext->sectioncmcontrol = $this->courserenderer->course_section_add_cm_control(
             $course, $displaysection, $displaysection);
         $templatecontext->navselection = $this->section_nav_selection($course, $sections, $displaysection);
-        $templatecontext->hastotal = $sectioncompletion->hastotal;
-        $templatecontext->percent = $sectioncompletion->percent;
+        $templatecontext->hasprogress = $sectioncompletion->hastotal;
+        $templatecontext->progress = $sectioncompletion->percent;
 
         echo $this->render_from_template('format_twocol/course_topic', $templatecontext);
     }

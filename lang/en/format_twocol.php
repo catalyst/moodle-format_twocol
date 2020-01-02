@@ -33,6 +33,7 @@ $string['bell'] = 'Bell';
 $string['calculator'] = 'Calulator';
 $string['calendar'] = 'Calendar';
 $string['clock'] = 'Clock';
+$string['completionstats:view'] = 'View completion summary statistics';
 $string['detailsheading'] = 'Summary';
 $string['detailsheading_help'] = 'Chose the text for the Summary heading';
 $string['detailsheading_label'] = 'Summary heading';

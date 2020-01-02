@@ -53,8 +53,9 @@ class format_twocol_renderer_testcase extends advanced_testcase {
     /**
      * Test getting user completion counts.
      */
-    public function test_get_completion_count() {
-        global $PAGE;
+    public function test_get_completion_counts() {
+        global $PAGE, $CFG;
+        $CFG->enablecompletion = true;
         $renderer = $PAGE->get_renderer('format_twocol');
         $completionauto = array('completion' => COMPLETION_TRACKING_AUTOMATIC);
 
@@ -68,15 +69,46 @@ class format_twocol_renderer_testcase extends advanced_testcase {
         $user1 = $this->getDataGenerator()->create_user();
         $user2 = $this->getDataGenerator()->create_user();
         $user3 = $this->getDataGenerator()->create_user();
+        $user4 = $this->getDataGenerator()->create_user();
 
         $this->getDataGenerator()->enrol_user($user1->id, $course->id);
         $this->getDataGenerator()->enrol_user($user2->id, $course->id);
         $this->getDataGenerator()->enrol_user($user3->id, $course->id);
+        $this->getDataGenerator()->enrol_user($user4->id, $course->id);
 
         // We're testing a private method, so we need to setup reflector magic.
-        $method = new ReflectionMethod('format_twocol_renderer', 'get_completion_count');
+        $method = new ReflectionMethod('format_twocol_renderer', 'get_completion_counts');
         $method->setAccessible(true); // Allow accessing of private method.
         $proxy = $method->invoke($renderer, $course); // Get result of invoked method.
+
+        // No users should have started yet.
+        $this->assertEquals(4, $proxy['notstarted']);
+        $this->assertEquals(0, $proxy['inprogress']);
+        $this->assertEquals(0, $proxy['complete']);
+
+        $compl = new completion_completion(['userid' => $user1->id, 'course' => $course->id]);
+        $compl->mark_inprogress();
+        $compl = new completion_completion(['userid' => $user2->id, 'course' => $course->id]);
+        $compl->mark_complete(1577779980);
+
+        // Should have one user complete and one user in progress.
+        $proxy = $method->invoke($renderer, $course); // Get result of invoked method.
+        $this->assertEquals(2, $proxy['notstarted']);
+        $this->assertEquals(1, $proxy['inprogress']);
+        $this->assertEquals(1, $proxy['complete']);
+
+        $compl = new completion_completion(['userid' => $user3->id, 'course' => $course->id]);
+        $compl->mark_inprogress();
+        $compl = new completion_completion(['userid' => $user4->id, 'course' => $course->id]);
+        $compl->mark_inprogress();
+        $compl = new completion_completion(['userid' => $user1->id, 'course' => $course->id]);
+        $compl->mark_complete(1577779980);
+
+        // Should have two users complete and two user in progress.
+        $proxy = $method->invoke($renderer, $course); // Get result of invoked method.
+        $this->assertEquals(0, $proxy['notstarted']);
+        $this->assertEquals(2, $proxy['inprogress']);
+        $this->assertEquals(2, $proxy['complete']);
 
     }
 }

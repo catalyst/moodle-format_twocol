@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and other meta-data are defined here.
+ * Capabilities
  *
  * @package     format_twocol
  * @copyright   2019 Matt Porritt <mattp@catalyst-au.net>
@@ -24,11 +24,17 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'format_twocol';
-$plugin->release = '2020010200';
-$plugin->version = 2020010200;
-$plugin->requires = 2019052000;
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = array(
-    'format_topics'  => 2019052000,
+$capabilities = array(
+
+    'format/completionstats:view' => array(
+        'riskbitmask' => RISK_PERSONAL,
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'student'        => CAP_PREVENT,
+            'teacher'        => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager'        => CAP_ALLOW
+        ),
+    )
 );
