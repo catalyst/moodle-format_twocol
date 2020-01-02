@@ -45,9 +45,6 @@ class format_twocol_renderer_testcase extends advanced_testcase {
 
     public function setUp() {
         $this->resetAfterTest();
-
-        global $CFG;
-        $CFG->enablecompletion = COMPLETION_ENABLED;
      }
 
     /**
@@ -61,10 +58,7 @@ class format_twocol_renderer_testcase extends advanced_testcase {
 
         // Set up the course.
         $course = $this->getDataGenerator()->create_course(array('enablecompletion' => true));
-
-//         $activity = $this->getDataGenerator()->get_plugin_generator('mod_page');
-//         $activity->create_instance(array('course'=>$course->id, 'completion' => COMPLETION_TRACKING_AUTOMATIC));
-        $page = $this->getDataGenerator()->create_module('page', array('course' => $course->id), $completionauto);
+        $this->getDataGenerator()->create_module('page', array('course' => $course->id), $completionauto);
 
         $user1 = $this->getDataGenerator()->create_user();
         $user2 = $this->getDataGenerator()->create_user();

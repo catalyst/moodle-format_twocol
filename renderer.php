@@ -105,9 +105,9 @@ class format_twocol_renderer extends format_section_renderer_base {
                 $completioncounts['notstarted'] ++;
             }
 
-         }
+        }
 
-         return $completioncounts;
+        return $completioncounts;
     }
 
     /**
