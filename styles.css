@@ -44,7 +44,9 @@
     height: 100%;
     padding: 20px 20px 10px;
 }
-
+.twocol > div > .col-md-6 + .col-md-6 {
+    margin-top: 1rem;
+}
 .twocol .course-img {
     position: relative;
     border: none;
@@ -204,4 +206,68 @@
 }
 #page-course-view-twocol #region-main .course-content .single-section .section-navigation-back a:hover {
     text-decoration: none;
+}
+
+#page-course-view-twocol .completion-stats {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -20px -20px 2rem;
+    padding: 1rem 20px;
+    background-color: #efefef;
+}
+#page-course-view-twocol .completion-stats .completion-stats-item {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+#page-course-view-twocol .completion-stats .completion-stats-item .completion-stats-title {
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 90%;
+    line-height: 1rem;
+    width: 165px;
+}
+#page-course-view-twocol .completion-stats .completion-stats-item .completion-stats-number {
+    font-size: 300%;
+    font-weight: 700;
+    padding-right: 0.5rem;
+}
+@media (min-width: 768px) {
+    .twocol > div > .col-md-6 + .col-md-6 {
+        margin-top: 0;
+    }
+}
+@media (min-width: 992px) {
+    #page-course-view-twocol .completion-stats {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        margin: -20px -20px 2rem;
+        padding: 20px;
+        background-color: #efefef;
+    }
+    #page-course-view-twocol .completion-stats .completion-stats-item {
+        width: 30%;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    #page-course-view-twocol .completion-stats .completion-stats-item .completion-stats-title {
+        width: 90px;
+        text-transform: uppercase;
+        font-weight: 500;
+        font-size: 90%;
+        line-height: 1rem;
+    }
+    #page-course-view-twocol .completion-stats .completion-stats-item .completion-stats-number {
+        font-size: 300%;
+        font-weight: 700;
+        padding-right: 0.5rem;
+        width: auto;
+    }
 }
