@@ -39,13 +39,11 @@ require_once($CFG->dirroot. '/course/format/twocol/renderer.php');
 class format_twocol_renderer_testcase extends advanced_testcase {
 
     /**
-     * @var array Fixtures used in this test.
+     * Setup function.
      */
-    public $fixture;
-
     public function setUp() {
         $this->resetAfterTest();
-     }
+    }
 
     /**
      * Test getting user completion counts.
