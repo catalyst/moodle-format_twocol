@@ -105,3 +105,7 @@ $string['showfromothers'] = 'Show topic';
 $string['speedometer'] = 'Speedometer';
 $string['star'] = 'Star';
 $string['tick'] = 'Tick';
+$string['userscomplete'] = 'Students complete';
+$string['usersinprogress'] = 'Students in progress';
+$string['usersnotstarted'] = 'Students not started';
+

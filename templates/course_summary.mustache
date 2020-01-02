@@ -61,11 +61,20 @@
       <div class="col-md-6 col-sm-12">
         <div class="column">
             {{#completioncounts}}
-                <p>complete: {{complete}}</p>
-                <p>in progress: {{inprogress}}</p>
-                <p>not started: {{notstarted}}</p>
+                <div class="completion-stats">
+                    <div class="completion-stats-number">{{complete}}</div>
+                    <div class="completion-stats-title">{{#str}}userscomplete, format_twocol{{/str}}</div>
+                </div>
+                <div class="completion-stats">
+                    <div class="completion-stats-number">{{inprogress}}</div>
+                    <div class="completion-stats-title">{{#str}}usersinprogress, format_twocol{{/str}}</div>
+                </div>
+                 <div class="completion-stats">
+                    <div class="completion-stats-number">{{notstarted}}</div>
+                    <div class="completion-stats-title">{{#str}}usersnotstarted, format_twocol{{/str}}</div>
+                </div>
             {{/completioncounts}}
-        
+
           <h3>{{detailsheading}}</h3>
 
           {{#sectionheading1}}
