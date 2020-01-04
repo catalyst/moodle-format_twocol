@@ -182,6 +182,7 @@ class format_twocol_renderer extends format_section_renderer_base {
 
         if (has_capability('format/completionstats:view', context_course::instance($course->id))) {
             $templatecontext->completioncounts = $this->get_completion_counts($course);
+            $templatecontext->completionurl = new moodle_url('/report/completion/index.php', array('course' => $course->id));
         } else {
             $templatecontext->completioncounts = false;
         }

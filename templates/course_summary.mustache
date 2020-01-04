@@ -64,15 +64,21 @@
                 <div class="completion-stats">
                     <div class="completion-stats-item">
                         <div class="completion-stats-number text-primary">{{complete}}</div>
-                        <div class="completion-stats-title">{{#str}}userscomplete, format_twocol{{/str}}</div>
+                        <div class="completion-stats-title">
+                            <a href="{{{completionurl}}}">{{#str}}userscomplete, format_twocol{{/str}}</a>
+                        </div>
                     </div>
                     <div class="completion-stats-item">
                         <div class="completion-stats-number text-primary">{{inprogress}}</div>
-                        <div class="completion-stats-title">{{#str}}usersinprogress, format_twocol{{/str}}</div>
+                        <div class="completion-stats-title">
+                            <a href="{{{completionurl}}}">{{#str}}usersinprogress, format_twocol{{/str}}</a>
+                        </div>
                     </div>
                     <div class="completion-stats-item">
                         <div class="completion-stats-number text-primary">{{notstarted}}</div>
-                        <div class="completion-stats-title">{{#str}}usersnotstarted, format_twocol{{/str}}</div>
+                        <div class="completion-stats-title">
+                            <a href="{{{completionurl}}}">{{#str}}usersnotstarted, format_twocol{{/str}}</a>
+                        </div>
                     </div>
                 </div>
             {{/completioncounts}}

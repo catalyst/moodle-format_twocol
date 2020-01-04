@@ -262,7 +262,12 @@
     padding: 1rem 20px;
     background-color: #efefef;
 }
-#page-course-view-twocol .completion-stats .completion-stats-item {
+
+#page-course-view-twocol .completion-stats a {
+    color: inherit;
+}
+
+#page-course-view-twocol .completion-stats a .completion-stats-item {
     width: 100%;
     display: flex;
     flex-wrap: nowrap;
@@ -277,11 +282,13 @@
     line-height: 1rem;
     width: 165px;
 }
+
 #page-course-view-twocol .completion-stats .completion-stats-item .completion-stats-number {
     font-size: 300%;
     font-weight: 700;
     padding-right: 0.5rem;
 }
+
 @media (min-width: 768px) {
     .twocol > div > .col-md-6 + .col-md-6 {
         margin-top: 0;
