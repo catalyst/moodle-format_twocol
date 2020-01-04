@@ -130,6 +130,7 @@ class format_twocol_renderer extends format_section_renderer_base {
         $templatecontext->mods = $this->courserenderer->course_section_cm_list($course, $thissection, $displaysection);
         $templatecontext->modcontrol = $this->courserenderer->course_section_add_cm_control($course, 0, $displaysection);
         $templatecontext->courseimage = $OUTPUT->get_generated_image_for_id($course->id);
+        $templatecontext->progresstitle = get_string('progresstitle:course', 'format_twocol');
 
         $coursecompletion = \core_completion\progress::get_course_progress_percentage($course);
         if (!is_null($coursecompletion)) {
@@ -243,6 +244,7 @@ class format_twocol_renderer extends format_section_renderer_base {
         $templatecontext->navselection = $this->section_nav_selection($course, $sections, $displaysection);
         $templatecontext->hasprogress = $sectioncompletion->hastotal;
         $templatecontext->progress = $sectioncompletion->percent;
+        $templatecontext->progresstitle = get_string('progresstitle:section', 'format_twocol');
 
         echo $this->render_from_template('format_twocol/course_topic', $templatecontext);
     }
@@ -438,6 +440,7 @@ class format_twocol_renderer extends format_section_renderer_base {
                     $params = array('' => 'disabled');
                 }
                 $previouslink = html_writer::tag('span', '', array('class' => 'fa fa-arrow-left fa-fw'));
+                $previouslink .= get_string('previous', 'format_twocol') . ' ';
                 $previouslink .= get_section_name($course, $sections[$back]);
                 $links['previous'] = html_writer::link(course_get_url($course, $back), $previouslink, $params);
             }
@@ -453,7 +456,8 @@ class format_twocol_renderer extends format_section_renderer_base {
                 if (!$sections[$forward]->visible) {
                     $params = array('' => 'disabled');
                 }
-                $nextlink = get_section_name($course, $sections[$forward]);
+                $nextlink = get_string('next', 'format_twocol') . ' ';
+                $nextlink .= get_section_name($course, $sections[$forward]);
                 $nextlink .= html_writer::tag('span', '', array('class' => 'fa fa-arrow-right fa-fw'));
                 $links['next'] = html_writer::link(course_get_url($course, $forward), $nextlink, $params);
             }

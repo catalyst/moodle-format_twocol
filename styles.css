@@ -19,7 +19,7 @@
 }
 .course-content div.twocol .column h3 + h5,
 .course-content div.twocol .column p + h3 {
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .jsenabled .course-content ul.twocol li.section .left,
@@ -93,6 +93,16 @@
     font-size: 45px;
 }
 
+.twocol .course-img .media .progress-title {
+    margin-top: 35px;
+    margin-bottom: auto;
+    margin-right: .5em;
+    padding: .2rem 1rem;
+    font-weight: 600;
+    border-radius: .5rem;
+    background-color: rgba(255,255,255,.75);
+}
+
 .twocol .course-img .media .progress-chart-container .progress-doughnut {
     position: relative;
     height: 100px;
@@ -161,26 +171,63 @@
 .twocol .topic-jump .topic-name-completion {
     font-size: 80%;
     display: inline-block;
-    background-color: rgba(255,255,255,0.25);
+    background-color: rgba(255,255,255,0.75);
     padding: 0.2rem 1rem;
     border-radius: 0.5rem;
     width: 60px;
+    color: #000000;
 }
+#page-course-view-twocol .course-content .single-section .section-navigation.mdl-top .mdl-right .btn-outline-primary,
+#page-course-view-twocol .course-content .single-section .section-navigation.mdl-bottom .mdl-right .btn-outline-primary,
+#page-course-view-twocol .course-content .single-section .section-navigation.mdl-top .mdl-left .btn-outline-primary,
+#page-course-view-twocol .course-content .single-section .section-navigation.mdl-bottom .mdl-left .btn-outline-primary {
+    font-weight: 600;
+}
+
 #page-course-view-twocol .course-content .single-section .section-navigation.mdl-top,
 #page-course-view-twocol .course-content .single-section .section-navigation.mdl-bottom {
-    padding: 0.5rem 0;
+    padding: 1rem 0;
+    overflow: auto;
+    background-color: #efefef;
 }
+
+#page-course-view-twocol .course-content .single-section .section-navigation.mdl-top {
+    border-bottom: 1px solid #cccccc;
+}
+
+#page-course-view-twocol .course-content .single-section .section-navigation.mdl-top .mdl-right {
+    margin-top: 1em;
+    margin-right: 1em;
+}
+
+#page-course-view-twocol .course-content .single-section .section-navigation.mdl-top .mdl-left {
+    margin-top: 1em;
+    margin-left: 1em;
+}
+
+#page-course-view-twocol .course-content .single-section .section-navigation.mdl-bottom {
+    border-top: 1px solid #cccccc;
+}
+
+#page-course-view-twocol .course-content .single-section .section-navigation.mdl-bottom .mdl-right {
+    margin-right: 1em;
+}
+
+#page-course-view-twocol .course-content .single-section .section-navigation.mdl-bottom .mdl-left {
+    margin-left: 1em;
+}
+
 #page-course-view-twocol .course-content .single-section .section-navigation.navigationtitle {
-    margin-bottom: 1rem;
     padding: 1rem 1rem;
 }
+
 #page-course-view-twocol #region-main .course-content .single-section h2.sectionname {
     text-align: left;
     display: block;
     float: left;
     clear: left;
     padding: 0.5rem 1rem;
-    background-color: rgba(255,255,255,0.4);
+    background-color: rgba(255,255,255,0.75);
     border-radius: 0 5px 5px 0;
     margin-left: -1rem;
     margin-right: 130px;
@@ -189,18 +236,18 @@
     display: block;
     float: left;
     padding: 0.2rem 1rem;
-    background-color: rgba(255,255,255,0.4);
+    background-color: rgba(255,255,255,0.5);
     border-radius: 0 5px 5px 0;
     margin-left: -1rem;
     margin-right: 130px;
-    font-size: 90%;
+    font-size: 130%;
     transition: all 0.2s;
 }
 #page-course-view-twocol #region-main .course-content .single-section .section-navigation-back:hover,
 #page-course-view-twocol #region-main .course-content .single-section .section-navigation-back:focus {
     background-color: #fff;
     padding-left: 1.2rem;
-}   
+}
 #page-course-view-twocol #region-main .course-content .single-section .section-navigation-back a {
     color: initial;
 }
@@ -211,7 +258,7 @@
 #page-course-view-twocol .completion-stats {
     display: flex;
     flex-wrap: wrap;
-    margin: -20px -20px 2rem;
+    margin: -20px -20px 0.5rem;
     padding: 1rem 20px;
     background-color: #efefef;
 }
@@ -245,7 +292,7 @@
         display: flex;
         flex-wrap: nowrap;
         justify-content: space-between;
-        margin: -20px -20px 2rem;
+        margin: -20px -20px 0.5rem;
         padding: 20px;
         background-color: #efefef;
     }
@@ -256,7 +303,7 @@
         align-items: center;
         justify-content: center;
     }
-    
+
     #page-course-view-twocol .completion-stats .completion-stats-item .completion-stats-title {
         width: 90px;
         text-transform: uppercase;

@@ -26,8 +26,13 @@
 }}
 
             <div class="media">
+                {{#hasprogress}}
+	                <div class="progress-title">
+	                    {{progresstitle}}
+	                </div>
+	            {{/hasprogress}}
                 <div class="mr-2">
-                     <div class="progress-chart-container m-b-1 m-r-1">
+                    <div class="progress-chart-container m-b-1 m-r-1">
                         {{#hasprogress}}
                             <div class="progress-doughnut">
                                 <div class="progress-text {{#progress}}has-percent{{/progress}}">{{progress}}&#37;</div>
