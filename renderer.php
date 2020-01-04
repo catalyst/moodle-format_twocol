@@ -111,13 +111,29 @@ class format_twocol_renderer extends format_section_renderer_base {
     }
 
     /**
+     * Get the course image or course patten for the given course.
+     *
+     * @param \stdClass $course
+     * @return string $courseimage
+     */
+    private function get_course_image_or_pattern(\stdClass $course) : string {
+        global $OUTPUT;
+
+        $courseimage = \core_course\external\course_summary_exporter::get_course_image($course);
+
+        if (!$courseimage) {
+            $courseimage = $OUTPUT->get_generated_image_for_id($course->id);
+        }
+
+        return $courseimage;
+    }
+
+    /**
      * Prints the course summary.
      *
      * @param \stdClass $course
      */
     public function print_course_summary($course) : void {
-        global $OUTPUT;
-
         $modinfo = get_fast_modinfo($course);
         $thissection = $modinfo->get_section_info(0);
         $displaysection = 0;
@@ -129,7 +145,7 @@ class format_twocol_renderer extends format_section_renderer_base {
         $templatecontext->summary = $this->format_summary_text($thissection);
         $templatecontext->mods = $this->courserenderer->course_section_cm_list($course, $thissection, $displaysection);
         $templatecontext->modcontrol = $this->courserenderer->course_section_add_cm_control($course, 0, $displaysection);
-        $templatecontext->courseimage = $OUTPUT->get_generated_image_for_id($course->id);
+        $templatecontext->courseimage = $this->get_course_image_or_pattern($course);
         $templatecontext->progresstitle = get_string('progresstitle:course', 'format_twocol');
 
         $coursecompletion = \core_completion\progress::get_course_progress_percentage($course);
@@ -201,8 +217,6 @@ class format_twocol_renderer extends format_section_renderer_base {
      * @param int $displaysection The section number in the course which is being displayed
      */
     public function print_single_section_page($course, $sections, $mods, $modnames, $modnamesused, $displaysection) {
-        global $OUTPUT;
-
         $modinfo = get_fast_modinfo($course);
         $course = course_get_format($course)->get_course();
         $completioninfo = new completion_info($course);
@@ -230,7 +244,7 @@ class format_twocol_renderer extends format_section_renderer_base {
         }
 
         $templatecontext = new \stdClass();
-        $templatecontext->courseimage = $OUTPUT->get_generated_image_for_id($course->id);
+        $templatecontext->courseimage = $this->get_course_image_or_pattern($course);
         $templatecontext->courseurl = new moodle_url('/course/view.php', array('id' => $course->id));
         $templatecontext->clipboard = $this->course_activity_clipboard($course, $displaysection); // Copy activity clipboard.
         $templatecontext->navlinkprevious = $sectionnavlinks['previous'];

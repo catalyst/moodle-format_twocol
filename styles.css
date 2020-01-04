@@ -52,6 +52,8 @@
     border: none;
     height: 150px;
     width: 100%;
+    background-position: center;
+    background-size: cover;
 }
 
 .twocol .course-img .media {
@@ -100,7 +102,7 @@
     padding: .2rem 1rem;
     font-weight: 600;
     border-radius: .5rem;
-    background-color: rgba(255,255,255,.75);
+    background-color: rgba(255,255,255,.9);
 }
 
 .twocol .course-img .media .progress-chart-container .progress-doughnut {
@@ -227,7 +229,7 @@
     float: left;
     clear: left;
     padding: 0.5rem 1rem;
-    background-color: rgba(255,255,255,0.75);
+    background-color: rgba(255,255,255,.9);
     border-radius: 0 5px 5px 0;
     margin-left: -1rem;
     margin-right: 130px;
@@ -236,7 +238,7 @@
     display: block;
     float: left;
     padding: 0.2rem 1rem;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255,255,255,1.9);
     border-radius: 0 5px 5px 0;
     margin-left: -1rem;
     margin-right: 130px;
