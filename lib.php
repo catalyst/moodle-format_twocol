@@ -235,10 +235,6 @@ class format_twocol extends format_base {
                     'default' => get_string('detailsheading', 'format_twocol'),
                     'type' => PARAM_ALPHANUMEXT,
                 ),
-                'resourcesheading' => array(
-                    'default' => get_string('resourcesheading', 'format_twocol'),
-                    'type' => PARAM_ALPHANUMEXT,
-                ),
                 'sectionheading1' => array(
                     'default' => '',
                     'type' => PARAM_ALPHANUMEXT,
@@ -304,6 +300,10 @@ class format_twocol extends format_base {
                     'default' => '',
                     'type' => PARAM_ALPHAEXT,
                 ),
+                'resourcesheading' => array(
+                    'default' => get_string('resourcesheading', 'format_twocol'),
+                    'type' => PARAM_ALPHANUMEXT,
+                ),
             );
         }
         if ($foreditform && !isset($courseformatoptions['coursedisplay']['label'])) {
@@ -324,12 +324,6 @@ class format_twocol extends format_base {
                     'label' => get_string('detailsheading_label', 'format_twocol'),
                     'element_type' => 'text',
                     'help' => 'detailsheading',
-                    'help_component' => 'format_twocol',
-                ),
-                'resourcesheading' => array(
-                    'label' => get_string('resourcesheading_label', 'format_twocol'),
-                    'element_type' => 'text',
-                    'help' => 'resourcesheading',
                     'help_component' => 'format_twocol',
                 ),
                 'sectionheading1' => array(
@@ -446,6 +440,12 @@ class format_twocol extends format_base {
                     'help' => 'sectionicon5',
                     'help_component' => 'format_twocol',
                     'element_attributes' => array($icons),
+                ),
+                'resourcesheading' => array(
+                    'label' => get_string('resourcesheading_label', 'format_twocol'),
+                    'element_type' => 'text',
+                    'help' => 'resourcesheading',
+                    'help_component' => 'format_twocol',
                 ),
             );
 
