@@ -447,7 +447,7 @@ class format_twocol_renderer extends format_section_renderer_base {
 
         $links = array('previous' => '', 'next' => '');
         $back = $sectionno - 1;
-        while ($back > 0 and empty($links['previous'])) {
+        while ($back >= 0 and empty($links['previous'])) {
             if ($canviewhidden || $sections[$back]->uservisible) {
                 $params = array();
                 $params = array('class' => 'btn btn-outline-primary btn-small', 'role' => 'button');
