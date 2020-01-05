@@ -231,6 +231,10 @@ class format_twocol extends format_base {
                     'default' => $courseconfig->hiddensections,
                     'type' => PARAM_INT,
                 ),
+                'completionstatus' => array(
+                    'default' => 1,
+                    'type' => PARAM_INT,
+                ),
                 'detailsheading' => array(
                     'default' => get_string('detailsheading', 'format_twocol'),
                     'type' => PARAM_ALPHANUMEXT,
@@ -319,6 +323,13 @@ class format_twocol extends format_base {
                             1 => new lang_string('hiddensectionsinvisible')
                         )
                     ),
+                ),
+                'completionstatus' => array(
+                    'label' => get_string('completionstatus', 'format_twocol'),
+                    'element_type' => 'advcheckbox',
+                    'help' => 'completionstatus',
+                    'help_component' => 'format_twocol',
+                    'element_attributes' => array( get_string('completionstatus_label', 'format_twocol'))
                 ),
                 'detailsheading' => array(
                     'label' => get_string('detailsheading_label', 'format_twocol'),

@@ -196,7 +196,8 @@ class format_twocol_renderer extends format_section_renderer_base {
             $templatecontext->sectiontext5 = $courseformatoptions['sectiontext5']['text'];
         }
 
-        if (has_capability('format/completionstats:view', context_course::instance($course->id))) {
+        if (has_capability('format/completionstats:view', context_course::instance($course->id))
+            && !empty($courseformatoptions['completionstatus'])) {
             $templatecontext->completioncounts = $this->get_completion_counts($course);
             $templatecontext->completionurl = new moodle_url('/report/completion/index.php', array('course' => $course->id));
         } else {
@@ -487,7 +488,7 @@ class format_twocol_renderer extends format_section_renderer_base {
      *
      * @param stdClass $course The course entry from DB
      * @param array $sections The course_sections entries from the DB
-     * @param $displaysection the current displayed section number.
+     * @param int $displaysection The current displayed section number.
      *
      * @return string HTML to output.
      */
