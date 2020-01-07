@@ -14,29 +14,40 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Privacy Subsystem implementation for format_twocol.
- *
- * @package     format_twocol
- * @copyright   2019 Matt Porritt <mattp@catalyst-au.net>
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-namespace format_twocol\privacy;
-defined('MOODLE_INTERNAL') || die();
-/**
- * Privacy Subsystem for format_twocol implementing null_provider.
+ * A more permissive class of \moodle_url.
  *
  * @package     format_twocol
  * @copyright   2020 Matt Porritt <mattp@catalyst-au.net>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class provider implements \core_privacy\local\metadata\null_provider {
+namespace format_twocol;
+
+defined('MOODLE_INTERNAL') || die();
+/**
+ * A more permissive class of \moodle_url.
+ *
+ * @package     format_twocol
+ * @copyright   2020 Matt Porritt <mattp@catalyst-au.net>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class course_url extends \moodle_url  {
+
     /**
-     * Get the language string identifier with the component's language
-     * file to explain why this plugin stores no data.
+     * Returns params for url.
      *
-     * @return  string
+     * @return array
      */
-    public static function get_reason() : string {
-        return 'privacy:metadata';
+    public function get_params() : array {
+        return $this->params;
     }
+
+    /**
+     * Returns anchor for URL.
+     *
+     * @return string|null
+     */
+    public function get_anchor(){
+        return $this->anchor;
+    }
+
 }

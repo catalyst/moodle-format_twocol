@@ -751,3 +751,54 @@ function format_twocol_inplace_editable($itemtype, $itemid, $newvalue) {
         return course_get_format($section->course)->inplace_editable_update_section_name($section, $itemtype, $newvalue);
     }
 }
+
+
+function format_twocol_before_footer() {
+    global $PAGE;
+
+    $contextlevel = $PAGE->context->contextlevel;
+    $contextid = $PAGE->context->id;
+    $url = $PAGE->context->get_url();
+    $rawurl = $PAGE->url;
+    $courseurl = '';
+    $courseid = $PAGE->context->get_course_context()->instanceid;
+
+    // If at the course level context, this could be a course or a section.
+    // In this case just save the URL.
+    // Make sure we only save view pages not edit or others.
+    if ($contextlevel == CONTEXT_COURSE) {
+        $courseurl = new \format_twocol\course_url($rawurl);
+        $path = $courseurl->get_path();
+        if (preg_match('/view\.php/', $path)) {
+            $preferencename = 'format_twocol_resume_contextid_' . $contextid;
+            $preference = array(
+                'path' => $path,
+                'params' => $courseurl->get_params(),
+                'anchor' => $courseurl->get_anchor(),
+            );
+            // We have what we need lets store it.
+            set_user_preference($preferencename, json_encode($preference));
+        }
+
+    }
+
+    // If in module context, this could be lots of different things.
+    // To be safe lets only save the URL if it is a view and only grab the basic view ID.
+    if ($contextlevel == CONTEXT_MODULE) {
+        $courseurl = new \format_twocol\course_url($url);
+        $path = $courseurl->get_path();
+        if (preg_match('/view\.php/', $path)) {
+            $preferencename = 'format_twocol_resume_contextid_' . $contextid;
+            $preference = array(
+                'path' => $path,
+                'params' => $courseurl->get_params(),
+                'anchor' => $courseurl->get_anchor(),
+            );
+            // We have what we need lets store it.
+            set_user_preference($preferencename, json_encode($preference));
+        }
+    }
+
+
+}
+
