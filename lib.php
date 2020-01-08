@@ -757,48 +757,30 @@ function format_twocol_before_footer() {
     global $PAGE;
 
     $contextlevel = $PAGE->context->contextlevel;
-    $contextid = $PAGE->context->id;
+    if ($contextlevel != CONTEXT_COURSE || $contextlevel != CONTEXT_MODULE) {
+        return;  // Exit early if we are not in a course or module context.
+    }
+
+    $courseid = $PAGE->context->get_course_context()->instanceid;
     $url = $PAGE->context->get_url();
     $rawurl = $PAGE->url;
-    $courseurl = '';
-    $courseid = $PAGE->context->get_course_context()->instanceid;
 
-    // If at the course level context, this could be a course or a section.
-    // In this case just save the URL.
-    // Make sure we only save view pages not edit or others.
     if ($contextlevel == CONTEXT_COURSE) {
-        $courseurl = new \format_twocol\course_url($rawurl);
-        $path = $courseurl->get_path();
-        if (preg_match('/view\.php/', $path)) {
-            $preferencename = 'format_twocol_resume_contextid_' . $contextid;
-            $preference = array(
-                'path' => $path,
-                'params' => $courseurl->get_params(),
-                'anchor' => $courseurl->get_anchor(),
-            );
-            // We have what we need lets store it.
-            set_user_preference($preferencename, json_encode($preference));
-        }
-
+        $targeturl = new \format_twocol\course_url($rawurl);
+    } else if ($contextlevel == CONTEXT_MODULE) {
+        $targeturl = new \format_twocol\course_url($url);
     }
 
-    // If in module context, this could be lots of different things.
-    // To be safe lets only save the URL if it is a view and only grab the basic view ID.
-    if ($contextlevel == CONTEXT_MODULE) {
-        $courseurl = new \format_twocol\course_url($url);
-        $path = $courseurl->get_path();
-        if (preg_match('/view\.php/', $path)) {
-            $preferencename = 'format_twocol_resume_contextid_' . $contextid;
-            $preference = array(
-                'path' => $path,
-                'params' => $courseurl->get_params(),
-                'anchor' => $courseurl->get_anchor(),
-            );
-            // We have what we need lets store it.
-            set_user_preference($preferencename, json_encode($preference));
-        }
+    $path = $targeturl->get_path();
+    if (preg_match('/view\.php/', $path)) {
+        $preferencename = 'format_twocol_resume_courseid_' . $courseid;
+        $preference = array(
+            'path' => $path,
+            'params' => $targeturl->get_params(),
+            'anchor' => $targeturl->get_anchor(),
+        );
+        // We have what we need lets store it.
+        set_user_preference($preferencename, json_encode($preference));
     }
-
-
 }
 
