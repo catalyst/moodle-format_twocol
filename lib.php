@@ -731,6 +731,68 @@ class format_twocol extends format_base {
         // Return everything (nothing to hide).
         return $this->get_format_options();
     }
+
+    /**
+     * Allows course format to execute code on moodle_page::set_course()
+     *
+     * This function is executed before the output starts.
+     *
+     * If everything is configured correctly, user is redirected from the
+     * default course view page to the activity view page.
+     *
+     * "Section 1" is the administrative page to manage orphaned activities
+     *
+     * If user is on course view page and there is no module added to the course
+     * and the user has 'moodle/course:manageactivities' capability, redirect to create module
+     * form.
+     *
+     * @param moodle_page $page instance of page calling set_course
+     */
+    public function page_set_course(moodle_page $page) : void {
+        global $PAGE;
+
+        if ($page->has_set_url()) {
+            $url = new \format_twocol\course_url($page->url);
+            $params = $url->get_params();
+            $path = $url->get_path();
+
+            // We only want to redirect if we are requesting the main course page.
+            // If we have linked to a section don't redirect.
+            if (!array_key_exists('section', $params) && preg_match('/course\/view\.php/', $path)) {
+                $courseid = $page->context->get_course_context()->instanceid;
+                $preferencename = 'format_twocol_resume_courseid_' . $courseid;
+                $userpreference = json_decode(get_user_preferences($preferencename), true);
+
+                // If user preference is empty exit early.
+                if (empty($userpreference)) {
+                    return;
+                }
+
+                // Check the context ID in the user preference is not a child of this context
+                $childrenids = $page->context->get_child_contexts();
+                error_log(print_r($childrenids, true));
+//                 $preferencecontext = context::instance_by_id($userpreference['contextid']);
+//                 $parentids = $preferencecontext->get_parent_context_ids();
+
+
+                $redirecturl = new moodle_url($userpreference['path'], $userpreference['params'], $userpreference['anchor']);
+
+                // Only redirect if preference URL is not base course URL.
+                $courseurl = new moodle_url('/course/view.php', array('id' => $courseid));
+                if ($redirecturl->compare($courseurl)) {
+                    return;
+                }
+
+                error_log(print_r($userpreference, true));
+
+                //check if context still exists before we try to redirect to it.
+
+            }
+
+        }
+
+    }
+
 }
 
 /**
@@ -752,16 +814,23 @@ function format_twocol_inplace_editable($itemtype, $itemid, $newvalue) {
     }
 }
 
-
+/**
+ * Store information about the course or module the user is viewing.
+ */
 function format_twocol_before_footer() {
     global $PAGE;
-
     $contextlevel = $PAGE->context->contextlevel;
-    if ($contextlevel != CONTEXT_COURSE || $contextlevel != CONTEXT_MODULE) {
+    $contextid = $PAGE->context->id;
+    if (($contextlevel != CONTEXT_COURSE) && ($contextlevel != CONTEXT_MODULE)) {
         return;  // Exit early if we are not in a course or module context.
     }
 
+    if ($PAGE->user_is_editing()) {
+        return; // Return early if user is editing.
+    }
+
     $courseid = $PAGE->context->get_course_context()->instanceid;
+    $preferencename = 'format_twocol_resume_courseid_' . $courseid;
     $url = $PAGE->context->get_url();
     $rawurl = $PAGE->url;
 
@@ -771,13 +840,21 @@ function format_twocol_before_footer() {
         $targeturl = new \format_twocol\course_url($url);
     }
 
+//     // Only continue if current URL is not base course URL.
+//     $courseurl = new moodle_url('/course/view.php', array('id' => $courseid));
+//     if ($targeturl->compare($courseurl)) {
+//         set_user_preference($preferencename, null);
+//         return;
+//     }
+
     $path = $targeturl->get_path();
     if (preg_match('/view\.php/', $path)) {
-        $preferencename = 'format_twocol_resume_courseid_' . $courseid;
+
         $preference = array(
             'path' => $path,
             'params' => $targeturl->get_params(),
             'anchor' => $targeturl->get_anchor(),
+            'contextid' => $contextid
         );
         // We have what we need lets store it.
         set_user_preference($preferencename, json_encode($preference));
