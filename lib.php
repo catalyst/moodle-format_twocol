@@ -241,11 +241,11 @@ class format_twocol extends format_base {
                 ),
                 'detailsheading' => array(
                     'default' => get_string('detailsheading', 'format_twocol'),
-                    'type' => PARAM_ALPHANUMEXT,
+                    'type' => PARAM_TEXT,
                 ),
                 'sectionheading1' => array(
                     'default' => '',
-                    'type' => PARAM_ALPHANUMEXT,
+                    'type' => PARAM_TEXT,
                 ),
                 'sectiontext1' => array(
                     'default' => '',
@@ -258,7 +258,7 @@ class format_twocol extends format_base {
                 ),
                 'sectionheading2' => array(
                     'default' => '',
-                    'type' => PARAM_ALPHANUMEXT,
+                    'type' => PARAM_TEXT,
                 ),
                 'sectiontext2' => array(
                     'default' => '',
@@ -271,7 +271,7 @@ class format_twocol extends format_base {
                 ),
                 'sectionheading3' => array(
                     'default' => '',
-                    'type' => PARAM_ALPHANUMEXT,
+                    'type' => PARAM_TEXT,
                 ),
                 'sectiontext3' => array(
                     'default' => '',
@@ -284,7 +284,7 @@ class format_twocol extends format_base {
                 ),
                 'sectionheading4' => array(
                     'default' => '',
-                    'type' => PARAM_ALPHANUMEXT,
+                    'type' => PARAM_TEXT,
                 ),
                 'sectiontext4' => array(
                     'default' => '',
@@ -297,7 +297,7 @@ class format_twocol extends format_base {
                 ),
                 'sectionheading5' => array(
                     'default' => '',
-                    'type' => PARAM_ALPHANUMEXT,
+                    'type' => PARAM_TEXT,
                 ),
                 'sectiontext5' => array(
                     'default' => '',
@@ -310,7 +310,7 @@ class format_twocol extends format_base {
                 ),
                 'resourcesheading' => array(
                     'default' => get_string('resourcesheading', 'format_twocol'),
-                    'type' => PARAM_ALPHANUMEXT,
+                    'type' => PARAM_TEXT,
                 ),
             );
         }
