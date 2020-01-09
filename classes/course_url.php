@@ -46,7 +46,7 @@ class course_url extends \moodle_url  {
      *
      * @return string|null
      */
-    public function get_anchor(){
+    public function get_anchor() {
         return $this->anchor;
     }
 
