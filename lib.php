@@ -235,6 +235,10 @@ class format_twocol extends format_base {
                     'default' => 1,
                     'type' => PARAM_INT,
                 ),
+                'completiontracking' => array(
+                    'default' => 1,
+                    'type' => PARAM_INT,
+                ),
                 'detailsheading' => array(
                     'default' => get_string('detailsheading', 'format_twocol'),
                     'type' => PARAM_ALPHANUMEXT,
@@ -330,6 +334,13 @@ class format_twocol extends format_base {
                     'help' => 'completionstatus',
                     'help_component' => 'format_twocol',
                     'element_attributes' => array( get_string('completionstatus_label', 'format_twocol'))
+                ),
+                'completiontracking' => array(
+                    'label' => get_string('completiontracking', 'format_twocol'),
+                    'element_type' => 'advcheckbox',
+                    'help' => 'completiontracking',
+                    'help_component' => 'format_twocol',
+                    'element_attributes' => array( get_string('completiontracking_label', 'format_twocol'))
                 ),
                 'detailsheading' => array(
                     'label' => get_string('detailsheading_label', 'format_twocol'),
@@ -738,18 +749,11 @@ class format_twocol extends format_base {
      * This function is executed before the output starts.
      *
      * If everything is configured correctly, user is redirected from the
-     * default course view page to the activity view page.
+     * default course view page the last activity or section they viewed.
      *
-     * "Section 1" is the administrative page to manage orphaned activities
-     *
-     * If user is on course view page and there is no module added to the course
-     * and the user has 'moodle/course:manageactivities' capability, redirect to create module
-     * form.
-     *
-     * @param moodle_page $page instance of page calling set_course
+     * @param moodle_page $page instance of page calling set_course.
      */
     public function page_set_course(moodle_page $page) : void {
-        global $PAGE;
 
         if ($page->has_set_url()) {
             $url = new \format_twocol\course_url($page->url);
@@ -762,18 +766,36 @@ class format_twocol extends format_base {
                 $courseid = $page->context->get_course_context()->instanceid;
                 $preferencename = 'format_twocol_resume_courseid_' . $courseid;
                 $userpreference = json_decode(get_user_preferences($preferencename), true);
+                $courseformatoptions = course_get_format($courseid)->get_format_options();
+
+                // Check functionality is enabled in config.
+                if (empty($courseformatoptions['completiontracking'])) {
+                    return;
+                }
 
                 // If user preference is empty exit early.
                 if (empty($userpreference)) {
                     return;
                 }
 
-                // Check the context ID in the user preference is not a child of this context
-                $childrenids = $page->context->get_child_contexts();
-                error_log(print_r($childrenids, true));
-//                 $preferencecontext = context::instance_by_id($userpreference['contextid']);
-//                 $parentids = $preferencecontext->get_parent_context_ids();
+                // Check if context still exists before we try to redirect to it.
+                $preferncecontextid = context::instance_by_id($userpreference['contextid']);
+                if (!$preferncecontextid) {
+                    return;
+                }
 
+                // Check if we are not comming from a child context of the course.
+                $previouscontext = get_user_preferences('theme_cataweseome_previous_contextid');
+                if (!$previouscontext) {
+                    return;
+                }
+
+                $childrenids = $page->context->get_child_contexts();
+                $childrenids[$page->context->id] = $page->context->id;
+
+                if (array_key_exists($previouscontext, $childrenids)) {
+                    return;
+                }
 
                 $redirecturl = new moodle_url($userpreference['path'], $userpreference['params'], $userpreference['anchor']);
 
@@ -783,9 +805,8 @@ class format_twocol extends format_base {
                     return;
                 }
 
-                error_log(print_r($userpreference, true));
-
-                //check if context still exists before we try to redirect to it.
+                // We've passed all the checks, redrect user.
+                redirect($redirecturl);
 
             }
 
@@ -839,13 +860,6 @@ function format_twocol_before_footer() {
     } else if ($contextlevel == CONTEXT_MODULE) {
         $targeturl = new \format_twocol\course_url($url);
     }
-
-//     // Only continue if current URL is not base course URL.
-//     $courseurl = new moodle_url('/course/view.php', array('id' => $courseid));
-//     if ($targeturl->compare($courseurl)) {
-//         set_user_preference($preferencename, null);
-//         return;
-//     }
 
     $path = $targeturl->get_path();
     if (preg_match('/view\.php/', $path)) {
