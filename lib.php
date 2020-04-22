@@ -784,6 +784,19 @@ class format_twocol extends format_base {
                     return;
                 }
 
+                // Check if module still exists.
+                if (!preg_match('/course\/view\.php/', $userpreference['path'])) { // Only action for mods.
+                    try {
+                        $cm = get_fast_modinfo($courseid)->get_cm($preferncecontextid->instanceid);
+                    } catch (\moodle_exception $e) {
+                        error_log('things have been caught');
+                        return; // Return if not found.
+                    }
+                    if ($cm->deletioninprogress) {
+                        return; // Return if being deleted.
+                    }
+                }
+
                 // Check if we are not comming from a child context of the course.
                 $previouscontext = get_user_preferences('theme_cataweseome_previous_contextid');
                 if (!$previouscontext) {
