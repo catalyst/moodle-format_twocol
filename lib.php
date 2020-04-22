@@ -789,7 +789,6 @@ class format_twocol extends format_base {
                     try {
                         $cm = get_fast_modinfo($courseid)->get_cm($preferncecontextid->instanceid);
                     } catch (\moodle_exception $e) {
-                        error_log('things have been caught');
                         return; // Return if not found.
                     }
                     if ($cm->deletioninprogress) {
