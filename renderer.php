@@ -80,14 +80,13 @@ class format_twocol_renderer extends format_section_renderer_base {
      * @param \stdClass $course
      * @return array $completioncounts
      */
-    private function get_completion_counts(\stdClass $course) : array {
+    private function get_completion_counts(completion_info $completioninfo, \stdClass $course) : array {
         $completioncounts = array(
             'complete' => 0,
             'inprogress' => 0,
             'notstarted' => 0
         );
 
-        $completioninfo = new completion_info($course);
         $trackedusers = $completioninfo->get_tracked_users();
 
         foreach ($trackedusers as $trackeduser) {
@@ -134,10 +133,12 @@ class format_twocol_renderer extends format_section_renderer_base {
      * @param \stdClass $course
      */
     public function print_course_summary($course) : void {
+        $config = get_config('format_twocol');
         $modinfo = get_fast_modinfo($course);
         $thissection = $modinfo->get_section_info(0);
         $displaysection = 0;
         $courseformatoptions = course_get_format($course)->get_format_options();
+        $completioninfo = new completion_info($course);
 
         $templatecontext = new \stdClass();
         $templatecontext->rightcontent = $this->section_right_content($thissection, $course, true);
@@ -197,12 +198,24 @@ class format_twocol_renderer extends format_section_renderer_base {
         }
 
         if (has_capability('format/completionstats:view', context_course::instance($course->id))
-            && !empty($courseformatoptions['completionstatus'])) {
-            $templatecontext->completioncounts = $this->get_completion_counts($course);
+            && !empty($courseformatoptions['completionstatus'])
+            && $completioninfo->has_criteria()) {
+            $templatecontext->completioncounts = $this->get_completion_counts($completioninfo, $course);
             $templatecontext->completionurl = new moodle_url('/report/completion/index.php', array('course' => $course->id));
         } else {
             $templatecontext->completioncounts = false;
         }
+
+        if (has_capability('moodle/course:update', context_course::instance($course->id))
+            && !empty($courseformatoptions['completionstatus'])
+            && !$completioninfo->has_criteria()
+            && $config->completionnag) {
+
+            $url = new moodle_url('/course/completion.php', array('id' => $course->id));
+            $messsage = get_string('nocompletion', 'format_twocol', $url->raw_out());
+            $templatecontext->nocompletioncriteria = \core\notification::warning($messsage);
+        }
+
 
         echo $this->render_from_template('format_twocol/course_summary', $templatecontext);
     }

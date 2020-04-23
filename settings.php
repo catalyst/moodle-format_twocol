@@ -15,20 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and other meta-data are defined here.
+ * Settings for format_twocol
  *
- * @package     format_twocol
- * @copyright   2019 Matt Porritt <mattp@catalyst-au.net>
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    format_twocol
+ * @copyright  2020 Matt Porritt <mattp@catalyst-au.net>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+defined('MOODLE_INTERNAL') || die;
 
-$plugin->component = 'format_twocol';
-$plugin->release = '2020042400';
-$plugin->version = 2020042400;
-$plugin->requires = 2019052000;
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = array(
-    'format_topics'  => 2019052000,
-);
+
+if ($ADMIN->fulltree) {
+    $settings->add(new admin_setting_configcheckbox('format_twocol/completionnag',
+        get_string('completionnag', 'format_twocol'),
+        get_string('completionnag_desc', 'format_twocol'), 1));
+}
