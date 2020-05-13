@@ -14,9 +14,6 @@ cache:
   directories:
     - $HOME/.composer/cache
 
-node_js:
-  - 14
-
 php:
   - 7.1
   - 7.2
@@ -43,6 +40,7 @@ matrix:
 
 before_install:
   - cd ../..
+  - nvm install 14.0.0
   - composer selfupdate
   - composer create-project -n --no-dev moodlerooms/moodle-plugin-ci ci ^2
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
