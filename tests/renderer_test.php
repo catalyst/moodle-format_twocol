@@ -68,10 +68,12 @@ class format_twocol_renderer_testcase extends advanced_testcase {
         $this->getDataGenerator()->enrol_user($user3->id, $course->id);
         $this->getDataGenerator()->enrol_user($user4->id, $course->id);
 
+        $completioninfo = new completion_info($course);
+
         // We're testing a private method, so we need to setup reflector magic.
         $method = new ReflectionMethod('format_twocol_renderer', 'get_completion_counts');
         $method->setAccessible(true); // Allow accessing of private method.
-        $proxy = $method->invoke($renderer, $course); // Get result of invoked method.
+        $proxy = $method->invoke($renderer, $completioninfo, $course); // Get result of invoked method.
 
         // No users should have started yet.
         $this->assertEquals(4, $proxy['notstarted']);
@@ -84,7 +86,7 @@ class format_twocol_renderer_testcase extends advanced_testcase {
         $compl->mark_complete(1577779980);
 
         // Should have one user complete and one user in progress.
-        $proxy = $method->invoke($renderer, $course); // Get result of invoked method.
+        $proxy = $method->invoke($renderer, $completioninfo, $course); // Get result of invoked method.
         $this->assertEquals(2, $proxy['notstarted']);
         $this->assertEquals(1, $proxy['inprogress']);
         $this->assertEquals(1, $proxy['complete']);
@@ -97,7 +99,7 @@ class format_twocol_renderer_testcase extends advanced_testcase {
         $compl->mark_complete(1577779980);
 
         // Should have two users complete and two user in progress.
-        $proxy = $method->invoke($renderer, $course); // Get result of invoked method.
+        $proxy = $method->invoke($renderer, $completioninfo, $course); // Get result of invoked method.
         $this->assertEquals(0, $proxy['notstarted']);
         $this->assertEquals(2, $proxy['inprogress']);
         $this->assertEquals(2, $proxy['complete']);

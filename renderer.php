@@ -77,6 +77,7 @@ class format_twocol_renderer extends format_section_renderer_base {
     /**
      * Get counts of user completion states for the course.
      *
+     * @param completion_info $completioninfo
      * @param \stdClass $course
      * @return array $completioncounts
      */
@@ -215,7 +216,6 @@ class format_twocol_renderer extends format_section_renderer_base {
             $messsage = get_string('nocompletion', 'format_twocol', $url->raw_out());
             $templatecontext->nocompletioncriteria = \core\notification::warning($messsage);
         }
-
 
         echo $this->render_from_template('format_twocol/course_summary', $templatecontext);
     }
