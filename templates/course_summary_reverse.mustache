@@ -32,39 +32,7 @@
     </div>
     </div>
     <div class="row row-flex">
-      <div class="col-md-6 col-sm-12">
-        <div class="column">
-         <div class="course-img" style='background-image: url("{{{courseimage}}}");'>
-            <span class="sr-only">{{#str}}aria:courseimage, core_course{{/str}}</span>
-            {{> format_twocol/progress_bar }}
-        </div>
-        <div class="section">
-	        <div class="right side">{{{rightcontent}}}</div>
-	        <h2>{{summaryname}}</h2>
-	        <div class="summary">
-	            {{{summary}}}
-	        </div>
-        </div>
-        <div class="sections">
-            {{#sections}}
-                <div class="topic-jump">
-                    <a href="{{{url}}}" class="btn btn-primary btn-block topic-name">
-                        <span class="topic-name-item">{{name}}</span>
-                        {{#completion}}
-                            {{#hastotal}}
-                                <span class="topic-name-completion" title="{{complete}} of {{total}} activities completed">
-                                    {{complete}} / {{total}}
-                                </span>
-                            {{/hastotal}}
-                        {{/completion}}
-                    </a>
-                </div>
-            {{/sections}}
-        </div>
-
-        </div>
-      </div>
-      <div class="col-md-6 col-sm-12">
+          <div class="col-md-6 col-sm-12">
         <div class="column">
             {{#completioncounts}}
                 <div class="completion-stats">
@@ -92,8 +60,8 @@
           <h3>{{detailsheading}}</h3>
 
           {{#sectionheading1}}
-	          <h5>{{# pix }} i/{{{sectionicon1}}}, core {{/ pix }}{{sectionheading1}}</h5>
-	          {{{sectiontext1}}}
+              <h5>{{# pix }} i/{{{sectionicon1}}}, core {{/ pix }}{{sectionheading1}}</h5>
+              {{{sectiontext1}}}
           {{/sectionheading1}}
 
           {{#sectionheading2}}
@@ -128,6 +96,37 @@
           </ul>
         </div>
     </div>
-    
-  </div>
+      <div class="col-md-6 col-sm-12">
+        <div class="column">
+         <div class="course-img" style='background-image: url("{{{courseimage}}}");'>
+            <span class="sr-only">{{#str}}aria:courseimage, core_course{{/str}}</span>
+            {{> format_twocol/progress_bar }}
+        </div>
+        <div class="section">
+	        <div class="right side">{{{rightcontent}}}</div>
+	        <h2>{{summaryname}}</h2>
+	        <div class="summary">
+	            {{{summary}}}
+	        </div>
+        </div>
+        <div class="sections">
+            {{#sections}}
+                <div class="topic-jump">
+                    <a href="{{{url}}}" class="btn btn-primary btn-block topic-name">
+                        <span class="topic-name-item">{{name}}</span>
+                        {{#completion}}
+                            {{#hastotal}}
+                                <span class="topic-name-completion" title="{{complete}} of {{total}} activities completed">
+                                    {{complete}} / {{total}}
+                                </span>
+                            {{/hastotal}}
+                        {{/completion}}
+                    </a>
+                </div>
+            {{/sections}}
+        </div>
+
+        </div>
+      </div>
+   </div>
 </div>

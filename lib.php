@@ -312,6 +312,10 @@ class format_twocol extends format_base {
                     'default' => get_string('resourcesheading', 'format_twocol'),
                     'type' => PARAM_TEXT,
                 ),
+                'reversedisplay' => array(
+                    'default' => 0,
+                    'type' => PARAM_INT,
+                ),
             );
         }
         if ($foreditform && !isset($courseformatoptions['coursedisplay']['label'])) {
@@ -468,6 +472,13 @@ class format_twocol extends format_base {
                     'element_type' => 'text',
                     'help' => 'resourcesheading',
                     'help_component' => 'format_twocol',
+                ),
+                'reversedisplay' => array(
+                    'label' => get_string('reversedisplay', 'format_twocol'),
+                    'element_type' => 'advcheckbox',
+                    'help' => 'reversedisplay',
+                    'help_component' => 'format_twocol',
+                    'element_attributes' => array( get_string('reversedisplay_label', 'format_twocol'))
                 ),
             );
 

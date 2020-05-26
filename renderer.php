@@ -217,7 +217,13 @@ class format_twocol_renderer extends format_section_renderer_base {
             $templatecontext->nocompletioncriteria = \core\notification::warning($messsage);
         }
 
-        echo $this->render_from_template('format_twocol/course_summary', $templatecontext);
+        // Finally, check which order the columns will be displayed in.
+        if (empty($courseformatoptions['reversedisplay'])) {
+            echo $this->render_from_template('format_twocol/course_summary', $templatecontext);
+        } else {
+            echo $this->render_from_template('format_twocol/course_summary_reverse', $templatecontext);
+        }
+
     }
 
     /**
