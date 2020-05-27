@@ -223,7 +223,6 @@ class format_twocol_renderer extends format_section_renderer_base {
         } else {
             echo $this->render_from_template('format_twocol/course_summary_reverse', $templatecontext);
         }
-
     }
 
     /**
