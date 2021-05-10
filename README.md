@@ -1,4 +1,5 @@
-[![Build Status](https://www.travis-ci.org/catalyst/moodle-format_twocol.svg?branch=master)](https://www.travis-ci.org/catalyst/moodle-format_twocol)
+![Build Status](https://github.com/catalyst/moodle-format_twocol/actions/workflows/ci.yml/badge.svg?branch=master)
+
 
 # Two Column - Course Format
 
