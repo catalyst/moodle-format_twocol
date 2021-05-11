@@ -117,12 +117,10 @@ class format_twocol_renderer extends format_section_renderer_base {
      * @return string $courseimage
      */
     private function get_course_image_or_pattern(\stdClass $course) : string {
-        global $OUTPUT;
-
         $courseimage = \core_course\external\course_summary_exporter::get_course_image($course);
 
         if (!$courseimage) {
-            $courseimage = $OUTPUT->get_generated_image_for_id($course->id);
+            $courseimage = $this->output->get_generated_image_for_id($course->id);
         }
 
         return $courseimage;
@@ -244,7 +242,7 @@ class format_twocol_renderer extends format_section_renderer_base {
         if (!($sectioninfo = $modinfo->get_section_info($displaysection)) || !$sectioninfo->uservisible) {
             // This section doesn't exist or is not available for the user.
             // We actually already check this in course/view.php but just in case exit from this function as well.
-            print_error('unknowncoursesection', 'error', course_get_url($course),
+            throw new \moodle_exception('unknowncoursesection', 'error', course_get_url($course),
                 format_string($course->fullname));
         }
 
@@ -293,8 +291,6 @@ class format_twocol_renderer extends format_section_renderer_base {
      * @param array $modnamesused (argument not used)
      */
     public function print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused) {
-        global $PAGE;
-
         $modinfo = get_fast_modinfo($course);
         $course = course_get_format($course)->get_course();
 
@@ -329,7 +325,7 @@ class format_twocol_renderer extends format_section_renderer_base {
                 continue;
             }
 
-            if (!$PAGE->user_is_editing() && $course->coursedisplay == COURSE_DISPLAY_MULTIPAGE) {
+            if (!$this->page->user_is_editing() && $course->coursedisplay == COURSE_DISPLAY_MULTIPAGE) {
                 // Display section summary only.
                 echo $this->section_summary($thissection, $course, null);
             } else {
@@ -342,7 +338,7 @@ class format_twocol_renderer extends format_section_renderer_base {
             }
         }
 
-        if ($PAGE->user_is_editing() and has_capability('moodle/course:update', $context)) {
+        if ($this->page->user_is_editing() and has_capability('moodle/course:update', $context)) {
             // Print stealth sections if present.
             foreach ($modinfo->get_section_info_all() as $section => $thissection) {
                 if ($section <= $numsections or empty($modinfo->sections[$section])) {
