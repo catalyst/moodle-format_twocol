@@ -41,7 +41,7 @@ class format_twocol_renderer_testcase extends advanced_testcase {
     /**
      * Setup function.
      */
-    public function setUp() {
+    public function setUp() : void {
         $this->resetAfterTest();
     }
 
