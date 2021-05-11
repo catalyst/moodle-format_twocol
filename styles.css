@@ -38,9 +38,9 @@
 }
 
 .twocol .column {
-    border: 1px solid rgba(0,0,0,.125);
-    -webkit-box-shadow: 0 0 7px rgba(0,0,0,.17);
-    box-shadow: 0 0 7px rgba(0,0,0,.17);
+    border: 1px solid rgba(0, 0, 0, .125);
+    -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .17);
+    box-shadow: 0 0 7px rgba(0, 0, 0, .17);
     height: 100%;
     padding: 20px 20px 10px;
 }
@@ -74,11 +74,11 @@
 .twocol .course-img .media .progress-chart-container .no-progress {
     height: 100px;
     width: 100px;
-    background-color: #ffffff;
+    background-color: #fff;
     border-radius: 50%;
     border: 10px solid #dee2e6;
     position: relative;
-    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
 }
 
 .twocol .course-img .media .progress-chart-container .no-progress .icon,
@@ -102,7 +102,7 @@
     padding: .2rem 1rem;
     font-weight: 600;
     border-radius: .5rem;
-    background-color: rgba(255,255,255,.9);
+    background-color: rgba(255, 255, 255, .9);
 }
 
 .twocol .course-img .media .progress-chart-container .progress-doughnut {
@@ -113,8 +113,8 @@
     background-clip: padding-box;
     border: 10px solid #dee2e6;
     border-radius: 50%;
-    -webkit-box-shadow: 0 0 25px rgba(0,0,0,.5);
-    box-shadow: 0 0 25px rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, .5);
+    box-shadow: 0 0 25px rgba(0, 0, 0, .5);
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
@@ -122,11 +122,11 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    -webkit-transform: translate(-50%,-50%);
-    -moz-transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    -o-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     color: #373a3c;
     font-weight: 600;
     font-size: 1.1rem;
@@ -146,6 +146,12 @@
     margin: 10px auto;
     max-width: 100%;
     max-height: 250px;
+}
+
+@keyframes progress {
+    0% {
+        stroke-dasharray: 0 100;
+    }
 }
 .progress-chart-container .progress-doughnut .progress-indicator .circular-chart .progress-circle {
     stroke: #1177d1;
@@ -173,11 +179,11 @@
 .twocol .topic-jump .topic-name-completion {
     font-size: 80%;
     display: inline-block;
-    background-color: rgba(255,255,255,0.75);
+    background-color: rgba(255, 255, 255, 0.75);
     padding: 0.2rem 1rem;
     border-radius: 0.5rem;
     width: 60px;
-    color: #000000;
+    color: #000;
 }
 #page-course-view-twocol .course-content .single-section .section-navigation.mdl-top .mdl-right .btn-outline-primary,
 #page-course-view-twocol .course-content .single-section .section-navigation.mdl-bottom .mdl-right .btn-outline-primary,
@@ -194,7 +200,7 @@
 }
 
 #page-course-view-twocol .course-content .single-section .section-navigation.mdl-top {
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid #ccc;
 }
 
 #page-course-view-twocol .course-content .single-section .section-navigation.mdl-top .mdl-right {
@@ -208,7 +214,7 @@
 }
 
 #page-course-view-twocol .course-content .single-section .section-navigation.mdl-bottom {
-    border-top: 1px solid #cccccc;
+    border-top: 1px solid #cccc;
 }
 
 #page-course-view-twocol .course-content .single-section .section-navigation.mdl-bottom .mdl-right {
@@ -229,7 +235,7 @@
     float: left;
     clear: left;
     padding: 0.5rem 1rem;
-    background-color: rgba(255,255,255,.9);
+    background-color: rgba(255, 255, 255, .9);
     border-radius: 0 5px 5px 0;
     margin-left: -1rem;
     margin-right: 130px;
@@ -238,7 +244,7 @@
     display: block;
     float: left;
     padding: 0.2rem 1rem;
-    background-color: rgba(255,255,255,1.9);
+    background-color: rgba(255, 255, 255, 1.9);
     border-radius: 0 5px 5px 0;
     margin-left: -1rem;
     margin-right: 130px;
@@ -296,6 +302,7 @@
         margin-top: 0;
     }
 }
+
 @media (min-width: 992px) {
     #page-course-view-twocol .completion-stats {
         display: flex;
