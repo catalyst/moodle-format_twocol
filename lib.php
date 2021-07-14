@@ -790,7 +790,7 @@ class format_twocol extends format_base {
                 }
 
                 // Check if context still exists before we try to redirect to it.
-                $preferncecontextid = context::instance_by_id($userpreference['contextid']);
+                $preferncecontextid = context::instance_by_id($userpreference['contextid'], IGNORE_MISSING);
                 if (!$preferncecontextid) {
                     return;
                 }
@@ -897,4 +897,3 @@ function format_twocol_before_footer() {
         set_user_preference($preferencename, json_encode($preference));
     }
 }
-
