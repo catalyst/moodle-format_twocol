@@ -1,4 +1,4 @@
-![Build Status](https://github.com/catalyst/moodle-format_twocol/actions/workflows/ci.yml/badge.svg?branch=master)
+[![main branch test](https://github.com/catalyst/moodle-format_twocol/actions/workflows/ci.yml/badge.svg)](https://github.com/catalyst/moodle-format_twocol/actions/workflows/ci.yml)
 
 
 # Two Column - Course Format
