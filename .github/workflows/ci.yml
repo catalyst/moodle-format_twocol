@@ -1,6 +1,5 @@
-name: Moodle plugin CI for master
+name: main branch test
 
-# Controls when the action will run.
 on: [push, pull_request]
 
 jobs:
@@ -10,7 +9,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres
+        image: postgres:10
         env:
           POSTGRES_USER: 'postgres'
           POSTGRES_HOST_AUTH_METHOD: 'trust'
@@ -23,7 +22,7 @@ jobs:
           - 5432:5432
 
       mariadb:
-        image: mariadb
+        image: mariadb:10
         env:
           MYSQL_USER: 'root'
           MYSQL_ALLOW_EMPTY_PASSWORD: "true"
@@ -37,16 +36,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        database: ['pgsql']
+        moodle-branch: ['MOODLE_39_STABLE', 'MOODLE_310_STABLE', 'MOODLE_311_STABLE', 'master']
+        php: ['7.2', '7.4']
+        exclude:
+          - moodle-branch: master
+            php: 7.2
+          - moodle-branch: MOODLE_311_STABLE
+            php: 7.2
         include:
-          - { moodle-branch: 'MOODLE_39_STABLE', php: '7.2', node: '14.15.1', database: 'mariadb' }
-          - { moodle-branch: 'MOODLE_39_STABLE', php: '7.2', node: '14.15.1', database: 'pgsql' }
-          - { moodle-branch: 'MOODLE_39_STABLE', php: '7.3', node: '14.15.1', database: 'mariadb' }
-          - { moodle-branch: 'MOODLE_39_STABLE', php: '7.3', node: '14.15.1', database: 'pgsql' }
-          - { moodle-branch: 'MOODLE_39_STABLE', php: '7.4', node: '14.15.1', database: 'mariadb' }
-          - { moodle-branch: 'MOODLE_39_STABLE', php: '7.4', node: '14.15.1', database: 'pgsql' }
-          - { moodle-branch: 'MOODLE_310_STABLE', php: '7.4', node: '14.15.1', database: 'mariadb' }
-          - { moodle-branch: 'MOODLE_310_STABLE', php: '7.4', node: '14.15.1', database: 'pgsql' }
-
+          - moodle-branch: master
+            php: 7.4
+            database: mariadb
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
@@ -62,8 +63,9 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: pgsql, zip, gd, xmlrpc, soap
+          extensions: pgsql, mysqli, zip, gd, xmlrpc, soap
           coverage: none
+          ini-values: max_input_vars=5000
 
       - name: Initialise moodle-plugin-ci
         run: |
@@ -87,14 +89,6 @@ jobs:
         if: ${{ always() }}
         run: moodle-plugin-ci phplint
 
-      - name: Run phpcpd
-        if: ${{ always() }}
-        run: moodle-plugin-ci phpcpd || true
-
-      - name: Run phpmd
-        if: ${{ always() }}
-        run: moodle-plugin-ci phpmd
-
       - name: Run codechecker
         if: ${{ always() }}
         run: moodle-plugin-ci codechecker
@@ -108,17 +102,24 @@ jobs:
         run: moodle-plugin-ci savepoints
 
       - name: Run mustache
+        continue-on-error: true # This step will show errors but will not fail. Seems a bit unreliable.
         if: ${{ always() }}
-        run: moodle-plugin-ci phpcpd
-
-      - name: Run grunt
-        if: ${{ always() }}
-        run: moodle-plugin-ci grunt
-
-      - name: Run phpdoc
-        if: ${{ always() }}
-        run: moodle-plugin-ci phpdoc
+        run: moodle-plugin-ci mustache
 
       - name: Run phpunit
         if: ${{ always() }}
         run: moodle-plugin-ci phpunit
+
+      - name: Run behat
+        if: ${{ always() }}
+        run: moodle-plugin-ci behat --profile chrome
+
+      - name: PHP Copy/Paste Detector
+        continue-on-error: true # This step will show errors but will not fail
+        if: ${{ always() }}
+        run: moodle-plugin-ci phpcpd
+
+      - name: PHP Mess Detector
+        continue-on-error: true # This step will show errors but will not fail
+        if: ${{ always() }}
+        run: moodle-plugin-ci phpmd
