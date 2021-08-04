@@ -3,13 +3,35 @@
 
 # Two Column - Course Format
 
-A two column course format for Moodle.
+A course format for Moodle that displays the course overview in two columns.
+
+It has configurable sections that allow for easy display of course summary information.
+
+Each course section (topic) is displayed on its own page.
+
+The side of the page (left or right) that the course image appears on can be set in the format settings.
 
 ## Supported Moodle Versions
 This plugin currently supports Moodle:
 
-* 3.7
-* 3.8
+| Moodle version     | Branch           |
+| ------------------ | ---------------- |
+| Moodle 3.8 to 3.11 | main             |
+
+## Installation
+
+1. Install the plugin the same as any standard moodle plugin either via the
+   Moodle plugin directory, or you can use git to clone it into your source:
+
+   ```sh
+   git clone git@github.com:catalyst/moodle-format_twocol.git course/format_twocol
+   ```
+
+   Or install via the Moodle plugin directory:
+
+   https://moodle.org/plugins/format_twocol
+
+2. Then run the Moodle upgrade either via the command line of Moodle UI.
 
 # Crafted by Catalyst IT
 
