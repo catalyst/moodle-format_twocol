@@ -239,6 +239,7 @@
     border-radius: 0 5px 5px 0;
     margin-left: -1rem;
     margin-right: 130px;
+    box-shadow: 15px 0px 25px -10px rgba(0,0,0,0.5);
 }
 #page-course-view-twocol #region-main .course-content .single-section .section-navigation-back {
     display: block;
@@ -250,6 +251,7 @@
     margin-right: 130px;
     font-size: 130%;
     transition: all 0.2s;
+    box-shadow: 15px 0px 25px -10px rgba(0,0,0,0.5);
 }
 #page-course-view-twocol #region-main .course-content .single-section .section-navigation-back:hover,
 #page-course-view-twocol #region-main .course-content .single-section .section-navigation-back:focus {
