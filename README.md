@@ -11,6 +11,8 @@ Each course section (topic) is displayed on its own page.
 
 The side of the page (left or right) that the course image appears on can be set in the format settings.
 
+![Two Column Screenshot](/pix/twocol_screenshot.png?raw=true)
+
 ## Supported Moodle Versions
 This plugin currently supports Moodle:
 
