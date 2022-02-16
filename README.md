@@ -18,7 +18,8 @@ This plugin currently supports Moodle:
 
 | Moodle version     | Branch           |
 | ------------------ | ---------------- |
-| Moodle 3.8 to 3.11 | main             |
+| Moodle 3.8 to 3.11 | MOODLE_38_STABLE |
+| Moodle 4.0+        | MOODLE_40_STABLE |
 
 ## Installation
 

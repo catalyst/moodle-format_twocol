@@ -33,7 +33,7 @@ require_once($CFG->dirroot.'/course/format/renderer.php');
  * @copyright   2019 Matt Porritt <mattp@catalyst-au.net>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class format_twocol_renderer extends format_section_renderer_base {
+class format_twocol_renderer extends core_courseformat\output\section_renderer {
 
     /**
      * Constructor method, calls the parent constructor
