@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright   2020 Matt Porritt <mattp@catalyst-au.net>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class course_url extends \moodle_url  {
+class course_url extends \moodle_url {
 
     /**
      * Returns params for url.
