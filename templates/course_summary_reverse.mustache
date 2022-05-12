@@ -15,9 +15,9 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template format_twocol/course_sumamry
+    @template format_twocol/course_summary_reverse
 
-    This template renders the course sumamry section.
+    This template renders the course summary section.
 
     Example context (json):
     {
@@ -89,7 +89,9 @@
            <li id="section-0" class="section main clearfix" role="region" aria-label="overview">
                 <span class="hidden sectionname">overview</span>
                 <div class = "content">
-                    {{{ mods }}}
+                    {{#mods}}
+                        {{> core_courseformat/local/content/section/cmlist }}
+                    {{/mods}}
                     {{{ modcontrol }}}
                 </div>
             </li>
@@ -103,10 +105,16 @@
             {{> format_twocol/progress_bar }}
         </div>
         <div class="section">
-	        <div class="right side">{{{rightcontent}}}</div>
+	        <div class="right side">
+                {{#controlmenu}}
+                    {{> core_courseformat/local/content/section/controlmenu }}
+                {{/controlmenu}}
+            </div>
 	        <h2>{{summaryname}}</h2>
 	        <div class="summary">
-	            {{{summary}}}
+                {{#summary}}
+                    {{{summarytext}}}
+                {{/summary}}
 	        </div>
         </div>
         <div class="sections">

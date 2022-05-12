@@ -45,6 +45,7 @@ $string['completiontracking_help'] = 'When enabled a student returning to the co
 $string['detailsheading'] = 'Summary';
 $string['detailsheading_help'] = 'Choose the text for the heading that is shown at the top of the right hand column. This is called the Summary heading';
 $string['detailsheading_label'] = 'Summary heading';
+$string['editsectionname'] = 'Edit topic name';
 $string['envelope'] = 'Envelope';
 $string['globe'] = 'Globe';
 $string['home'] = 'Course home';
@@ -55,6 +56,7 @@ $string['lightning'] = 'Lightning';
 $string['linechart'] = 'Line Chart';
 $string['money'] = 'Money';
 $string['next'] = 'Next:';
+$string['newsectionname'] = 'New name for topic {$a}';
 $string['newspaper'] = 'Newspaper';
 $string['nocompletion'] = 'There is no <a href="{$a}">completion criteria</a> set for this course. It is highly recommended you set <a href="{$a}">completion criteria</a>.';
 $string['openbook'] = 'Open book';

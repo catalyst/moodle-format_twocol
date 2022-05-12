@@ -27,9 +27,10 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir.'/filelib.php');
 require_once($CFG->libdir.'/completionlib.php');
 
-$context = context_course::instance($course->id);
 // Retrieve course format option fields and add them to the $course object.
-$course = course_get_format($course)->get_course();
+$format = course_get_format($course);
+$course = $format->get_course();
+$context = context_course::instance($course->id);
 
 if (($marker >= 0) && has_capability('moodle/course:setcurrentsection', $context) && confirm_sesskey()) {
     $course->marker = $marker;
@@ -40,13 +41,12 @@ if (($marker >= 0) && has_capability('moodle/course:setcurrentsection', $context
 $renderer = $PAGE->get_renderer('format_twocol');
 
 if (!empty($displaysection)) {
-    $renderer->print_single_section_page($course, null, null, null, null, $displaysection);
-} else {
-    $renderer->print_course_summary($course);
-    if ($PAGE->user_is_editing()) {
-        $renderer->print_multiple_section_page($course, null, null, null, null, $displaysection);
-    }
+    $format->set_section_number($displaysection);
 }
+
+$outputclass = $format->get_output_classname('content');
+$output = new $outputclass($format);
+echo $renderer->render($output);
 
 // Include course format js module. We are reusing the core topics format JS.
 $PAGE->requires->js('/course/format/topics/format.js');

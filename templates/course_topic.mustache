@@ -25,7 +25,6 @@
     }
 }}
 <div class="twocol">
-    {{{clipboard}}}
     <div class="single-section">
         <div class="section-navigation navigationtitle course-img" style='background-image: url("{{{courseimage}}}");'>
             <span class="sr-only">{{#str}}aria:courseimage, core_course{{/str}}</span>
@@ -42,12 +41,11 @@
             <span class="mdl-right">{{{navlinknext}}}</span>
         </div>
         <ul class="twocol">
-	            {{{sectionheader}}}
-	            {{{helpicon}}}
-	            {{{sectioncmlist}}}
-	            {{{sectioncmcontrol}}}
-	            </div>
-            </li>
+            {{{sectionheader}}}
+            {{#sectioncmlist}}
+                {{> core_courseformat/local/content/section/cmlist }}
+            {{/sectioncmlist}}
+            {{{sectioncmcontrol}}}
         </ul>
         <div class="section-navigation mdl-bottom">
             <span class="mdl-left">{{{navlinkprevious}}}</span>

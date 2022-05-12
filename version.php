@@ -25,9 +25,9 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'format_twocol';
-$plugin->release = '2021080400';
-$plugin->version = 2021080400;
-$plugin->requires = 2019052000;
+$plugin->release = '2022041900';
+$plugin->version = 2022041900;
+$plugin->requires = 2022041900;
 $plugin->maturity = MATURITY_STABLE;
 $plugin->dependencies = array(
     'format_topics'  => 2019052000,
