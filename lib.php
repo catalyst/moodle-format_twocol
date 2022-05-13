@@ -881,7 +881,11 @@ function format_twocol_before_footer() {
     if ($contextlevel == CONTEXT_COURSE) {
         $targeturl = new \format_twocol\course_url($rawurl);
     } else if ($contextlevel == CONTEXT_MODULE) {
-        $targeturl = new \format_twocol\course_url($url);
+        if (strpos($rawurl->get_path(), 'mod/resource') !== false) {
+            $targeturl = new \format_twocol\course_url($url, ['forceview' => 1]);
+        } else {
+            $targeturl = new \format_twocol\course_url($url);
+        }
     }
 
     $path = $targeturl->get_path();
