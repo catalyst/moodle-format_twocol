@@ -24,6 +24,7 @@
 
 namespace format_twocol\output\courseformat;
 
+use completion_completion;
 use completion_info;
 use context_course;
 use core_courseformat\output\local\content as content_base;

@@ -26,7 +26,6 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 require_once($CFG->libdir.'/completionlib.php');
-require_once($CFG->dirroot. '/course/format/twocol/renderer.php');
 
 /**
  * Unit tesst for format_twocol renderer class.
@@ -51,7 +50,6 @@ class format_twocol_renderer_testcase extends advanced_testcase {
     public function test_get_completion_counts() {
         global $PAGE, $CFG;
         $CFG->enablecompletion = true;
-        $renderer = $PAGE->get_renderer('format_twocol');
         $completionauto = array('completion' => COMPLETION_TRACKING_AUTOMATIC);
 
         // Set up the course.
@@ -71,9 +69,11 @@ class format_twocol_renderer_testcase extends advanced_testcase {
         $completioninfo = new completion_info($course);
 
         // We're testing a private method, so we need to setup reflector magic.
-        $method = new ReflectionMethod('format_twocol_renderer', 'get_completion_counts');
+        $format = course_get_format($course);
+        $content = new \format_twocol\output\courseformat\content($format);
+        $method = new ReflectionMethod('format_twocol\output\courseformat\content', 'get_completion_counts');
         $method->setAccessible(true); // Allow accessing of private method.
-        $proxy = $method->invoke($renderer, $completioninfo, $course); // Get result of invoked method.
+        $proxy = $method->invoke($content, $completioninfo, $course); // Get result of invoked method.
 
         // No users should have started yet.
         $this->assertEquals(4, $proxy['notstarted']);
@@ -86,7 +86,7 @@ class format_twocol_renderer_testcase extends advanced_testcase {
         $compl->mark_complete(1577779980);
 
         // Should have one user complete and one user in progress.
-        $proxy = $method->invoke($renderer, $completioninfo, $course); // Get result of invoked method.
+        $proxy = $method->invoke($content, $completioninfo, $course); // Get result of invoked method.
         $this->assertEquals(2, $proxy['notstarted']);
         $this->assertEquals(1, $proxy['inprogress']);
         $this->assertEquals(1, $proxy['complete']);
@@ -99,7 +99,7 @@ class format_twocol_renderer_testcase extends advanced_testcase {
         $compl->mark_complete(1577779980);
 
         // Should have two users complete and two user in progress.
-        $proxy = $method->invoke($renderer, $completioninfo, $course); // Get result of invoked method.
+        $proxy = $method->invoke($content, $completioninfo, $course); // Get result of invoked method.
         $this->assertEquals(0, $proxy['notstarted']);
         $this->assertEquals(2, $proxy['inprogress']);
         $this->assertEquals(2, $proxy['complete']);
