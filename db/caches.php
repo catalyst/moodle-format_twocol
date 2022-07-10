@@ -15,20 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and other meta-data are defined here.
+ * Caches
  *
  * @package     format_twocol
- * @copyright   2019 Matt Porritt <mattp@catalyst-au.net>
+ * @copyright   2022 Matt Porritt <mattp@catalyst-au.net>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'format_twocol';
-$plugin->release = '2022071005';
-$plugin->version = 2022071005;
-$plugin->requires = 2022041900;
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = array(
-    'format_topics'  => 2019052000,
-);
+$definitions = [
+        'header_course_image' => [
+                'mode' => cache_store::MODE_APPLICATION,
+                'simplekeys' => true,
+                'simpledata' => true,
+                'staticacceleration' => true,
+                'datasource' => '\format_twocol\cache\header_course_image',
+        ]
+];

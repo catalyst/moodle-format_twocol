@@ -15,12 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Legacy file to aviod exceptions when formats require it.
+ * Capabilities
  *
- * @deprecated since Moodle 4.0 MDL-72656
  * @package     format_twocol
- * @copyright   2019 Matt Porritt <mattp@catalyst-au.net>
+ * @copyright   2022 Matt Porritt <mattp@catalyst-au.net>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
+
+$observers = [
+        [
+                'eventname' => '\core\event\course_updated',
+                'callback'  => '\format_twocol\event\observer::course_updated',
+        ],
+];
