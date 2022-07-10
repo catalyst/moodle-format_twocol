@@ -52,8 +52,28 @@
     border: none;
     height: 150px;
     width: 100%;
+}
+
+.twocol .course-img-contain {
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.twocol .course-img-containleft {
+    background-position: left;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.twocol .course-img-cover {
     background-position: center;
     background-size: cover;
+}
+
+.twocol .course-img-auto {
+    background-position: center;
+    background-size: auto;
 }
 
 .twocol .course-img .media {

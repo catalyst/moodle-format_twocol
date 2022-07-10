@@ -15,20 +15,32 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and other meta-data are defined here.
+ * Event observers used in format_twocol.
  *
  * @package     format_twocol
- * @copyright   2019 Matt Porritt <mattp@catalyst-au.net>
+ * @copyright   2022 Matt Porritt <mattp@catalyst-au.net>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+namespace format_twocol\event;
+
+use core\event\course_updated;
+
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'format_twocol';
-$plugin->release = '2022071005';
-$plugin->version = 2022071005;
-$plugin->requires = 2019052000;
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = array(
-    'format_topics'  => 2019052000,
-);
+/**
+ * Event observer for format_twocol.
+ */
+class observer {
+    /**
+     * Triggered via course_updated event.
+     *
+     * @param \core\event\course_updated $event
+     */
+    public static function course_updated(course_updated $event) {
+        // Purge course image cache in case if course image has been updated.
+        \cache::make('format_twocol', 'header_course_image')->delete($event->objectid);
+        return true;
+    }
+
+}

@@ -112,13 +112,25 @@ class format_twocol_renderer extends format_section_renderer_base {
 
     /**
      * Get the course image or course patten for the given course.
+     * If there is only one course image, this is used. If there are
+     * more than one then the second image is used. This is so one
+     * image can be used for th course image and another by the
+     * two col format for a header image.
      *
      * @param \stdClass $course
      * @return string $courseimage
      */
     private function get_course_image_or_pattern(\stdClass $course) : string {
-        $courseimage = \core_course\external\course_summary_exporter::get_course_image($course);
+        // First try to get a custom header image.
+        $courseimageobj = \cache::make('format_twocol', 'header_course_image');
+        $courseimage = $courseimageobj->get($course->id);
 
+        // Then try to get the default course image.
+        if (!$courseimage) {
+            $courseimage = \core_course\external\course_summary_exporter::get_course_image($course);
+        }
+
+        // If all else fails just get a generated image.
         if (!$courseimage) {
             $courseimage = $this->output->get_generated_image_for_id($course->id);
         }
@@ -165,6 +177,8 @@ class format_twocol_renderer extends format_section_renderer_base {
         if (!empty($courseformatoptions['resourcesheading'])) {
             $templatecontext->resourcesheading = format_text($courseformatoptions['resourcesheading'], FORMAT_HTML);
         }
+
+        $templatecontext->headerimageformat = format_text($courseformatoptions['headerimageformat'], FORMAT_HTML);
 
         if (!empty($courseformatoptions['sectionheading1'])) {
             $templatecontext->sectionheading1 = format_text($courseformatoptions['sectionheading1'], FORMAT_HTML);
@@ -237,6 +251,7 @@ class format_twocol_renderer extends format_section_renderer_base {
         $modinfo = get_fast_modinfo($course);
         $course = course_get_format($course)->get_course();
         $completioninfo = new completion_info($course);
+        $courseformatoptions = course_get_format($course)->get_format_options();
 
         // Can we view the section in question?
         if (!($sectioninfo = $modinfo->get_section_info($displaysection)) || !$sectioninfo->uservisible) {
@@ -262,6 +277,7 @@ class format_twocol_renderer extends format_section_renderer_base {
 
         $templatecontext = new \stdClass();
         $templatecontext->courseimage = $this->get_course_image_or_pattern($course);
+        $templatecontext->headerimageformat = format_text($courseformatoptions['headerimageformat'], FORMAT_HTML);
         $templatecontext->courseurl = new moodle_url('/course/view.php', array('id' => $course->id));
         $templatecontext->clipboard = $this->course_activity_clipboard($course, $displaysection); // Copy activity clipboard.
         $templatecontext->navlinkprevious = $sectionnavlinks['previous'];

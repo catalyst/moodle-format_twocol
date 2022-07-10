@@ -36,6 +36,26 @@ This plugin currently supports Moodle:
 
 2. Then run the Moodle upgrade either via the command line of Moodle UI.
 
+## Course images
+There are some course settings in this course format that apply to the course images
+
+### Separate header image
+This course format supports multiple course images.
+If there is only one course image, this is used.
+If there are  more than one then the second image is used. 
+This is so one image can be used for th course image and another by the two col format for a header image.
+
+NOTE: By default Moodle only allows 1 course image. For the above functionality to work this needs to be changed to 2.
+This is done be increasing the `Course image files limit` setting at `Site administration > Appearance > Courses`
+
+### Header image format
+You can choose from the course settings how the course image is displayed when rendered from the course settings.
+There are three options for formatting the display of the header image:
+* Contain: Scales the image as large as possible without cropping or stretching the image.
+* Contain Left: Sam as contain but the image is left aligned.
+* Cover: Scales the image (while preserving its ratio) to the smallest possible size to fill, leaving no empty space. Image may be cropped. 
+* Auto: Scales the background image in the corresponding direction such that its intrinsic proportions are maintained.';
+
 # Crafted by Catalyst IT
 
 

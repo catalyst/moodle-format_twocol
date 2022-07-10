@@ -15,20 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and other meta-data are defined here.
+ * Capabilities
  *
  * @package     format_twocol
- * @copyright   2019 Matt Porritt <mattp@catalyst-au.net>
+ * @copyright   2022 Matt Porritt <mattp@catalyst-au.net>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'format_twocol';
-$plugin->release = '2022071005';
-$plugin->version = 2022071005;
-$plugin->requires = 2019052000;
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = array(
-    'format_topics'  => 2019052000,
-);
+$observers = [
+        [
+                'eventname' => '\core\event\course_updated',
+                'callback'  => '\format_twocol\event\observer::course_updated',
+        ],
+];
