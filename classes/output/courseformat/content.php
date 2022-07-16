@@ -177,7 +177,6 @@ class content extends content_base {
         $cmlist = new $cmlistclass($format, $thissection);
         $templatecontext->mods = $cmlist->export_for_template($output);
         $templatecontext->modcontrol = $output->course_section_add_cm_control($course, 0, $displaysection);
-        $templatecontext->courseimage = $this->get_course_image_or_pattern($course, $output);
         $templatecontext->progresstitle = get_string('progresstitle:course', 'format_twocol');
         $templatecontext->headerbackcolor = $headerbackcolor;
 
