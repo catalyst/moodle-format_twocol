@@ -9,7 +9,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:10
+        image: postgres:12
         env:
           POSTGRES_USER: 'postgres'
           POSTGRES_HOST_AUTH_METHOD: 'trust'
@@ -37,8 +37,8 @@ jobs:
       fail-fast: false
       matrix:
         database: ['pgsql']
-        moodle-branch: ['MOODLE_400_STABLE', 'master', '']
-        php: ['7.3', '7.4']
+        moodle-branch: ['MOODLE_400_STABLE', 'master']
+        php: ['7.4']
 
     steps:
       - name: Check out repository code
