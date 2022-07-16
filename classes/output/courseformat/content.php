@@ -129,7 +129,6 @@ class content extends content_base {
         $courseimageobj = \cache::make('format_twocol', 'header_course_image');
         $courseimage = $courseimageobj->get($courseimageid);;
 
-
         // Then try to get the default course image.
         if (!$courseimage) {
             $courseimage = \core_course\external\course_summary_exporter::get_course_image($course);
