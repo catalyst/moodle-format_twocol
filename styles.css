@@ -205,6 +205,18 @@
     width: 60px;
     color: #000;
 }
+
+.twocol img.activityicon {
+    height: 40px;
+    width: 40px;
+    vertical-align: middle;
+}
+.twocol .activityinstance .instancename {
+    font-size: 1.2rem;
+    position: relative;
+    bottom: 10px;
+}
+
 #page-course-view-twocol .course-content .single-section .section-navigation.mdl-top .mdl-right .btn-outline-primary,
 #page-course-view-twocol .course-content .single-section .section-navigation.mdl-bottom .mdl-right .btn-outline-primary,
 #page-course-view-twocol .course-content .single-section .section-navigation.mdl-top .mdl-left .btn-outline-primary,
