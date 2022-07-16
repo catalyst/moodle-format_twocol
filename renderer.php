@@ -118,12 +118,14 @@ class format_twocol_renderer extends format_section_renderer_base {
      * two col format for a header image.
      *
      * @param \stdClass $course
+     * @param int $imagenum The course image num to get.
      * @return string $courseimage
      */
-    private function get_course_image_or_pattern(\stdClass $course) : string {
+    private function get_course_image_or_pattern(\stdClass $course, int $imagenum) : string {
         // First try to get a custom header image.
+        $courseimageid = implode('_', [$course->id, $imagenum]);
         $courseimageobj = \cache::make('format_twocol', 'header_course_image');
-        $courseimage = $courseimageobj->get($course->id);
+        $courseimage = $courseimageobj->get($courseimageid);
 
         // Then try to get the default course image.
         if (!$courseimage) {
@@ -150,6 +152,8 @@ class format_twocol_renderer extends format_section_renderer_base {
         $displaysection = 0;
         $courseformatoptions = course_get_format($course)->get_format_options();
         $completioninfo = new completion_info($course);
+        $imagenum = isset($courseformatoptions['headerimage']) ? $courseformatoptions['headerimage'] : 1;
+        $headerbackcolor = isset($courseformatoptions['headerbackcolor']) ? $courseformatoptions['headerbackcolor'] : '#FFFFFF';
 
         $templatecontext = new \stdClass();
         $templatecontext->rightcontent = $this->section_right_content($thissection, $course, true);
@@ -157,8 +161,13 @@ class format_twocol_renderer extends format_section_renderer_base {
         $templatecontext->summary = $this->format_summary_text($thissection);
         $templatecontext->mods = $this->courserenderer->course_section_cm_list($course, $thissection, $displaysection);
         $templatecontext->modcontrol = $this->courserenderer->course_section_add_cm_control($course, 0, $displaysection);
-        $templatecontext->courseimage = $this->get_course_image_or_pattern($course);
         $templatecontext->progresstitle = get_string('progresstitle:course', 'format_twocol');
+        $templatecontext->headerbackcolor = $headerbackcolor;
+
+        if ($imagenum !== 0) {
+            $imagenum--;
+            $templatecontext->courseimage = $this->get_course_image_or_pattern($course, $imagenum);
+        }
 
         $coursecompletion = \core_completion\progress::get_course_progress_percentage($course);
         if (!is_null($coursecompletion)) {
@@ -252,6 +261,8 @@ class format_twocol_renderer extends format_section_renderer_base {
         $course = course_get_format($course)->get_course();
         $completioninfo = new completion_info($course);
         $courseformatoptions = course_get_format($course)->get_format_options();
+        $imagenum = isset($courseformatoptions['sectionimage']) ? $courseformatoptions['sectionimage'] : 1;
+        $headerbackcolor = isset($courseformatoptions['headerbackcolor']) ? $courseformatoptions['headerbackcolor'] : '#FFFFFF';
 
         // Can we view the section in question?
         if (!($sectioninfo = $modinfo->get_section_info($displaysection)) || !$sectioninfo->uservisible) {
@@ -276,8 +287,7 @@ class format_twocol_renderer extends format_section_renderer_base {
         }
 
         $templatecontext = new \stdClass();
-        $templatecontext->courseimage = $this->get_course_image_or_pattern($course);
-        $templatecontext->headerimageformat = format_text($courseformatoptions['headerimageformat'], FORMAT_HTML);
+        $templatecontext->sectionimageformat = format_text($courseformatoptions['sectionimageformat'], FORMAT_HTML);
         $templatecontext->courseurl = new moodle_url('/course/view.php', array('id' => $course->id));
         $templatecontext->clipboard = $this->course_activity_clipboard($course, $displaysection); // Copy activity clipboard.
         $templatecontext->navlinkprevious = $sectionnavlinks['previous'];
@@ -293,6 +303,12 @@ class format_twocol_renderer extends format_section_renderer_base {
         $templatecontext->hasprogress = $sectioncompletion->hastotal;
         $templatecontext->progress = $sectioncompletion->percent;
         $templatecontext->progresstitle = get_string('progresstitle:section', 'format_twocol');
+        $templatecontext->headerbackcolor = $headerbackcolor;
+
+        if ($imagenum !== 0) {
+            $imagenum--;
+            $templatecontext->sectionimage = $this->get_course_image_or_pattern($course, $imagenum);
+        }
 
         echo $this->render_from_template('format_twocol/course_topic', $templatecontext);
     }

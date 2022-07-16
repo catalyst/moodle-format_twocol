@@ -37,19 +37,31 @@ This plugin currently supports Moodle:
 2. Then run the Moodle upgrade either via the command line of Moodle UI.
 
 ## Course images
-There are some course settings in this course format that apply to the course images
-
-### Separate header image
+There are course settings in this course format that apply to the course images.
 This course format supports multiple course images.
-If there is only one course image, this is used.
-If there are  more than one then the second image is used. 
-This is so one image can be used for th course image and another by the two col format for a header image.
+This is so one image can be used for the course image and another for course header and section header images.
 
-NOTE: By default Moodle only allows 1 course image. For the above functionality to work this needs to be changed to 2.
+The settings:
+* Heading image
+* Heading image format
+
+Control the course front page header image settings.
+
+The settings:
+* Section image
+* Section image format
+
+Control the individual course section image settings
+
+NOTE: By default Moodle only allows 1 course image. For this functionality to work this needs to be changed to 3.
 This is done be increasing the `Course image files limit` setting at `Site administration > Appearance > Courses`
 
+### Header background color
+A background color can be used instead of course header and section header images.
+This can is also displayed "behind" images in case the images are transparent and/or don't fully cover the header area.
+
 ### Header image format
-You can choose from the course settings how the course image is displayed when rendered from the course settings.
+You can choose from the course settings how the course and section images are displayed when rendered from the course settings.
 There are three options for formatting the display of the header image:
 * Contain: Scales the image as large as possible without cropping or stretching the image.
 * Contain Left: Sam as contain but the image is left aligned.

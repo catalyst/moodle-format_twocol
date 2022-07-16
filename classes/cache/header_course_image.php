@@ -55,21 +55,26 @@ class header_course_image implements cache_data_source {
      */
     public function load_for_cache($key) {
         // We should use get_course() instead of get_fast_modinfo() for better performance.
-        $course = get_course($key);
-        return $this->get_image_url_from_overview_files($course);
+        $vars = explode('_', $key);
+        $course = get_course($vars[0]);
+        $imageid = $vars[1];
+        return $this->get_image_url_from_overview_files($course, $imageid);
     }
 
     /**
      * Returns image URL from course overview files.
      *
      * @param \stdClass $course Course object.
+     * @param int $imageid The image to retrieve.
      * @return null|string Image URL or null if it's not exists.
      */
-    protected function get_image_url_from_overview_files(\stdClass $course): ?string {
+    protected function get_image_url_from_overview_files(\stdClass $course, $imageid): ?string {
+
         $courseinlist = new core_course_list_element($course);
-        $files = $courseinlist->get_course_overviewfiles();
-        if (count($files) > 1) {
-            $file = array_pop($files);
+        $filesarr = $courseinlist->get_course_overviewfiles();
+        $files = array_values($filesarr);
+        if (isset($files[$imageid])) {
+            $file = $files[$imageid];
             if ($file->is_valid_image()) {
                 return moodle_url::make_pluginfile_url(
                         $file->get_contextid(),
