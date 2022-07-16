@@ -34,10 +34,13 @@
     <div class="row row-flex">
       <div class="col-md-6 col-sm-12">
         <div class="column">
-         <div class="course-img course-img-{{{headerimageformat}}}" style='background-image: url("{{{courseimage}}}");'>
-            <span class="sr-only">{{#str}}aria:courseimage, core_course{{/str}}</span>
-            {{> format_twocol/progress_bar }}
-        </div>
+            <div class="course-img course-img-{{{headerimageformat}}}"
+                {{#courseimage}}style='background-image: url("{{{courseimage}}}"), linear-gradient({{{headerbackcolor}}}, {{{headerbackcolor}}});' {{/courseimage}}
+                {{^courseimage}}style='background-color: {{{headerbackcolor}}};'{{/courseimage}}
+            >
+                <span class="sr-only">{{#str}}aria:courseimage, core_course{{/str}}</span>
+                {{> format_twocol/progress_bar }}
+            </div>
         <div class="section">
 	        <div class="right side">
                 {{#controlmenu}}

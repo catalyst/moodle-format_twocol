@@ -232,6 +232,13 @@ class format_twocol extends core_courseformat\base {
             'checked' => get_string('tick', 'format_twocol'),
         );
 
+        $headingimagenum = [
+            0 => get_string('backgroundcoloronly', 'format_hero'),
+            1 => get_string('first', 'format_hero'),
+            2 => get_string('second', 'format_hero'),
+            3 => get_string('third', 'format_hero'),
+        ];
+
         $headingformats = [
             'contain' => get_string('contain', 'format_twocol'),
             'containleft' => get_string('containleft', 'format_twocol'),
@@ -254,9 +261,25 @@ class format_twocol extends core_courseformat\base {
                     'default' => 1,
                     'type' => PARAM_INT,
                 ),
+                'headerimage' => array(
+                    'default' => 1,
+                    'type' => PARAM_INT,
+                ),
                 'headerimageformat' => array(
                     'default' => get_string('contain', 'format_twocol'),
                     'type' => PARAM_ALPHAEXT,
+                ),
+                'headerbackcolor' => array(
+                    'default' => '#FFFFFF',
+                    'type' => PARAM_NOTAGS,
+                ),
+                'sectionimage' => array(
+                     'default' => 2,
+                     'type' => PARAM_INT,
+                ),
+                'sectionimageformat' => array(
+                     'default' => get_string('contain', 'format_hero'),
+                     'type' => PARAM_ALPHAEXT,
                 ),
                 'detailsheading' => array(
                     'default' => get_string('detailsheading', 'format_twocol'),
@@ -365,11 +388,38 @@ class format_twocol extends core_courseformat\base {
                     'help_component' => 'format_twocol',
                     'element_attributes' => array( get_string('completiontracking_label', 'format_twocol'))
                 ),
+                'headerimage' => array(
+                    'label' => get_string('headerimage_label', 'format_hero'),
+                    'element_type' => 'select',
+                    'help' => 'headerimage',
+                    'help_component' => 'format_hero',
+                    'element_attributes' => array($headingimagenum),
+                ),
                 'headerimageformat' => array(
                     'label' => get_string('headerimageformat_label', 'format_twocol'),
                     'element_type' => 'select',
                     'help' => 'headerimageformat',
                     'help_component' => 'format_twocol',
+                    'element_attributes' => array($headingformats),
+                ),
+                'headerbackcolor' => array(
+                    'label' => get_string('headerbackcolor_label', 'format_hero'),
+                    'element_type' => 'text',
+                    'help' => 'headerbackcolor',
+                    'help_component' => 'format_hero',
+                ),
+                'sectionimage' => array(
+                    'label' => get_string('sectionimage_label', 'format_hero'),
+                    'element_type' => 'select',
+                    'help' => 'sectionimage',
+                    'help_component' => 'format_hero',
+                    'element_attributes' => array($headingimagenum),
+                ),
+                'sectionimageformat' => array(
+                    'label' => get_string('sectionimageformat_label', 'format_hero'),
+                    'element_type' => 'select',
+                    'help' => 'sectionimageformat',
+                    'help_component' => 'format_hero',
                     'element_attributes' => array($headingformats),
                 ),
                 'detailsheading' => array(

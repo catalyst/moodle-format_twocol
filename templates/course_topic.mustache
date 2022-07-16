@@ -26,7 +26,10 @@
 }}
 <div class="twocol">
     <div class="single-section">
-        <div class="section-navigation navigationtitle course-img course-img-{{{headerimageformat}}}" style='background-image: url("{{{courseimage}}}");'>
+        <div class="section-navigation navigationtitle course-img course-img-{{{sectionimageformat}}}"
+            {{#sectionimage}}style='background-image: url("{{{sectionimage}}}"), linear-gradient({{{headerbackcolor}}}, {{{headerbackcolor}}});' {{/sectionimage}}
+            {{^sectionimage}}style='background-color: {{{headerbackcolor}}};'{{/sectionimage}}
+        >
             <span class="sr-only">{{#str}}aria:courseimage, core_course{{/str}}</span>
             {{> format_twocol/progress_bar }}
             <h6 class="section-navigation-back">
