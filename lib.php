@@ -225,10 +225,10 @@ class format_twocol extends format_base {
         );
 
         $headingimagenum = [
-                0 => get_string('backgroundcoloronly', 'format_hero'),
-                1 => get_string('first', 'format_hero'),
-                2 => get_string('second', 'format_hero'),
-                3 => get_string('third', 'format_hero'),
+                0 => get_string('backgroundcoloronly', 'format_twocol'),
+                1 => get_string('first', 'format_twocol'),
+                2 => get_string('second', 'format_twocol'),
+                3 => get_string('third', 'format_twocol'),
         ];
 
         $headingformats = [
@@ -249,16 +249,12 @@ class format_twocol extends format_base {
                     'default' => 1,
                     'type' => PARAM_INT,
                 ),
-                'completiontracking' => array(
-                    'default' => 1,
-                    'type' => PARAM_INT,
-                ),
                 'headerimage' => array(
                      'default' => 1,
                      'type' => PARAM_INT,
                 ),
                 'headerimageformat' => array(
-                    'default' => get_string('contain', 'format_twocol'),
+                    'default' => get_string('cover', 'format_twocol'),
                     'type' => PARAM_ALPHAEXT,
                 ),
                 'headerbackcolor' => array(
@@ -270,7 +266,7 @@ class format_twocol extends format_base {
                     'type' => PARAM_INT,
                 ),
                 'sectionimageformat' => array(
-                     'default' => get_string('contain', 'format_hero'),
+                     'default' => get_string('cover', 'format_twocol'),
                      'type' => PARAM_ALPHAEXT,
                 ),
                 'detailsheading' => array(
@@ -373,18 +369,11 @@ class format_twocol extends format_base {
                     'help_component' => 'format_twocol',
                     'element_attributes' => array( get_string('completionstatus_label', 'format_twocol'))
                 ),
-                'completiontracking' => array(
-                    'label' => get_string('completiontracking', 'format_twocol'),
-                    'element_type' => 'advcheckbox',
-                    'help' => 'completiontracking',
-                    'help_component' => 'format_twocol',
-                    'element_attributes' => array( get_string('completiontracking_label', 'format_twocol'))
-                ),
                 'headerimage' => array(
-                    'label' => get_string('headerimage_label', 'format_hero'),
+                    'label' => get_string('headerimage_label', 'format_twocol'),
                     'element_type' => 'select',
                     'help' => 'headerimage',
-                    'help_component' => 'format_hero',
+                    'help_component' => 'format_twocol',
                     'element_attributes' => array($headingimagenum),
                 ),
                 'headerimageformat' => array(
@@ -395,23 +384,23 @@ class format_twocol extends format_base {
                     'element_attributes' => array($headingformats),
                 ),
                 'headerbackcolor' => array(
-                    'label' => get_string('headerbackcolor_label', 'format_hero'),
+                    'label' => get_string('headerbackcolor_label', 'format_twocol'),
                     'element_type' => 'text',
                     'help' => 'headerbackcolor',
-                    'help_component' => 'format_hero',
+                    'help_component' => 'format_twocol',
                 ),
                 'sectionimage' => array(
-                    'label' => get_string('sectionimage_label', 'format_hero'),
+                    'label' => get_string('sectionimage_label', 'format_twocol'),
                     'element_type' => 'select',
                     'help' => 'sectionimage',
-                    'help_component' => 'format_hero',
+                    'help_component' => 'format_twocol',
                     'element_attributes' => array($headingimagenum),
                 ),
                 'sectionimageformat' => array(
-                    'label' => get_string('sectionimageformat_label', 'format_hero'),
+                    'label' => get_string('sectionimageformat_label', 'format_twocol'),
                     'element_type' => 'select',
                     'help' => 'sectionimageformat',
-                    'help_component' => 'format_hero',
+                    'help_component' => 'format_twocol',
                     'element_attributes' => array($headingformats),
                 ),
                 'detailsheading' => array(
@@ -821,90 +810,6 @@ class format_twocol extends format_base {
         // Return everything (nothing to hide).
         return $this->get_format_options();
     }
-
-    /**
-     * Allows course format to execute code on moodle_page::set_course()
-     *
-     * This function is executed before the output starts.
-     *
-     * If everything is configured correctly, user is redirected from the
-     * default course view page the last activity or section they viewed.
-     *
-     * @param moodle_page $page instance of page calling set_course.
-     */
-    public function page_set_course(moodle_page $page) : void {
-
-        if ($page->has_set_url()) {
-            $url = new \format_twocol\course_url($page->url);
-            $params = $url->get_params();
-            $path = $url->get_path();
-
-            // We only want to redirect if we are requesting the main course page.
-            // If we have linked to a section don't redirect.
-            if (!array_key_exists('section', $params) && preg_match('/course\/view\.php/', $path)) {
-                $courseid = $page->context->get_course_context()->instanceid;
-                $preferencename = 'format_twocol_resume_courseid_' . $courseid;
-                $userpreference = json_decode(get_user_preferences($preferencename), true);
-                $courseformatoptions = course_get_format($courseid)->get_format_options();
-
-                // Check functionality is enabled in config.
-                if (empty($courseformatoptions['completiontracking'])) {
-                    return;
-                }
-
-                // If user preference is empty exit early.
-                if (empty($userpreference)) {
-                    return;
-                }
-
-                // Check if context still exists before we try to redirect to it.
-                $preferncecontextid = context::instance_by_id($userpreference['contextid'], IGNORE_MISSING);
-                if (!$preferncecontextid) {
-                    return;
-                }
-
-                // Check if module still exists.
-                if (!preg_match('/course\/view\.php/', $userpreference['path'])) { // Only action for mods.
-                    try {
-                        $cm = get_fast_modinfo($courseid)->get_cm($preferncecontextid->instanceid);
-                    } catch (\moodle_exception $e) {
-                        return; // Return if not found.
-                    }
-                    if ($cm->deletioninprogress) {
-                        return; // Return if being deleted.
-                    }
-                }
-
-                // Check if we are not comming from a child context of the course.
-                $previouscontext = get_user_preferences('theme_cataweseome_previous_contextid');
-                if (!$previouscontext) {
-                    return;
-                }
-
-                $childrenids = $page->context->get_child_contexts();
-                $childrenids[$page->context->id] = $page->context->id;
-
-                if (array_key_exists($previouscontext, $childrenids)) {
-                    return;
-                }
-
-                $redirecturl = new moodle_url($userpreference['path'], $userpreference['params'], $userpreference['anchor']);
-
-                // Only redirect if preference URL is not base course URL.
-                $courseurl = new moodle_url('/course/view.php', array('id' => $courseid));
-                if ($redirecturl->compare($courseurl)) {
-                    return;
-                }
-
-                // We've passed all the checks, redrect user.
-                redirect($redirecturl);
-
-            }
-
-        }
-
-    }
-
 }
 
 /**
@@ -923,49 +828,5 @@ function format_twocol_inplace_editable($itemtype, $itemid, $newvalue) {
             'SELECT s.* FROM {course_sections} s JOIN {course} c ON s.course = c.id WHERE s.id = ? AND c.format = ?',
             array($itemid, 'twocol'), MUST_EXIST);
         return course_get_format($section->course)->inplace_editable_update_section_name($section, $itemtype, $newvalue);
-    }
-}
-
-/**
- * Store information about the course or module the user is viewing.
- */
-function format_twocol_before_footer() {
-    global $PAGE;
-    $contextlevel = $PAGE->context->contextlevel;
-    $contextid = $PAGE->context->id;
-    if (($contextlevel != CONTEXT_COURSE) && ($contextlevel != CONTEXT_MODULE)) {
-        return;  // Exit early if we are not in a course or module context.
-    }
-
-    if ($PAGE->user_is_editing()) {
-        return; // Return early if user is editing.
-    }
-
-    $courseid = $PAGE->context->get_course_context()->instanceid;
-    $preferencename = 'format_twocol_resume_courseid_' . $courseid;
-    $url = $PAGE->context->get_url();
-    $rawurl = $PAGE->url;
-
-    if ($contextlevel == CONTEXT_COURSE) {
-        $targeturl = new \format_twocol\course_url($rawurl);
-    } else if ($contextlevel == CONTEXT_MODULE) {
-        if (strpos($rawurl->get_path(), 'mod/resource') !== false) {
-            $targeturl = new \format_twocol\course_url($url, ['forceview' => 1]);
-        } else {
-            $targeturl = new \format_twocol\course_url($url);
-        }
-    }
-
-    $path = $targeturl->get_path();
-    if (preg_match('/view\.php/', $path)) {
-
-        $preference = array(
-            'path' => $path,
-            'params' => $targeturl->get_params(),
-            'anchor' => $targeturl->get_anchor(),
-            'contextid' => $contextid
-        );
-        // We have what we need lets store it.
-        set_user_preference($preferencename, json_encode($preference));
     }
 }
