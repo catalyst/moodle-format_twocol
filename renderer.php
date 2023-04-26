@@ -192,31 +192,36 @@ class format_twocol_renderer extends format_section_renderer_base {
         if (!empty($courseformatoptions['sectionheading1'])) {
             $templatecontext->sectionheading1 = format_text($courseformatoptions['sectionheading1'], FORMAT_HTML);
             $templatecontext->sectionicon1 = $courseformatoptions['sectionicon1'];
-            $templatecontext->sectiontext1 = format_text($courseformatoptions['sectiontext1']['text'], FORMAT_HTML);
+            $sectionsummary = json_decode($courseformatoptions['sectiontext1'], true);
+            $templatecontext->sectiontext1 = format_text($sectionsummary['text'], FORMAT_HTML);
         }
 
         if (!empty($courseformatoptions['sectionheading2'])) {
             $templatecontext->sectionheading2 = format_text($courseformatoptions['sectionheading2'], FORMAT_HTML);
             $templatecontext->sectionicon2 = $courseformatoptions['sectionicon2'];
-            $templatecontext->sectiontext2 = format_text($courseformatoptions['sectiontext2']['text'], FORMAT_HTML);
+            $sectionsummary = json_decode($courseformatoptions['sectiontext2'], true);
+            $templatecontext->sectiontext2 = format_text($sectionsummary['text'], FORMAT_HTML);
         }
 
         if (!empty($courseformatoptions['sectionheading3'])) {
             $templatecontext->sectionheading3 = format_text($courseformatoptions['sectionheading3'], FORMAT_HTML);
             $templatecontext->sectionicon3 = $courseformatoptions['sectionicon3'];
-            $templatecontext->sectiontext3 = format_text($courseformatoptions['sectiontext3']['text'], FORMAT_HTML);
+            $sectionsummary = json_decode($courseformatoptions['sectiontext3'], true);
+            $templatecontext->sectiontext3 = format_text($sectionsummary['text'], FORMAT_HTML);
         }
 
         if (!empty($courseformatoptions['sectionheading4'])) {
             $templatecontext->sectionheading4 = format_text($courseformatoptions['sectionheading4'], FORMAT_HTML);
             $templatecontext->sectionicon4 = $courseformatoptions['sectionicon4'];
-            $templatecontext->sectiontext4 = format_text($courseformatoptions['sectiontext4']['text'], FORMAT_HTML);
+            $sectionsummary = json_decode($courseformatoptions['sectiontext4'], true);
+            $templatecontext->sectiontext4 = format_text($sectionsummary['text'], FORMAT_HTML);
         }
 
         if (!empty($courseformatoptions['sectionheading5'])) {
             $templatecontext->sectionheading5 = format_text($courseformatoptions['sectionheading5'], FORMAT_HTML);
             $templatecontext->sectionicon5 = $courseformatoptions['sectionicon5'];
-            $templatecontext->sectiontext5 = format_text($courseformatoptions['sectiontext5']['text'], FORMAT_HTML);
+            $sectionsummary = json_decode($courseformatoptions['sectiontext5'], true);
+            $templatecontext->sectiontext5 = format_text($sectionsummary['text'], FORMAT_HTML);
         }
 
         if (has_capability('format/completionstats:view', context_course::instance($course->id))
