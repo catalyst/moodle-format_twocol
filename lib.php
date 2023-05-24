@@ -429,8 +429,10 @@ class format_twocol extends core_courseformat\base {
                     'help' => 'sectiontext1',
                     'help_component' => 'format_twocol',
                     'element_attributes' => array(
-                        'trusttext' => 0,
-                        'enable_filemanagement' => false
+                        [
+                            'trusttext' => 0,
+                            'enable_filemanagement' => false
+                        ]
                     )
                 ),
                 'sectionicon1' => array(
@@ -452,8 +454,10 @@ class format_twocol extends core_courseformat\base {
                     'help' => 'sectiontext2',
                     'help_component' => 'format_twocol',
                     'element_attributes' => array(
-                        'trusttext' => 0,
-                        'enable_filemanagement' => false
+                        [
+                            'trusttext' => 0,
+                            'enable_filemanagement' => false
+                        ]
                     )
                 ),
                 'sectionicon2' => array(
@@ -475,8 +479,10 @@ class format_twocol extends core_courseformat\base {
                     'help' => 'sectiontext3',
                     'help_component' => 'format_twocol',
                     'element_attributes' => array(
-                        'trusttext' => 0,
-                        'enable_filemanagement' => false
+                        [
+                            'trusttext' => 0,
+                            'enable_filemanagement' => false
+                        ]
                     )
                 ),
                 'sectionicon3' => array(
@@ -498,8 +504,10 @@ class format_twocol extends core_courseformat\base {
                     'help' => 'sectiontext4',
                     'help_component' => 'format_twocol',
                     'element_attributes' => array(
-                        'trusttext' => 0,
-                        'enable_filemanagement' => false
+                        [
+                            'trusttext' => 0,
+                            'enable_filemanagement' => false
+                        ]
                     )
                 ),
                 'sectionicon4' => array(
@@ -521,8 +529,10 @@ class format_twocol extends core_courseformat\base {
                     'help' => 'sectiontext5',
                     'help_component' => 'format_twocol',
                     'element_attributes' => array(
-                        'trusttext' => 0,
-                        'enable_filemanagement' => false
+                        [
+                            'trusttext' => 0,
+                            'enable_filemanagement' => false
+                        ]
                     )
                 ),
                 'sectionicon5' => array(
