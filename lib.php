@@ -638,25 +638,39 @@ class format_twocol extends format_base {
                           'format' => $this->format,
                           'sectionid' => $sectionid
                           ), '', 'id,name,value');
-                foreach ($records as $record) {
-                    if (array_key_exists($record->name, $this->formatoptions[$sectionid])) {
-                        $value = $record->value;
-                        if ($value !== null && isset($options[$record->name]['type'])) {
-                            // This will convert string value to number if needed.
-                            $value = clean_param($value, $options[$record->name]['type']);
-                        }
 
-                        if (!empty($options[$record->name]['element']) && $options[$record->name]['element'] === 'editor') {
-                            $this->formatoptions[$sectionid][$record->name] = json_decode($value, true);
-                        } else {
-                            $this->formatoptions[$sectionid][$record->name] = $value;
-                        }
-                    }
+                $indexedrecords = [];
+                foreach ($records as $record) {
+                    $indexedrecords[$record->name] = $record->value;
+                }
+                foreach ($options as $optionname => $option) {
+                    contract_value($this->formatoptions[$sectionid], $indexedrecords, $option, $optionname);
                 }
             }
         }
         return $this->formatoptions[$sectionid];
     }
+
+    /**
+     * Override this function to return the course format options so that editor content can be saved to db.
+     *
+     * @return stdClass
+     */
+    public function get_course() {
+        $course = parent::get_course();
+
+        if ($course) {
+            // The text editor fields (text, format) are stored as json encoded arrays.
+            $sectiontext = ['sectiontext1', 'sectiontext2', 'sectiontext3', 'sectiontext4', 'sectiontext5'];
+            foreach ($sectiontext as $text) {
+                if (!is_array($course->$text)) {
+                    $course->$text = json_decode($course->$text, true);
+                }
+            }
+        }
+        return $course;
+    }
+
     /**
      * Whether this format allows to delete sections.
      *
