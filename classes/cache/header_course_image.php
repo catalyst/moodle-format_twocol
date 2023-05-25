@@ -56,7 +56,6 @@ class header_course_image implements cache_data_source {
     public function load_for_cache($key) {
         // We should use get_course() instead of get_fast_modinfo() for better performance.
         $vars = explode('_', $key);
-        return $this->get_image_url_from_overview_files($course);
         $course = get_course($vars[0]);
         $imageid = $vars[1];
         return $this->get_image_url_from_overview_files($course, $imageid);
