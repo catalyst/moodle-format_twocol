@@ -317,6 +317,8 @@ class content extends content_base {
         $templatecontext->sectioncmlist = $cmlist->export_for_template($output);
         $templatecontext->sectioncmcontrol = $output->course_section_add_cm_control(
             $course, $displaysection, $displaysection);
+        $header = new \core_courseformat\output\local\content\section\summary($format, $thissection);
+        $templatecontext->sectionheader = $output->render($header);
         $templatecontext->navselection = $this->section_nav_selection($course, null, $displaysection, $output);
         $templatecontext->hasprogress = $sectioncompletion->hastotal;
         $templatecontext->progress = $sectioncompletion->percent;
