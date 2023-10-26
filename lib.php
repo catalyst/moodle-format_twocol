@@ -832,7 +832,7 @@ class format_twocol extends core_courseformat\base {
             $modinfo = $this->get_modinfo();
             $section = $modinfo->get_section_info($section->section);
         }
-        $elementclass = $this->get_output_classname('section_format\\availability');
+        $elementclass = $this->get_output_classname('content\\section\\availability');
         $availability = new $elementclass($this, $section);
 
         $rv['section_availability'] = $renderer->render($availability);
