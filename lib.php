@@ -849,6 +849,15 @@ class format_twocol extends core_courseformat\base {
         // Return everything (nothing to hide).
         return $this->get_format_options();
     }
+
+    /**
+     * Opt into the course index.
+     *
+     * @return bool
+     */
+    public function uses_course_index() {
+        return true;
+    }
 }
 
 /**
