@@ -330,6 +330,12 @@ class content extends content_base {
             $templatecontext->sectionimage = $this->get_course_image_or_pattern($course, $output, $imagenum);
         }
 
+        if ($format->show_editor()) {
+            $controlmenuclass = $format->get_output_classname('content\\section\\controlmenu');
+            $controlmenu = new $controlmenuclass($format, $thissection);
+            $templatecontext->controlmenu = $controlmenu->export_for_template($output);
+        }
+
         return $templatecontext;
     }
 
