@@ -368,3 +368,11 @@
         width: auto;
     }
 }
+
+.twocol .controlmenu-coursetopic {
+    margin: 6px;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+}
