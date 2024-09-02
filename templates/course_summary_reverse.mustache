@@ -107,7 +107,7 @@
                 {{#courseimage}}style='background-image: url("{{{courseimage}}}"), linear-gradient({{{headerbackcolor}}}, {{{headerbackcolor}}});' {{/courseimage}}
                 {{^courseimage}}style='background-color: {{{headerbackcolor}}};'{{/courseimage}}
             >
-            <span class="sr-only">{{#str}}aria:courseimage, core_course{{/str}}</span>
+            <span class="sr-only">{{fullname}}</span>
             {{> format_twocol/progress_bar }}
         </div>
         <div class="section">
