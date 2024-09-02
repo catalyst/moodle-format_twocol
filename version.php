@@ -29,4 +29,7 @@ $plugin->release = '2024090200';
 $plugin->version = 2024090200;
 $plugin->requires = 2023120100.01;
 $plugin->maturity = MATURITY_STABLE;
-$plugin->supported = [404];
+$plugin->dependencies = array(
+    'format_topics'  => 2019052000,
+);
+$plugin->supported = [404, 404];
