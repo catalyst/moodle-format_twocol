@@ -48,6 +48,3 @@ $outputclass = $format->get_output_classname('content');
 $output = new $outputclass($format);
 echo $renderer->render($output);
 
-// Include course format js module. We are reusing the core topics format JS.
-$PAGE->requires->js('/course/format/topics/format.js');
-
