@@ -21,6 +21,7 @@ This plugin currently supports Moodle:
 | Moodle 3.8 to 3.10 | MOODLE_38_STABLE     |
 | Moodle 3.11        | MOODLE_311_STABLE    |
 | Moodle 4.0+        | MOODLE_400_STABLE    |
+| Moodle 4.4+        | MOODLE_404_STABLE    |
 
 ## Installation
 
@@ -66,7 +67,7 @@ You can choose from the course settings how the course and section images are di
 There are three options for formatting the display of the header image:
 * Contain: Scales the image as large as possible without cropping or stretching the image.
 * Contain Left: Sam as contain but the image is left aligned.
-* Cover: Scales the image (while preserving its ratio) to the smallest possible size to fill, leaving no empty space. Image may be cropped. 
+* Cover: Scales the image (while preserving its ratio) to the smallest possible size to fill, leaving no empty space. Image may be cropped.
 * Auto: Scales the background image in the corresponding direction such that its intrinsic proportions are maintained.';
 
 # Crafted by Catalyst IT
@@ -81,7 +82,7 @@ https://www.catalyst-au.net/
 
 # Contributing and Support
 
-Issues, and pull requests using github are welcome and encouraged! 
+Issues, and pull requests using github are welcome and encouraged!
 
 https://github.com/catalyst/moodle-format_twocol/issues
 
