@@ -41,7 +41,7 @@ if (($marker >= 0) && has_capability('moodle/course:setcurrentsection', $context
 $renderer = $PAGE->get_renderer('format_twocol');
 
 if (!empty($displaysection)) {
-    $format->set_section_number($displaysection);
+    $format->set_sectionnum($displaysection);
 }
 
 $outputclass = $format->get_output_classname('content');

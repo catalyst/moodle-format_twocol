@@ -65,7 +65,7 @@ class content extends content_base {
         $data = new stdClass();
 
         $format = $this->format;
-        $displaysection = $format->get_section_number();
+        $displaysection = $format->get_sectionnum();
         if (!empty($displaysection)) {
             $data->singlesectionpage = $this->print_single_section_page($output);
         } else {
@@ -274,7 +274,7 @@ class content extends content_base {
      */
     public function print_single_section_page(renderer_base $output): stdClass {
         $format = $this->format;
-        $displaysection = $format->get_section_number();
+        $displaysection = $format->get_sectionnum();
         $course = $format->get_course();
 
         $modinfo = get_fast_modinfo($course);
