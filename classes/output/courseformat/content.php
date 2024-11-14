@@ -324,6 +324,9 @@ class content extends content_base {
         $templatecontext->progress = $sectioncompletion->percent;
         $templatecontext->progresstitle = get_string('progresstitle:section', 'format_twocol');
         $templatecontext->headerbackcolor = $headerbackcolor;
+        $availableclass = $format->get_output_classname('content\\section\\availability');
+        $availability = new $availableclass($format, $thissection);
+        $templatecontext->hasavailability = $availability->export_for_template($output);
 
         if ($imagenum !== 0) {
             $imagenum--;

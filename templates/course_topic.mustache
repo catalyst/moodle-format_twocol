@@ -50,6 +50,11 @@
             <span class="mdl-right">{{{navlinknext}}}</span>
         </div>
         <ul class="twocol">
+            <li class="{{#hasavailability}}description{{/hasavailability}} my-3" data-for="sectioninfo">
+                {{$ core_courseformat/local/content/section/availability }}
+                    {{> core_courseformat/local/content/section/availability }}
+                {{/ core_courseformat/local/content/section/availability }}
+            </li>
             {{{sectionheader}}}
             {{#sectioncmlist}}
                 {{> core_courseformat/local/content/section/cmlist }}
