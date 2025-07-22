@@ -240,7 +240,7 @@ class content extends content_base {
             $templatecontext->sectiontext5 = format_text($sectionsummary['text'], FORMAT_HTML);
         }
 
-        if (has_capability('format/completionstats:view', context_course::instance($course->id))
+        if (has_capability('format/twocol:viewcompletionstats', context_course::instance($course->id))
             && !empty($courseformatoptions['completionstatus'])
             && $completioninfo->has_criteria()) {
             $templatecontext->completioncounts = $this->get_completion_counts($completioninfo, $course);
