@@ -24,17 +24,25 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$capabilities = array(
+$capabilities = [
 
-    'format/completionstats:view' => array(
+    'format/twocol:viewcompletionstats' => [
         'riskbitmask' => RISK_PERSONAL,
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'student'        => CAP_PREVENT,
             'teacher'        => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager'        => CAP_ALLOW
-        ),
-    )
-);
+            'manager'        => CAP_ALLOW,
+        ],
+        'clonepermissionsfrom' => 'format/completionstats:view',
+    ],
+];
+
+$deprecatedcapabilities = [
+    'format/completionstats:view' => [
+        'replacement' => 'format/twocol:viewcompletionstats',
+        'message'     => 'Capability renamed to match plugin name.',
+    ],
+];
