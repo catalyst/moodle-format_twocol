@@ -147,6 +147,7 @@ $string['speedometer'] = 'Speedometer';
 $string['star'] = 'Star';
 $string['third'] = 'Third';
 $string['tick'] = 'Tick';
+$string['twocol:viewcompletionstats'] = 'View completion summary statistics';
 $string['userscomplete'] = 'Students complete';
 $string['usersinprogress'] = 'Students in progress';
 $string['usersnotstarted'] = 'Students not started';
