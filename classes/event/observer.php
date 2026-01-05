@@ -25,9 +25,6 @@ namespace format_twocol\event;
 
 use core\event\course_updated;
 
-
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Event observer for format_twocol.
  */
@@ -42,5 +39,4 @@ class observer {
         \cache::make('format_twocol', 'header_course_image')->delete($event->objectid);
         return true;
     }
-
 }

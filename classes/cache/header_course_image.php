@@ -18,8 +18,8 @@ namespace format_twocol\cache;
 
 use cache_data_source;
 use cache_definition;
-use \moodle_url;
-use \core_course_list_element;
+use moodle_url;
+use core_course_list_element;
 
 /**
  * Class to describe cache data source for course image.
@@ -29,7 +29,6 @@ use \core_course_list_element;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class header_course_image implements cache_data_source {
-
     /** @var header_course_image */
     protected static $instance = null;
 
@@ -38,7 +37,7 @@ class header_course_image implements cache_data_source {
      * specified by this interface.
      *
      * @param cache_definition $definition
-     * @return \foramt_twocol\cache\header_course_image
+     * @return header_course_image
      */
     public static function get_instance_for_cache(cache_definition $definition): header_course_image {
         if (is_null(self::$instance)) {
@@ -77,12 +76,12 @@ class header_course_image implements cache_data_source {
             $file = $files[$imageid];
             if ($file->is_valid_image()) {
                 return moodle_url::make_pluginfile_url(
-                        $file->get_contextid(),
-                        $file->get_component(),
-                        $file->get_filearea(),
-                        null,
-                        $file->get_filepath(),
-                        $file->get_filename()
+                    $file->get_contextid(),
+                    $file->get_component(),
+                    $file->get_filearea(),
+                    null,
+                    $file->get_filepath(),
+                    $file->get_filename()
                 )->out();
             }
         }

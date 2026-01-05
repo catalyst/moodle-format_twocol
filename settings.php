@@ -26,7 +26,10 @@ defined('MOODLE_INTERNAL') || die;
 
 
 if ($ADMIN->fulltree) {
-    $settings->add(new admin_setting_configcheckbox('format_twocol/completionnag',
+    $settings->add(new admin_setting_configcheckbox(
+        'format_twocol/completionnag',
         get_string('completionnag', 'format_twocol'),
-        get_string('completionnag_desc', 'format_twocol'), 1));
+        get_string('completionnag_desc', 'format_twocol'),
+        1
+    ));
 }

@@ -23,7 +23,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-require_once($CFG->dirroot. '/course/format/lib.php');
+require_once($CFG->dirroot . '/course/format/lib.php');
 
 /**
  * Main class for the twocol course format
@@ -33,13 +33,12 @@ require_once($CFG->dirroot. '/course/format/lib.php');
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class format_twocol extends core_courseformat\base {
-
     /**
      * Returns true if this course format uses sections
      *
      * @return bool
      */
-    public function uses_sections() : bool {
+    public function uses_sections(): bool {
         return true;
     }
 
@@ -51,11 +50,14 @@ class format_twocol extends core_courseformat\base {
      * @param int|stdClass $section Section object from database or just field section.section
      * @return string Display name that the course format prefers, e.g. "Topic 2"
      */
-    public function get_section_name($section) : string {
+    public function get_section_name($section): string {
         $section = $this->get_section($section);
         if ((string)$section->name !== '') {
-            return format_string($section->name, true,
-                    array('context' => context_course::instance($this->courseid)));
+            return format_string(
+                $section->name,
+                true,
+                ['context' => context_course::instance($this->courseid)]
+            );
         } else {
             return $this->get_default_section_name($section);
         }
@@ -86,7 +88,7 @@ class format_twocol extends core_courseformat\base {
      * Generate the title for this section page
      * @return string the page title
      */
-    public function page_title() : string {
+    public function page_title(): string {
         return get_string('sectionoutline');
     }
 
@@ -100,10 +102,10 @@ class format_twocol extends core_courseformat\base {
      *     'sr' (int) used by multipage formats to specify to which section to return
      * @return null|moodle_url
      */
-    public function get_view_url($section, $options = array()) {
+    public function get_view_url($section, $options = []) {
 
         $course = $this->get_course();
-        $url = new moodle_url('/course/view.php', array('id' => $course->id));
+        $url = new moodle_url('/course/view.php', ['id' => $course->id]);
 
         if (is_object($section)) {
             $sectionno = $section->section;
@@ -141,8 +143,10 @@ class format_twocol extends core_courseformat\base {
         // If section is specified in course/view.php, make sure it is expanded in navigation.
         if ($navigation->includesectionnum === false) {
             $selectedsection = optional_param('section', null, PARAM_INT);
-            if ($selectedsection !== null && (!defined('AJAX_SCRIPT') || AJAX_SCRIPT == '0') &&
-                    $PAGE->url->compare(new moodle_url('/course/view.php'), URL_MATCH_BASE)) {
+            if (
+                $selectedsection !== null && (!defined('AJAX_SCRIPT') || AJAX_SCRIPT == '0') &&
+                    $PAGE->url->compare(new moodle_url('/course/view.php'), URL_MATCH_BASE)
+            ) {
                 $navigation->includesectionnum = $selectedsection;
             }
         }
@@ -173,7 +177,7 @@ class format_twocol extends core_courseformat\base {
      */
     public function ajax_section_move() {
         global $PAGE;
-        $titles = array();
+        $titles = [];
         $course = $this->get_course();
         $modinfo = get_fast_modinfo($course);
         $renderer = $this->get_renderer($PAGE);
@@ -182,7 +186,7 @@ class format_twocol extends core_courseformat\base {
                 $titles[$number] = $renderer->section_title($section, $course);
             }
         }
-        return array('sectiontitles' => $titles, 'action' => 'move');
+        return ['sectiontitles' => $titles, 'action' => 'move'];
     }
 
     /**
@@ -192,10 +196,10 @@ class format_twocol extends core_courseformat\base {
      *     each of values is an array of block names (for left and right side columns)
      */
     public function get_default_blocks() {
-        return array(
-            BLOCK_POS_LEFT => array(),
-            BLOCK_POS_RIGHT => array()
-        );
+        return [
+            BLOCK_POS_LEFT => [],
+            BLOCK_POS_RIGHT => [],
+        ];
     }
 
     /**
@@ -210,7 +214,7 @@ class format_twocol extends core_courseformat\base {
      */
     public function course_format_options($foreditform = false) {
         static $courseformatoptions = false;
-        $icons = array (
+        $icons = [
             'report' => get_string('areachart', 'format_twocol'),
             'notifications' => get_string('bell', 'format_twocol'),
             'calc' => get_string('calculator', 'format_twocol'),
@@ -230,7 +234,7 @@ class format_twocol extends core_courseformat\base {
             'dashboard' => get_string('speedometer', 'format_twocol'),
             'star-rating' => get_string('star', 'format_twocol'),
             'checked' => get_string('tick', 'format_twocol'),
-        );
+        ];
 
         $headingimagenum = [
             0 => get_string('backgroundcoloronly', 'format_twocol'),
@@ -248,314 +252,314 @@ class format_twocol extends core_courseformat\base {
 
         if ($courseformatoptions === false) {
             $courseconfig = get_config('moodlecourse');
-            $courseformatoptions = array(
-                'hiddensections' => array(
+            $courseformatoptions = [
+                'hiddensections' => [
                     'default' => $courseconfig->hiddensections,
                     'type' => PARAM_INT,
-                ),
-                'completionstatus' => array(
+                ],
+                'completionstatus' => [
                     'default' => 1,
                     'type' => PARAM_INT,
-                ),
-                'headerimage' => array(
+                ],
+                'headerimage' => [
                     'default' => 1,
                     'type' => PARAM_INT,
-                ),
-                'headerimageformat' => array(
+                ],
+                'headerimageformat' => [
                     'default' => get_string('cover', 'format_twocol'),
                     'type' => PARAM_ALPHAEXT,
-                ),
-                'headerbackcolor' => array(
+                ],
+                'headerbackcolor' => [
                     'default' => '#FFFFFF',
                     'type' => PARAM_NOTAGS,
-                ),
-                'sectionimage' => array(
+                ],
+                'sectionimage' => [
                      'default' => 2,
                      'type' => PARAM_INT,
-                ),
-                'sectionimageformat' => array(
+                ],
+                'sectionimageformat' => [
                      'default' => get_string('cover', 'format_twocol'),
                      'type' => PARAM_ALPHAEXT,
-                ),
-                'detailsheading' => array(
+                ],
+                'detailsheading' => [
                     'default' => get_string('detailsheading', 'format_twocol'),
                     'type' => PARAM_TEXT,
-                ),
-                'sectionheading1' => array(
+                ],
+                'sectionheading1' => [
                     'default' => '',
                     'type' => PARAM_TEXT,
-                ),
-                'sectiontext1' => array(
+                ],
+                'sectiontext1' => [
                     'default' => '',
                     'type' => PARAM_RAW,
-                    'element' => 'editor'
-                ),
-                'sectionicon1' => array(
+                    'element' => 'editor',
+                ],
+                'sectionicon1' => [
                     'default' => '',
                     'type' => PARAM_ALPHAEXT,
-                ),
-                'sectionheading2' => array(
+                ],
+                'sectionheading2' => [
                     'default' => '',
                     'type' => PARAM_TEXT,
-                ),
-                'sectiontext2' => array(
+                ],
+                'sectiontext2' => [
                     'default' => '',
                     'type' => PARAM_RAW,
-                    'element' => 'editor'
-                ),
-                'sectionicon2' => array(
+                    'element' => 'editor',
+                ],
+                'sectionicon2' => [
                     'default' => '',
                     'type' => PARAM_ALPHAEXT,
-                ),
-                'sectionheading3' => array(
+                ],
+                'sectionheading3' => [
                     'default' => '',
                     'type' => PARAM_TEXT,
-                ),
-                'sectiontext3' => array(
+                ],
+                'sectiontext3' => [
                     'default' => '',
                     'type' => PARAM_RAW,
-                    'element' => 'editor'
-                ),
-                'sectionicon3' => array(
+                    'element' => 'editor',
+                ],
+                'sectionicon3' => [
                     'default' => '',
                     'type' => PARAM_ALPHAEXT,
-                ),
-                'sectionheading4' => array(
+                ],
+                'sectionheading4' => [
                     'default' => '',
                     'type' => PARAM_TEXT,
-                ),
-                'sectiontext4' => array(
+                ],
+                'sectiontext4' => [
                     'default' => '',
                     'type' => PARAM_RAW,
-                    'element' => 'editor'
-                ),
-                'sectionicon4' => array(
+                    'element' => 'editor',
+                ],
+                'sectionicon4' => [
                     'default' => '',
                     'type' => PARAM_ALPHAEXT,
-                ),
-                'sectionheading5' => array(
+                ],
+                'sectionheading5' => [
                     'default' => '',
                     'type' => PARAM_TEXT,
-                ),
-                'sectiontext5' => array(
+                ],
+                'sectiontext5' => [
                     'default' => '',
                     'type' => PARAM_RAW,
-                    'element' => 'editor'
-                ),
-                'sectionicon5' => array(
+                    'element' => 'editor',
+                ],
+                'sectionicon5' => [
                     'default' => '',
                     'type' => PARAM_ALPHAEXT,
-                ),
-                'resourcesheading' => array(
+                ],
+                'resourcesheading' => [
                     'default' => get_string('resourcesheading', 'format_twocol'),
                     'type' => PARAM_TEXT,
-                ),
-                'reversedisplay' => array(
+                ],
+                'reversedisplay' => [
                     'default' => 0,
                     'type' => PARAM_INT,
-                ),
-            );
+                ],
+            ];
         }
         if ($foreditform && !isset($courseformatoptions['coursedisplay']['label'])) {
-            $courseformatoptionsedit = array(
-                'hiddensections' => array(
+            $courseformatoptionsedit = [
+                'hiddensections' => [
                     'label' => new lang_string('hiddensections'),
                     'help' => 'hiddensections',
                     'help_component' => 'moodle',
                     'element_type' => 'select',
-                    'element_attributes' => array(
-                        array(
+                    'element_attributes' => [
+                        [
                             0 => new lang_string('hiddensectionscollapsed'),
-                            1 => new lang_string('hiddensectionsinvisible')
-                        )
-                    ),
-                ),
-                'completionstatus' => array(
+                            1 => new lang_string('hiddensectionsinvisible'),
+                        ],
+                    ],
+                ],
+                'completionstatus' => [
                     'label' => get_string('completionstatus', 'format_twocol'),
                     'element_type' => 'advcheckbox',
                     'help' => 'completionstatus',
                     'help_component' => 'format_twocol',
-                    'element_attributes' => array( get_string('completionstatus_label', 'format_twocol'))
-                ),
-                'headerimage' => array(
+                    'element_attributes' => [ get_string('completionstatus_label', 'format_twocol')],
+                ],
+                'headerimage' => [
                     'label' => get_string('headerimage_label', 'format_twocol'),
                     'element_type' => 'select',
                     'help' => 'headerimage',
                     'help_component' => 'format_twocol',
-                    'element_attributes' => array($headingimagenum),
-                ),
-                'headerimageformat' => array(
+                    'element_attributes' => [$headingimagenum],
+                ],
+                'headerimageformat' => [
                     'label' => get_string('headerimageformat_label', 'format_twocol'),
                     'element_type' => 'select',
                     'help' => 'headerimageformat',
                     'help_component' => 'format_twocol',
-                    'element_attributes' => array($headingformats),
-                ),
-                'headerbackcolor' => array(
+                    'element_attributes' => [$headingformats],
+                ],
+                'headerbackcolor' => [
                     'label' => get_string('headerbackcolor_label', 'format_twocol'),
                     'element_type' => 'text',
                     'help' => 'headerbackcolor',
                     'help_component' => 'format_twocol',
-                ),
-                'sectionimage' => array(
+                ],
+                'sectionimage' => [
                     'label' => get_string('sectionimage_label', 'format_twocol'),
                     'element_type' => 'select',
                     'help' => 'sectionimage',
                     'help_component' => 'format_twocol',
-                    'element_attributes' => array($headingimagenum),
-                ),
-                'sectionimageformat' => array(
+                    'element_attributes' => [$headingimagenum],
+                ],
+                'sectionimageformat' => [
                     'label' => get_string('sectionimageformat_label', 'format_twocol'),
                     'element_type' => 'select',
                     'help' => 'sectionimageformat',
                     'help_component' => 'format_twocol',
-                    'element_attributes' => array($headingformats),
-                ),
-                'detailsheading' => array(
+                    'element_attributes' => [$headingformats],
+                ],
+                'detailsheading' => [
                     'label' => get_string('detailsheading_label', 'format_twocol'),
                     'element_type' => 'text',
                     'help' => 'detailsheading',
                     'help_component' => 'format_twocol',
-                ),
-                'sectionheading1' => array(
+                ],
+                'sectionheading1' => [
                     'label' => get_string('sectionheading1_label', 'format_twocol'),
                     'element_type' => 'text',
                     'help' => 'sectionheading1',
                     'help_component' => 'format_twocol',
-                ),
-                'sectiontext1' => array(
+                ],
+                'sectiontext1' => [
                     'label' => get_string('sectiontext1_label', 'format_twocol'),
                     'element_type' => 'editor',
                     'help' => 'sectiontext1',
                     'help_component' => 'format_twocol',
-                    'element_attributes' => array(
+                    'element_attributes' => [
                         [
                             'trusttext' => 0,
-                            'enable_filemanagement' => false
-                        ]
-                    )
-                ),
-                'sectionicon1' => array(
+                            'enable_filemanagement' => false,
+                        ],
+                    ],
+                ],
+                'sectionicon1' => [
                     'label' => get_string('sectionicon1_label', 'format_twocol'),
                     'element_type' => 'select',
                     'help' => 'sectionicon1',
                     'help_component' => 'format_twocol',
-                    'element_attributes' => array($icons),
-                ),
-                'sectionheading2' => array(
+                    'element_attributes' => [$icons],
+                ],
+                'sectionheading2' => [
                     'label' => get_string('sectionheading2_label', 'format_twocol'),
                     'element_type' => 'text',
                     'help' => 'sectionheading2',
                     'help_component' => 'format_twocol',
-                ),
-                'sectiontext2' => array(
+                ],
+                'sectiontext2' => [
                     'label' => get_string('sectiontext2_label', 'format_twocol'),
                     'element_type' => 'editor',
                     'help' => 'sectiontext2',
                     'help_component' => 'format_twocol',
-                    'element_attributes' => array(
+                    'element_attributes' => [
                         [
                             'trusttext' => 0,
-                            'enable_filemanagement' => false
-                        ]
-                    )
-                ),
-                'sectionicon2' => array(
+                            'enable_filemanagement' => false,
+                        ],
+                    ],
+                ],
+                'sectionicon2' => [
                     'label' => get_string('sectionicon2_label', 'format_twocol'),
                     'element_type' => 'select',
                     'help' => 'sectionicon2',
                     'help_component' => 'format_twocol',
-                    'element_attributes' => array($icons),
-                ),
-                'sectionheading3' => array(
+                    'element_attributes' => [$icons],
+                ],
+                'sectionheading3' => [
                     'label' => get_string('sectionheading3_label', 'format_twocol'),
                     'element_type' => 'text',
                     'help' => 'sectionheading3',
                     'help_component' => 'format_twocol',
-                ),
-                'sectiontext3' => array(
+                ],
+                'sectiontext3' => [
                     'label' => get_string('sectiontext3_label', 'format_twocol'),
                     'element_type' => 'editor',
                     'help' => 'sectiontext3',
                     'help_component' => 'format_twocol',
-                    'element_attributes' => array(
+                    'element_attributes' => [
                         [
                             'trusttext' => 0,
-                            'enable_filemanagement' => false
-                        ]
-                    )
-                ),
-                'sectionicon3' => array(
+                            'enable_filemanagement' => false,
+                        ],
+                    ],
+                ],
+                'sectionicon3' => [
                     'label' => get_string('sectionicon3_label', 'format_twocol'),
                     'element_type' => 'select',
                     'help' => 'sectionicon3',
                     'help_component' => 'format_twocol',
-                    'element_attributes' => array($icons),
-                ),
-                'sectionheading4' => array(
+                    'element_attributes' => [$icons],
+                ],
+                'sectionheading4' => [
                     'label' => get_string('sectionheading4_label', 'format_twocol'),
                     'element_type' => 'text',
                     'help' => 'sectionheading4',
                     'help_component' => 'format_twocol',
-                ),
-                'sectiontext4' => array(
+                ],
+                'sectiontext4' => [
                     'label' => get_string('sectiontext4_label', 'format_twocol'),
                     'element_type' => 'editor',
                     'help' => 'sectiontext4',
                     'help_component' => 'format_twocol',
-                    'element_attributes' => array(
+                    'element_attributes' => [
                         [
                             'trusttext' => 0,
-                            'enable_filemanagement' => false
-                        ]
-                    )
-                ),
-                'sectionicon4' => array(
+                            'enable_filemanagement' => false,
+                        ],
+                    ],
+                ],
+                'sectionicon4' => [
                     'label' => get_string('sectionicon4_label', 'format_twocol'),
                     'element_type' => 'select',
                     'help' => 'sectionicon4',
                     'help_component' => 'format_twocol',
-                    'element_attributes' => array($icons),
-                ),
-                'sectionheading5' => array(
+                    'element_attributes' => [$icons],
+                ],
+                'sectionheading5' => [
                     'label' => get_string('sectionheading5_label', 'format_twocol'),
                     'element_type' => 'text',
                     'help' => 'sectionheading5',
                     'help_component' => 'format_twocol',
-                ),
-                'sectiontext5' => array(
+                ],
+                'sectiontext5' => [
                     'label' => get_string('sectiontext5_label', 'format_twocol'),
                     'element_type' => 'editor',
                     'help' => 'sectiontext5',
                     'help_component' => 'format_twocol',
-                    'element_attributes' => array(
+                    'element_attributes' => [
                         [
                             'trusttext' => 0,
-                            'enable_filemanagement' => false
-                        ]
-                    )
-                ),
-                'sectionicon5' => array(
+                            'enable_filemanagement' => false,
+                        ],
+                    ],
+                ],
+                'sectionicon5' => [
                     'label' => get_string('sectionicon5_label', 'format_twocol'),
                     'element_type' => 'select',
                     'help' => 'sectionicon5',
                     'help_component' => 'format_twocol',
-                    'element_attributes' => array($icons),
-                ),
-                'resourcesheading' => array(
+                    'element_attributes' => [$icons],
+                ],
+                'resourcesheading' => [
                     'label' => get_string('resourcesheading_label', 'format_twocol'),
                     'element_type' => 'text',
                     'help' => 'resourcesheading',
                     'help_component' => 'format_twocol',
-                ),
-                'reversedisplay' => array(
+                ],
+                'reversedisplay' => [
                     'label' => get_string('reversedisplay', 'format_twocol'),
                     'element_type' => 'advcheckbox',
                     'help' => 'reversedisplay',
                     'help_component' => 'format_twocol',
-                    'element_attributes' => array( get_string('reversedisplay_label', 'format_twocol'))
-                ),
-            );
+                    'element_attributes' => [ get_string('reversedisplay_label', 'format_twocol')],
+                ],
+            ];
 
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
         }
@@ -629,7 +633,7 @@ class format_twocol extends core_courseformat\base {
      * @param int|null $sectionid null if it is course format option
      * @return array array of options that have valid values
      */
-    protected function validate_format_options(array $rawdata, int $sectionid = null) : array {
+    protected function validate_format_options(array $rawdata, ?int $sectionid = null): array {
         if (!$sectionid) {
             $allformatoptions = $this->course_format_options(true);
         } else {
@@ -677,7 +681,7 @@ class format_twocol extends core_courseformat\base {
 
         if (empty($options)) {
             // There are no option for course/sections anyway, no need to go further.
-            return array();
+            return [];
         }
         if ($section === null) {
             // Course format options will be returned.
@@ -685,9 +689,14 @@ class format_twocol extends core_courseformat\base {
         } else if ($this->courseid && isset($section->id)) {
             // Course section format options will be returned.
             $sectionid = $section->id;
-        } else if ($this->courseid && is_int($section) &&
-            ($sectionobj = $DB->get_record('course_sections',
-                array('section' => $section, 'course' => $this->courseid), 'id'))) {
+        } else if (
+            $this->courseid && is_int($section) &&
+            ($sectionobj = $DB->get_record(
+                'course_sections',
+                ['section' => $section, 'course' => $this->courseid],
+                'id'
+            ))
+        ) {
                     // Course section format options will be returned.
                     $sectionid = $sectionobj->id;
         } else {
@@ -696,7 +705,7 @@ class format_twocol extends core_courseformat\base {
             $sectionid = -1;
         }
         if (!array_key_exists($sectionid, $this->formatoptions)) {
-            $this->formatoptions[$sectionid] = array();
+            $this->formatoptions[$sectionid] = [];
             // First fill with default values.
             foreach ($options as $optionname => $optionparams) {
                 $this->formatoptions[$sectionid][$optionname] = null;
@@ -708,11 +717,15 @@ class format_twocol extends core_courseformat\base {
                 // Overwrite the default options values with those stored in course_format_options table.
                 // Nothing can be stored if we are interested in generic course ($this->courseid == 0)
                 // or generic section ($sectionid === 0).
-                $records = $DB->get_records('course_format_options',
-                    array('courseid' => $this->courseid,
+                $records = $DB->get_records(
+                    'course_format_options',
+                    ['courseid' => $this->courseid,
                           'format' => $this->format,
-                          'sectionid' => $sectionid
-                          ), '', 'id,name,value');
+                          'sectionid' => $sectionid,
+                    ],
+                    '',
+                    'id,name,value'
+                );
 
                 $indexedrecords = [];
                 foreach ($records as $record) {
@@ -754,7 +767,7 @@ class format_twocol extends core_courseformat\base {
      * @param int|stdClass|section_info $section
      * @return bool
      */
-    public function can_delete_section($section) : bool {
+    public function can_delete_section($section): bool {
         return true;
     }
 
@@ -768,8 +781,13 @@ class format_twocol extends core_courseformat\base {
      * @param null|lang_string|string $editlabel
      * @return \core\output\inplace_editable
      */
-    public function inplace_editable_render_section_name($section, $linkifneeded = true,
-                                                         $editable = null, $edithint = null, $editlabel = null) {
+    public function inplace_editable_render_section_name(
+        $section,
+        $linkifneeded = true,
+        $editable = null,
+        $edithint = null,
+        $editlabel = null
+    ) {
         if (empty($edithint)) {
             $edithint = new lang_string('editsectionname', 'format_twocol');
         }
@@ -785,7 +803,7 @@ class format_twocol extends core_courseformat\base {
      *
      * @return bool
      */
-    public function supports_news() : bool {
+    public function supports_news(): bool {
         return false;
     }
 
@@ -797,7 +815,7 @@ class format_twocol extends core_courseformat\base {
      * @param stdClass|section_info $section section where this module is located or will be added to
      * @return bool
      */
-    public function allow_stealth_module_visibility($cm, $section) : bool {
+    public function allow_stealth_module_visibility($cm, $section): bool {
         // Allow the third visibility state inside visible sections or in section 0.
         return !$section->section || $section->visible;
     }
@@ -874,7 +892,9 @@ function format_twocol_inplace_editable($itemtype, $itemid, $newvalue) {
     if ($itemtype === 'sectionname' || $itemtype === 'sectionnamenl') {
         $section = $DB->get_record_sql(
             'SELECT s.* FROM {course_sections} s JOIN {course} c ON s.course = c.id WHERE s.id = ? AND c.format = ?',
-            array($itemid, 'twocol'), MUST_EXIST);
+            [$itemid, 'twocol'],
+            MUST_EXIST
+        );
         return course_get_format($section->course)->inplace_editable_update_section_name($section, $itemtype, $newvalue);
     }
 }

@@ -42,7 +42,6 @@ use url_select;
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class content extends content_base {
-
     /**
      * Override template definition.
      *
@@ -76,7 +75,6 @@ class content extends content_base {
         }
 
         return $data;
-
     }
 
     /**
@@ -86,30 +84,29 @@ class content extends content_base {
      * @param stdClass $course
      * @return array $completioncounts
      */
-    private function get_completion_counts(completion_info $completioninfo, stdClass $course) : array {
-        $completioncounts = array(
+    private function get_completion_counts(completion_info $completioninfo, stdClass $course): array {
+        $completioncounts = [
             'complete' => 0,
             'inprogress' => 0,
-            'notstarted' => 0
-        );
+            'notstarted' => 0,
+        ];
 
         $trackedusers = $completioninfo->get_tracked_users();
 
         foreach ($trackedusers as $trackeduser) {
-            $params = array(
+            $params = [
                 'userid'    => $trackeduser->id,
-                'course'  => $course->id
-            );
+                'course'  => $course->id,
+            ];
 
             $ccompletion = new completion_completion($params);
             if ($ccompletion->timecompleted > 0) {
-                $completioncounts['complete'] ++;
+                $completioncounts['complete']++;
             } else if ($ccompletion->timestarted > 0) {
-                $completioncounts['inprogress'] ++;
+                $completioncounts['inprogress']++;
             } else {
-                $completioncounts['notstarted'] ++;
+                $completioncounts['notstarted']++;
             }
-
         }
 
         return $completioncounts;
@@ -127,7 +124,7 @@ class content extends content_base {
         // First try to get a custom header image.
         $courseimageid = implode('_', [$course->id, $imagenum]);
         $courseimageobj = \cache::make('format_twocol', 'header_course_image');
-        $courseimage = $courseimageobj->get($courseimageid);;
+        $courseimage = $courseimageobj->get($courseimageid);
 
         // Then try to get the default course image.
         if (!$courseimage) {
@@ -240,21 +237,24 @@ class content extends content_base {
             $templatecontext->sectiontext5 = format_text($sectionsummary['text'], FORMAT_HTML);
         }
 
-        if (has_capability('format/twocol:viewcompletionstats', context_course::instance($course->id))
+        if (
+            has_capability('format/twocol:viewcompletionstats', context_course::instance($course->id))
             && !empty($courseformatoptions['completionstatus'])
-            && $completioninfo->has_criteria()) {
+            && $completioninfo->has_criteria()
+        ) {
             $templatecontext->completioncounts = $this->get_completion_counts($completioninfo, $course);
-            $templatecontext->completionurl = new moodle_url('/report/completion/index.php', array('course' => $course->id));
+            $templatecontext->completionurl = new moodle_url('/report/completion/index.php', ['course' => $course->id]);
         } else {
             $templatecontext->completioncounts = false;
         }
 
-        if (has_capability('moodle/course:update', context_course::instance($course->id))
+        if (
+            has_capability('moodle/course:update', context_course::instance($course->id))
             && !empty($courseformatoptions['completionstatus'])
             && !$completioninfo->has_criteria()
-            && $config->completionnag) {
-
-            $url = new moodle_url('/course/completion.php', array('id' => $course->id));
+            && $config->completionnag
+        ) {
+            $url = new moodle_url('/course/completion.php', ['id' => $course->id]);
             $messsage = get_string('nocompletion', 'format_twocol', $url->raw_out());
             $templatecontext->nocompletioncriteria = \core\notification::warning($messsage);
         }
@@ -287,8 +287,12 @@ class content extends content_base {
         if (!($sectioninfo = $modinfo->get_section_info($displaysection)) || !$sectioninfo->uservisible) {
             // This section doesn't exist or is not available for the user.
             // We actually already check this in course/view.php but just in case exit from this function as well.
-            throw new \moodle_exception('unknowncoursesection', 'error', course_get_url($course),
-                format_string($course->fullname));
+            throw new \moodle_exception(
+                'unknowncoursesection',
+                'error',
+                course_get_url($course),
+                format_string($course->fullname)
+            );
         }
 
         // The requested section page.
@@ -307,7 +311,7 @@ class content extends content_base {
 
         $templatecontext = new stdClass();
         $templatecontext->sectionimageformat = format_text($courseformatoptions['sectionimageformat'], FORMAT_HTML);
-        $templatecontext->courseurl = new moodle_url('/course/view.php', array('id' => $course->id));
+        $templatecontext->courseurl = new moodle_url('/course/view.php', ['id' => $course->id]);
         $templatecontext->navlinkprevious = $sectionnavlinks['previous'];
         $templatecontext->navlinknext = $sectionnavlinks['next'];
         $templatecontext->sectionname = $output->section_title_without_link($thissection, $course);
@@ -316,7 +320,10 @@ class content extends content_base {
         $cmlist = new $cmlistclass($format, $thissection);
         $templatecontext->sectioncmlist = $cmlist->export_for_template($output);
         $templatecontext->sectioncmcontrol = $output->course_section_add_cm_control(
-            $course, $displaysection, $displaysection);
+            $course,
+            $displaysection,
+            $displaysection
+        );
         $header = new \core_courseformat\output\local\content\section\summary($format, $thissection);
         $templatecontext->sectionheader = $output->render($header);
         $templatecontext->navselection = $this->section_nav_selection($course, null, $displaysection, $output);
@@ -354,7 +361,6 @@ class content extends content_base {
         unset($data->initialsection);
 
         return $data;
-
     }
 
     /**
@@ -366,7 +372,7 @@ class content extends content_base {
     private function get_section_info(stdClass $course): array {
         $modinfo = get_fast_modinfo($course);
         $numsections = course_get_format($course)->get_last_section_number();
-        $sections = array();
+        $sections = [];
 
         foreach ($modinfo->get_section_info_all() as $section => $thissection) {
             if ($section == 0) {
@@ -386,11 +392,11 @@ class content extends content_base {
                 continue;
             }
 
-            $sections[] = array(
-                'url' => new moodle_url('/course/view.php', array('id' => $course->id, 'section' => $section)),
+            $sections[] = [
+                'url' => new moodle_url('/course/view.php', ['id' => $course->id, 'section' => $section]),
                 'name' => get_section_name($course, $thissection),
-                'completion' => $this->get_section_completion($thissection, $course)
-            );
+                'completion' => $this->get_section_completion($thissection, $course),
+            ];
         }
 
         return $sections;
@@ -425,8 +431,10 @@ class content extends content_base {
                 if ($cancomplete && $completioninfo->is_enabled($thismod) != COMPLETION_TRACKING_NONE) {
                     $total++;
                     $completiondata = $completioninfo->get_data($thismod, true);
-                    if ($completiondata->completionstate == COMPLETION_COMPLETE ||
-                        $completiondata->completionstate == COMPLETION_COMPLETE_PASS) {
+                    if (
+                        $completiondata->completionstate == COMPLETION_COMPLETE ||
+                        $completiondata->completionstate == COMPLETION_COMPLETE_PASS
+                    ) {
                         $complete++;
                     }
                 }
@@ -456,18 +464,18 @@ class content extends content_base {
         // FIXME: This is really evil and should by using the navigation API.
         $course = course_get_format($course)->get_course();
         $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id))
-        or !$course->hiddensections;
+        || !$course->hiddensections;
 
-        $links = array('previous' => '', 'next' => '');
+        $links = ['previous' => '', 'next' => ''];
         $back = $sectionno - 1;
-        while ($back >= 0 and empty($links['previous'])) {
+        while ($back >= 0 && empty($links['previous'])) {
             if ($canviewhidden || $sections[$back]->uservisible) {
-                $params = array();
-                $params = array('class' => 'btn btn-outline-primary btn-small', 'role' => 'button');
+                $params = [];
+                $params = ['class' => 'btn btn-outline-primary btn-small', 'role' => 'button'];
                 if (!$sections[$back]->visible) {
-                    $params = array('' => 'disabled');
+                    $params = ['' => 'disabled'];
                 }
-                $previouslink = html_writer::tag('span', '', array('class' => 'fa fa-arrow-left fa-fw'));
+                $previouslink = html_writer::tag('span', '', ['class' => 'fa fa-arrow-left fa-fw']);
                 $previouslink .= get_string('previous', 'format_twocol') . ' ';
                 $previouslink .= get_section_name($course, $sections[$back]);
                 $links['previous'] = html_writer::link(course_get_url($course, $back), $previouslink, $params);
@@ -477,16 +485,16 @@ class content extends content_base {
 
         $forward = $sectionno + 1;
         $numsections = course_get_format($course)->get_last_section_number();
-        while ($forward <= $numsections and empty($links['next'])) {
+        while ($forward <= $numsections && empty($links['next'])) {
             if ($canviewhidden || $sections[$forward]->uservisible) {
-                $params = array();
-                $params = array('class' => 'btn btn-outline-primary btn-small', 'role' => 'button');
+                $params = [];
+                $params = ['class' => 'btn btn-outline-primary btn-small', 'role' => 'button'];
                 if (!$sections[$forward]->visible) {
-                    $params = array('' => 'disabled');
+                    $params = ['' => 'disabled'];
                 }
                 $nextlink = get_string('next', 'format_twocol') . ' ';
                 $nextlink .= get_section_name($course, $sections[$forward]);
-                $nextlink .= html_writer::tag('span', '', array('class' => 'fa fa-arrow-right fa-fw'));
+                $nextlink .= html_writer::tag('span', '', ['class' => 'fa fa-arrow-right fa-fw']);
                 $links['next'] = html_writer::link(course_get_url($course, $forward), $nextlink, $params);
             }
             $forward++;
@@ -507,21 +515,21 @@ class content extends content_base {
      */
     protected function section_nav_selection($course, $sections, $displaysection, $output) {
         $o = '';
-        $sectionmenu = array();
+        $sectionmenu = [];
         $sectionmenu[course_get_url($course)->out(false)] = get_string('maincoursepage');
         $modinfo = get_fast_modinfo($course);
         $section = 1;
         $numsections = course_get_format($course)->get_last_section_number();
         while ($section <= $numsections) {
             $thissection = $modinfo->get_section_info($section);
-            $showsection = $thissection->uservisible or !$course->hiddensections;
+            $showsection = $thissection->uservisible || !$course->hiddensections;
             if (($showsection) && ($section != $displaysection) && ($url = course_get_url($course, $section))) {
                 $sectionmenu[$url->out(false)] = get_section_name($course, $section);
             }
             $section++;
         }
 
-        $select = new url_select($sectionmenu, '', array('' => get_string('jumpto')));
+        $select = new url_select($sectionmenu, '', ['' => get_string('jumpto')]);
         $select->class = 'jumpmenu border-primary';
         $select->formid = 'sectionmenu';
         $o .= $output->render($select);

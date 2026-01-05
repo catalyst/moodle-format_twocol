@@ -31,5 +31,5 @@ $definitions = [
                 'simpledata' => true,
                 'staticacceleration' => true,
                 'datasource' => '\format_twocol\cache\header_course_image',
-        ]
+        ],
 ];

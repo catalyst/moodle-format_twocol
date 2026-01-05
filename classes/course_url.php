@@ -13,6 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  * A more permissive class of \moodle_url.
  *
@@ -22,7 +23,6 @@
  */
 namespace format_twocol;
 
-defined('MOODLE_INTERNAL') || die();
 /**
  * A more permissive class of \moodle_url.
  *
@@ -31,13 +31,12 @@ defined('MOODLE_INTERNAL') || die();
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class course_url extends \moodle_url {
-
     /**
      * Returns params for url.
      *
      * @return array
      */
-    public function get_params() : array {
+    public function get_params(): array {
         return $this->params;
     }
 
@@ -49,5 +48,4 @@ class course_url extends \moodle_url {
     public function get_anchor() {
         return $this->anchor;
     }
-
 }
