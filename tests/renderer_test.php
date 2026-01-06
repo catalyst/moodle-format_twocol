@@ -21,11 +21,17 @@
  * @copyright  2019 Matt Porritt <mattp@catalyst-au.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+namespace format_twocol;
+
+use advanced_testcase;
+use completion_completion;
+use completion_info;
+use ReflectionMethod;
 
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
-require_once($CFG->libdir.'/completionlib.php');
+require_once($CFG->libdir . '/completionlib.php');
 
 /**
  * Unit tesst for format_twocol renderer class.
@@ -35,26 +41,28 @@ require_once($CFG->libdir.'/completionlib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @group      format_twocol
  */
-class format_twocol_renderer_testcase extends advanced_testcase {
-
+final class renderer_test extends advanced_testcase {
     /**
      * Setup function.
      */
-    public function setUp() : void {
+    public function setUp(): void {
+        parent::setUp();
         $this->resetAfterTest();
     }
 
     /**
      * Test getting user completion counts.
+     *
+     * @covers \format_twocol\output\courseformat\content::get_completion_counts
      */
-    public function test_get_completion_counts() {
+    public function test_get_completion_counts(): void {
         global $PAGE, $CFG;
         $CFG->enablecompletion = true;
-        $completionauto = array('completion' => COMPLETION_TRACKING_AUTOMATIC);
+        $completionauto = ['completion' => COMPLETION_TRACKING_AUTOMATIC];
 
         // Set up the course.
-        $course = $this->getDataGenerator()->create_course(array('enablecompletion' => true));
-        $this->getDataGenerator()->create_module('page', array('course' => $course->id), $completionauto);
+        $course = $this->getDataGenerator()->create_course(['enablecompletion' => true]);
+        $this->getDataGenerator()->create_module('page', ['course' => $course->id], $completionauto);
 
         $user1 = $this->getDataGenerator()->create_user();
         $user2 = $this->getDataGenerator()->create_user();
@@ -103,6 +111,5 @@ class format_twocol_renderer_testcase extends advanced_testcase {
         $this->assertEquals(0, $proxy['notstarted']);
         $this->assertEquals(2, $proxy['inprogress']);
         $this->assertEquals(2, $proxy['complete']);
-
     }
 }
