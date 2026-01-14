@@ -876,6 +876,11 @@ class format_twocol extends core_courseformat\base {
     public function uses_course_index() {
         return true;
     }
+
+    #[\Override]
+    public function supports_components() {
+        return true;
+    }
 }
 
 /**
