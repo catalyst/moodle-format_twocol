@@ -16,12 +16,13 @@ The side of the page (left or right) that the course image appears on can be set
 ## Supported Moodle Versions
 This plugin currently supports Moodle:
 
-| Moodle version     | Branch               |
-|--------------------|----------------------|
-| Moodle 3.8 to 3.10 | MOODLE_38_STABLE     |
-| Moodle 3.11        | MOODLE_311_STABLE    |
-| Moodle 4.0 to 4.3  | MOODLE_400_STABLE    |
-| Moodle 4.4+        | MOODLE_404_STABLE    |
+| Moodle version     | Branch            |
+|--------------------|-------------------|
+| Moodle 3.8 to 3.10 | MOODLE_38_STABLE  |
+| Moodle 3.11        | MOODLE_311_STABLE |
+| Moodle 4.0 to 4.3  | MOODLE_400_STABLE |
+| Moodle 4.4 to 4.5  | MOODLE_404_STABLE |
+| Moodle 5.0+        | MOODLE_500_STABLE |
 
 ## Installation
 
