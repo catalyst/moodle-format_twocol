@@ -173,7 +173,7 @@ class content extends content_base {
         $cmlistclass = $format->get_output_classname('content\\section\\cmlist');
         $cmlist = new $cmlistclass($format, $thissection);
         $templatecontext->mods = $cmlist->export_for_template($output);
-        $templatecontext->modcontrol = $output->course_section_add_cm_control($course, 0, $displaysection);
+        $templatecontext->modcontrol = $output->section_add_cm_controls(course_get_format($course), $thissection);
         $templatecontext->progresstitle = get_string('progresstitle:course', 'format_twocol');
         $templatecontext->headerbackcolor = $headerbackcolor;
 
@@ -319,11 +319,7 @@ class content extends content_base {
         $cmlistclass = $format->get_output_classname('content\\section\\cmlist');
         $cmlist = new $cmlistclass($format, $thissection);
         $templatecontext->sectioncmlist = $cmlist->export_for_template($output);
-        $templatecontext->sectioncmcontrol = $output->course_section_add_cm_control(
-            $course,
-            $displaysection,
-            $displaysection
-        );
+        $templatecontext->sectioncmcontrol = $output->section_add_cm_controls(course_get_format($course), $thissection);
         $header = new \core_courseformat\output\local\content\section\summary($format, $thissection);
         $templatecontext->sectionheader = $output->render($header);
         $templatecontext->navselection = $this->section_nav_selection($course, null, $displaysection, $output);
