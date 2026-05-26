@@ -350,8 +350,8 @@
         width: 30%;
         display: flex;
         flex-wrap: nowrap;
+        flex-direction: column;
         align-items: center;
-        justify-content: center;
     }
 
     #page-course-view-twocol .completion-stats .completion-stats-item .completion-stats-title {
