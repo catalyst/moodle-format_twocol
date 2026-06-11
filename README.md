@@ -22,7 +22,8 @@ This plugin currently supports Moodle:
 | Moodle 3.11        | MOODLE_311_STABLE |
 | Moodle 4.0 to 4.3  | MOODLE_400_STABLE |
 | Moodle 4.4 to 4.5  | MOODLE_404_STABLE |
-| Moodle 5.0+        | MOODLE_500_STABLE |
+| Moodle 5.0         | MOODLE_500_STABLE |
+| Moodle 5.1+        | MOODLE_501_STABLE |
 
 ## Installation
 
