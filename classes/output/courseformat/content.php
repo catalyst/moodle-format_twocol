@@ -263,6 +263,7 @@ class content extends content_base {
         if (!empty($courseformatoptions['reversedisplay'])) {
             $templatecontext->reversedisplay = 1;
         }
+        $templatecontext->sectionid = $thissection->id;
         return $templatecontext;
     }
 
