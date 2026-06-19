@@ -326,7 +326,7 @@
 }
 
 #page-course-view-twocol .completion-stats .completion-stats-item .completion-stats-number {
-    font-size: 300%;
+    font-size: 200%;
     font-weight: 700;
     padding-right: 0.5rem;
 }
@@ -362,7 +362,7 @@
         line-height: 1rem;
     }
     #page-course-view-twocol .completion-stats .completion-stats-item .completion-stats-number {
-        font-size: 300%;
+        font-size: 200%;
         font-weight: 700;
         padding-right: 0.5rem;
         width: auto;
