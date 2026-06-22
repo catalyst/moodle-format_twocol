@@ -346,6 +346,7 @@ class content extends content_base {
             $controlmenu = new $controlmenuclass($format, $thissection);
             $templatecontext->controlmenu = $controlmenu->export_for_template($output);
         }
+        $templatecontext->sectionid = $thissection->id;
 
         return $templatecontext;
     }
