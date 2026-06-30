@@ -65,6 +65,8 @@ class content extends content_base {
 
         $format = $this->format;
         $displaysection = $format->get_sectionnum();
+        $data->sectionreturn = $displaysection ?: 'null';
+        $data->pagesectionid = $format->get_sectionid() ?? 'null';
         if (!empty($displaysection)) {
             $data->singlesectionpage = $this->print_single_section_page($output);
         } else {
@@ -263,6 +265,7 @@ class content extends content_base {
         if (!empty($courseformatoptions['reversedisplay'])) {
             $templatecontext->reversedisplay = 1;
         }
+        $templatecontext->sectionid = $thissection->id;
         return $templatecontext;
     }
 
@@ -341,6 +344,7 @@ class content extends content_base {
             $controlmenu = new $controlmenuclass($format, $thissection);
             $templatecontext->controlmenu = $controlmenu->export_for_template($output);
         }
+        $templatecontext->sectionid = $thissection->id;
 
         return $templatecontext;
     }

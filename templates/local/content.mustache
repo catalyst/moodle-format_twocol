@@ -33,6 +33,13 @@
 {{/coursesummary}}
 {{#singlesectionpage}}
     {{> format_twocol/course_topic }}
+    {{#js}}
+    require(['core_courseformat/local/content'], function(component) {
+        component.init(
+            '#page', {}, {{sectionreturn}}, {{#pagesectionid}}{{.}}{{/pagesectionid}}{{^pagesectionid}}null{{/pagesectionid}}
+        );
+    });
+    {{/js}}
 {{/singlesectionpage}}
 {{#multiplesectionpage}}
     {{> core_courseformat/local/content }}
