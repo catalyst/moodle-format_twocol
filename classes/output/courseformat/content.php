@@ -65,6 +65,8 @@ class content extends content_base {
 
         $format = $this->format;
         $displaysection = $format->get_sectionnum();
+        $data->sectionreturn = $displaysection ?: 'null';
+        $data->pagesectionid = $format->get_sectionid() ?? 'null';
         if (!empty($displaysection)) {
             $data->singlesectionpage = $this->print_single_section_page($output);
         } else {
