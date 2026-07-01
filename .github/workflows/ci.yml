@@ -11,4 +11,3 @@ jobs:
     # moodle_org_token: ${{ secrets.MOODLE_ORG_TOKEN }}
     with:
       disable_behat: true
-      disable_grunt: true
