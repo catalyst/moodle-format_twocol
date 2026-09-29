@@ -25,8 +25,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'format_twocol';
-$plugin->release = 2025072501;
-$plugin->version = 2025072501;
+$plugin->release = 2025072502;
+$plugin->version = 2025072502;
 $plugin->requires = 2024042200;
 $plugin->maturity = MATURITY_STABLE;
-$plugin->supported = [501, 502];
+$plugin->supported = [501, 503];
