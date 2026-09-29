@@ -10,4 +10,4 @@ jobs:
     with:
       disable_behat: true
       disable_grunt: true
-      enable_composer_publish: true
+      enable_composer_publish: false
