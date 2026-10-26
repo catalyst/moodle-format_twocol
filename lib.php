@@ -133,6 +133,15 @@ class format_twocol extends core_courseformat\base {
     }
 
     /**
+     * Returns true if this course format is compatible with content components.
+     *
+     * @return bool if the format is compatible with components.
+     */
+    public function supports_components() {
+        return true;
+    }
+
+    /**
      * Loads all of the course sections into the navigation
      *
      * @param global_navigation $navigation
